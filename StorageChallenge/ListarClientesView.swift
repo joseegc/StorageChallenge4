@@ -13,10 +13,10 @@ struct ListarClientesView: View {
     
     var body: some View {
         VStack {
-            Text(clientesViewModel.cliente.nome)
+            Text("teste")
             Text("Cadastrar Cliente")
             TextField("nome", text: $clientesViewModel.cliente.nome)
-            TextField("idade", value: $clientesViewModel.cliente.idade, formatter: NumberFormatter())
+            TextField("idade", value: $clientesViewModel.cliente.telefone, formatter: NumberFormatter())
                 .keyboardType(.numberPad)
             
             Button(action: {

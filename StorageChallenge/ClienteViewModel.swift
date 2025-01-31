@@ -13,8 +13,7 @@ class ClienteViewModel: ObservableObject {
     var coreDataModel = CoreDataModel()
     @Published var clientesSalvos: [ClienteEntity] = []
 
-    @Published var cliente = Cliente(nome: "Nome Padrao",
-                               idade: 0)
+    @Published var cliente = Cliente(nome: "", telefone: "")
     
     init(){
         clientesSalvos = coreDataModel.buscarClientes()

@@ -8,15 +8,17 @@
 import SwiftUI
 
 struct ListaPedidosView: View {
-    @State var pedidos = ["teste","teste2"]
+    @State var pedidos: [Pedido] = []
     
     var body: some View {
         List(pedidos){
-            Text($0)
+            Text($0.titulo)
         }
     }
 }
 
 #Preview {
-    ListaPedidosView()
+    ListaPedidosView(
+    pedidos: [Pedido(titulo: "Pedido 1", statusDaEntrega: "Pendente", observacoes: "Teste obs")]
+    )
 }
