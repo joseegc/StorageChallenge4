@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Cliente {
+struct Cliente: Identifiable {
     var id = UUID()
     var nome: String
     var telefone: String?

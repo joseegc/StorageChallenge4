@@ -1,8 +1,8 @@
 //
-//  ClienteViewModel.swift
+//  CadastrarClienteViewModel.swift
 //  StorageChallenge
 //
-//  Created by JOSE ELIAS GOMES CAMARGO on 30/01/25.
+//  Created by JOSE ELIAS GOMES CAMARGO on 31/01/25.
 //
 
 import Foundation
@@ -10,15 +10,15 @@ import CoreData
 import SwiftUI
 
 
-
-class ClienteViewModel: ObservableObject {
+class CadastrarEditarClienteViewModel: ObservableObject {
     @ObservedObject var coreDataModel = CoreDataModel()  // Agora usa a instância compartilhada de CoreDataModel
+
     @Published var clientesSalvos: [ClienteEntity] = []
 
-    @Published var cliente = Cliente()
+    @Published var cliente = Cliente(nome: "Nome Padrao",
+                               idade: 0)
     
     init(){
-
         clientesSalvos = coreDataModel.buscarClientes()
     }
     
@@ -29,20 +29,16 @@ class ClienteViewModel: ObservableObject {
         buscarClientesNoBanco()
     }
     
-    func atualizarNoBanco(entidade: ClienteEntity) {
+    func atualizarNoBanco(entidade: NSManagedObject) {
         self.cliente.nome += "!"
-        coreDataModel.editarCliente(cliente: self.cliente, entidade: entidade)
+        coreDataModel.atualizar(entidade: entidade, objeto: self.cliente)
     }
     
     func buscarClientesNoBanco() {
         self.clientesSalvos = coreDataModel.buscarClientes()
        
     }
-    
-    func deletarCliente(clienteADeletar: ClienteEntity) {
-        coreDataModel.deletarCliente(clienteADeletar: clienteADeletar)
-        buscarClientesNoBanco()
-    }
+   
     
     func deletarTodos() {
         self.clientesSalvos.removeAll()

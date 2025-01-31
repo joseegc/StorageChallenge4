@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Pedido {
+struct Pedido: Identifiable {
     var id = UUID()
     var titulo : String
     var statusDaEntrega: String
