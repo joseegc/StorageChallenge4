@@ -2,10 +2,14 @@
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22522" systemVersion="23F79" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="ClienteEntity" representedClassName="ClienteEntity" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
-        <attribute name="idade" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="nome" optional="YES" attributeType="String"/>
+        <attribute name="telefone" optional="YES" attributeType="String"/>
+        <relationship name="foto" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FotoEntity"/>
         <relationship name="medidas" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MedidaEntity"/>
         <relationship name="pedidos" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PedidoEntity" inverseName="cliente" inverseEntity="PedidoEntity"/>
+    </entity>
+    <entity name="FotoEntity" representedClassName="FotoEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="foto" optional="YES" attributeType="Binary"/>
     </entity>
     <entity name="Item" representedClassName="Item" syncable="YES" codeGenerationType="class">
         <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
@@ -27,9 +31,6 @@
         <relationship name="cliente" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ClienteEntity" inverseName="pedidos" inverseEntity="ClienteEntity"/>
         <relationship name="medidas" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MedidaEntity"/>
         <relationship name="pagamento" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PagamentoEntity"/>
-        <relationship name="referencias" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ReferenciaEntity"/>
-    </entity>
-    <entity name="ReferenciaEntity" representedClassName="ReferenciaEntity" syncable="YES" codeGenerationType="class">
-        <attribute name="urlDaImagem" optional="YES" attributeType="String"/>
+        <relationship name="referencias" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FotoEntity"/>
     </entity>
 </model>

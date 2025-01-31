@@ -75,8 +75,7 @@ class CoreDataModel: ObservableObject {
       let novoCliente = ClienteEntity(context: container.viewContext)
         novoCliente.nome = cliente.nome
         
-        novoCliente.idade = Int64(cliente.idade)
-        
+        novoCliente.idade = cliente.idade
         salvar()
         
     }

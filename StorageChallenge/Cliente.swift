@@ -10,10 +10,17 @@ import Foundation
 struct Cliente {
     var id = UUID()
     var nome: String
-    var idade: Int
-    
-    init(nome: String, idade: Int) {
+    var telefone: String
+    var foto: Foto
+    var pedidos: [Pedido]
+    var medidas: [Medida]
+
+    init(id: UUID = UUID(), nome: String, telefone: String, foto: Foto, pedidos: [Pedido], medidas: [Medida]) {
+        self.id = id
         self.nome = nome
-        self.idade = idade
+        self.telefone = telefone
+        self.foto = foto
+        self.pedidos = pedidos
+        self.medidas = medidas
     }
 }
