@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct Medida {
+struct Medida: Identifiable {
+    var id = UUID()
     var descricao: String
     var valor: Float
     

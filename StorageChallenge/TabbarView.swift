@@ -12,15 +12,15 @@ struct TabbarView: View {
     var body: some View {
         TabView {
             // Pedidos
-            ListarClientesView()
+            ListaPedidosView()
                 .tabItem {
-                    Label("Registrar", systemImage: "plus")
+                    Label("Pedidos", systemImage: "calendar")
                 }
             
             // Clientes
             ListarClientesView()
                 .tabItem {
-                    Label("Registrar", systemImage: "plus")
+                    Label("Clientes", systemImage: "person.3.fill")
                 }
         }
     }

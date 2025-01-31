@@ -5,7 +5,7 @@
         <attribute name="nome" optional="YES" attributeType="String"/>
         <attribute name="telefone" optional="YES" attributeType="String"/>
         <relationship name="foto" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FotoEntity"/>
-        <relationship name="medidas" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MedidaEntity"/>
+        <relationship name="medidas" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MedidaEntity" inverseName="cliente" inverseEntity="MedidaEntity"/>
         <relationship name="pedidos" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PedidoEntity" inverseName="cliente" inverseEntity="PedidoEntity"/>
     </entity>
     <entity name="FotoEntity" representedClassName="FotoEntity" syncable="YES" codeGenerationType="class">
@@ -17,6 +17,7 @@
     <entity name="MedidaEntity" representedClassName="MedidaEntity" syncable="YES" codeGenerationType="class">
         <attribute name="descricao" optional="YES" attributeType="String"/>
         <attribute name="valor" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="cliente" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ClienteEntity" inverseName="medidas" inverseEntity="ClienteEntity"/>
     </entity>
     <entity name="PagamentoEntity" representedClassName="PagamentoEntity" syncable="YES" codeGenerationType="class">
         <attribute name="statusDoPagamento" optional="YES" attributeType="String"/>
