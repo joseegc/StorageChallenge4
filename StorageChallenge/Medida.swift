@@ -11,7 +11,8 @@ struct Medida {
     var descricao: String
     var valor: Float
     
-    init(descricao: String, valor: Float) {
+    
+    init(descricao: String = "", valor: Float = 0) {
         self.descricao = descricao
         self.valor = valor
     }

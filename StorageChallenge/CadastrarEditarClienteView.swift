@@ -8,17 +8,17 @@
 import SwiftUI
 import PhotosUI
 
-class Medida {
-    @State var descricao: String
-   @State  var valor: Float
-    
-    init() {
-        descricao = ""
-        valor = 0
-    }
-}
+//class Medida {
+//    @State var descricao: String
+//   @State  var valor: Float
+//    
+//    init() {
+//        descricao = ""
+//        valor = 0
+//    }
+//}
 struct CadastrarEditarClienteView: View {
-    @StateObject var clientesViewModel = ClienteViewModel()
+    @EnvironmentObject var clientesViewModel: ClienteViewModel
     var tituloDaView = "Cadastrar Cliente"
     
     @State var nome = ""
@@ -48,7 +48,7 @@ struct CadastrarEditarClienteView: View {
                 Text("Nome")
                     .font(.title2)
                     .bold()
-                TextField("Nome*", text: $nome)
+                TextField("Nome*", text: clientesViewModel.cliente.nome)
             }
             
             VStack(alignment: .leading, spacing: 0) {
