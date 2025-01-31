@@ -18,6 +18,7 @@ struct Pedido: Identifiable {
     var pagamento: Pagamento?
     var referencias: [Foto]?
     
+    
     init(id: UUID = UUID(), titulo: String, statusDaEntrega: String, observacoes: String? = nil, dataDeEntrega: Date, cliente: Cliente, medidas: [Medida]? = nil, pagamento: Pagamento? = nil, referencias: [Foto]? = nil) {
         self.id = id
         self.titulo = titulo

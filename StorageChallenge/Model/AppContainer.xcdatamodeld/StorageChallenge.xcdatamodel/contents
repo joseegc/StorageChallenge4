@@ -6,10 +6,10 @@
         <attribute name="telefone" optional="YES" attributeType="String"/>
         <relationship name="foto" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FotoEntity"/>
         <relationship name="medidas" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MedidaEntity"/>
-        <relationship name="pedidos" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PedidoEntity" inverseName="cliente" inverseEntity="PedidoEntity"/>
+        <relationship name="pedidos" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PedidoEntity" inverseName="cliente" inverseEntity="PedidoEntity"/>
     </entity>
     <entity name="FotoEntity" representedClassName="FotoEntity" syncable="YES" codeGenerationType="class">
-        <attribute name="foto" optional="YES" attributeType="Binary"/>
+        <attribute name="imagem" optional="YES" attributeType="Binary"/>
     </entity>
     <entity name="Item" representedClassName="Item" syncable="YES" codeGenerationType="class">
         <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>

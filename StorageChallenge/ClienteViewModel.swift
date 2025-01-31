@@ -27,9 +27,9 @@ class ClienteViewModel: ObservableObject {
         buscarClientesNoBanco()
     }
     
-    func atualizarNoBanco(entidade: NSManagedObject) {
+    func atualizarNoBanco(entidade: ClienteEntity) {
         self.cliente.nome += "!"
-        CoreDataModel.shared.atualizar(entidade: entidade, objeto: self.cliente)
+        coreDataModel.editarCliente(cliente: self.cliente, entidade: entidade)
     }
     
     func buscarClientesNoBanco() {
