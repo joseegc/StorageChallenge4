@@ -9,7 +9,7 @@ import SwiftUI
 
 
 struct ListarClientesView: View {
-    @StateObject var clientesViewModel: ClienteViewModel
+    @StateObject var clientesViewModel = ClienteViewModel()
     
     var body: some View {
         VStack {

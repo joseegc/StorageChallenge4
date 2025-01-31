@@ -8,17 +8,29 @@
 import SwiftUI
 
 struct ListaPedidosView: View {
-    @State var pedidos: [Pedido] = []
+    @ObservedObject var pedidoVM = PedidoViewModel()
     
     var body: some View {
-        List(pedidos){
-            Text($0.titulo)
-        }
+        List(pedidoVM.todosPedidos){pedido in
+            NavigationLink {
+                ListarClientesView()
+            } label: {
+                Text(pedido.titulo)
+            }
+        }.navigationTitle("Pedidos")
+            .toolbar {
+                // Botão de adicionar na parte superior direita
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    NavigationLink(destination: ListarClientesView()) {
+                        Image(systemName: "plus")
+                    }
+                }
+            }
     }
 }
 
 #Preview {
-    ListaPedidosView(
-    pedidos: [Pedido(titulo: "Pedido 1", statusDaEntrega: "Pendente", observacoes: "Teste obs")]
-    )
+    NavigationStack{
+        ListaPedidosView()
+    }
 }
