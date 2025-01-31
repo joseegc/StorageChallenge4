@@ -9,12 +9,11 @@ import SwiftUI
 
 @main
 struct StorageChallengeApp: App {
-    let persistenceController = PersistenceController.shared
-
+    @StateObject var coreDataModel = CoreDataModel()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+            ListarClientesView(clientesViewModel: ClienteViewModel())
         }
     }
 }
