@@ -12,6 +12,9 @@ class CoreDataModel: ObservableObject {
     let container: NSPersistentContainer
 //    @Published var clientesSalvos: [ClienteEntity] = []
     
+    static let shared = CoreDataModel()
+
+    
     init() {
         container = NSPersistentContainer(name: "AppContainer")
         container.loadPersistentStores { (description, error) in

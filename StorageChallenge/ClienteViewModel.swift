@@ -10,21 +10,19 @@ import CoreData
 import SwiftUI
 
 
-
 class ClienteViewModel: ObservableObject {
-    @ObservedObject var coreDataModel = CoreDataModel()  // Agora usa a instância compartilhada de CoreDataModel
     @Published var clientesSalvos: [ClienteEntity] = []
 
     @Published var cliente = Cliente()
     
     init(){
 
-        clientesSalvos = coreDataModel.buscarClientes()
+        clientesSalvos = CoreDataModel.shared.buscarClientes()
     }
     
    
     func adicionarAoBanco() {
-        coreDataModel.adicionar(objeto: self.cliente)
+        CoreDataModel.shared.adicionar(objeto: self.cliente)
         
         buscarClientesNoBanco()
     }
@@ -35,12 +33,12 @@ class ClienteViewModel: ObservableObject {
     }
     
     func buscarClientesNoBanco() {
-        self.clientesSalvos = coreDataModel.buscarClientes()
+        self.clientesSalvos = CoreDataModel.shared.buscarClientes()
        
     }
     
     func deletarCliente(clienteADeletar: ClienteEntity) {
-        coreDataModel.deletarCliente(clienteADeletar: clienteADeletar)
+        CoreDataModel.shared.deletarCliente(clienteADeletar: clienteADeletar)
         buscarClientesNoBanco()
     }
     
