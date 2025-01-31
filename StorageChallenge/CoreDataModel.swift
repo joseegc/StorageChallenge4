@@ -84,11 +84,16 @@ class CoreDataModel: ObservableObject {
             clienteEntity.foto = fotoEntity
         }
         if let medidas = cliente.medidas {
-            clienteEntity.medidas = NSSet(array: medidas)
+            for medida in cliente.medidas ?? [] {
+                    let medidaEntity = MedidaEntity(context: CoreDataModel.shared.container.viewContext)
+                    medidaEntity.descricao = medida.descricao
+                    medidaEntity.valor = medida.valor
+                medidaEntity.cliente = clienteEntity
+                }
         }
-        if let pedidos = cliente.pedidos {
-            clienteEntity.pedidos = NSSet(array: pedidos)
-        }
+//        if let pedidos = cliente.pedidos {
+//            clienteEntity.pedidos = NSSet(array: pedidos)
+//        }
             
     }
     

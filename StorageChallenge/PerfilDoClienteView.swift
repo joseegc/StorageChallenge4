@@ -17,10 +17,20 @@ struct PerfilDoClienteView: View {
     var body: some View {
         VStack {
             Text(cliente.nome ?? "")
+            Text(cliente.telefone ?? "")
+            
+            ForEach((cliente.medidas?.allObjects as? [MedidaEntity] ?? []).reversed(), id: \.self) { medida in
+                HStack {
+                    Text("\(medida.descricao ?? "Sem descrição"):")
+                    Text("\(String(format: "%.2f", medida.valor)) cm")
+                }
+            }
+
+
         }.navigationTitle(cliente.nome ?? "Cliente")
             .toolbar {
                 ToolbarItem {
-                    NavigationLink(destination: CadastrarEditarClienteView(tituloDaView: "Editar Cliente")) {
+                    NavigationLink(destination: CadastrarEditarClienteView(tituloDaView: "Editar Cliente", cliente: cliente)) {
                         Image(systemName: "pencil.circle.fill")
                     }
                 }

@@ -10,26 +10,13 @@ import SwiftUI
 
 struct ListarClientesView: View {
     @EnvironmentObject var clientesViewModel: ClienteViewModel
+    @State var pesquisa = ""
 
     var body: some View {
         NavigationView {
             ScrollView {
                 VStack {
-                    Text(clientesViewModel.cliente.nome )
-                    Text("Cadastrar Cliente")
-                    TextField("nome", text: $clientesViewModel.cliente.nome)
-                  
-                    
-                    Button(action: {
-                        clientesViewModel.adicionarAoBanco()
-                    }, label: {
-                        Text("Enviar")
-                            .frame(width: 200, height: 50)
-                            .background(.blue)
-                            .foregroundStyle(Color(.white))
-                    })
-                    
-                    
+                   
                     ForEach(clientesViewModel.clientesSalvos, id: \.self) { cliente in
                         
                         NavigationLink(destination: PerfilDoClienteView(cliente: cliente)) {
@@ -40,6 +27,7 @@ struct ListarClientesView: View {
                         }
                         
                     }
+                    .searchable(text: $pesquisa)
                     
                     
                 }
