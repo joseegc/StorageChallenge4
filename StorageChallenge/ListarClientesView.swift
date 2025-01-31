@@ -9,8 +9,8 @@ import SwiftUI
 
 
 struct ListarClientesView: View {
-    @StateObject var clientesViewModel = ClienteViewModel()
-    
+    @EnvironmentObject var clientesViewModel: ClienteViewModel
+
     var body: some View {
         NavigationView {
             ScrollView {
@@ -18,7 +18,7 @@ struct ListarClientesView: View {
                     Text(clientesViewModel.cliente.nome )
                     Text("Cadastrar Cliente")
                     TextField("nome", text: $clientesViewModel.cliente.nome)
-                    
+                  
                     
                     Button(action: {
                         clientesViewModel.adicionarAoBanco()
@@ -59,6 +59,6 @@ struct ListarClientesView: View {
     }
 }
 
-#Preview {
-    ListarClientesView(clientesViewModel: ClienteViewModel())
-}
+//#Preview {
+//    ListarClientesView(clientesViewModel: ClienteViewModel())
+//}

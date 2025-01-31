@@ -9,9 +9,11 @@ import SwiftUI
 
 struct PerfilDoClienteView: View {
     let cliente: ClienteEntity
-    @StateObject var clientesViewModel = ClienteViewModel()
     @State var navegarParaListagemDeClientes = false
+    
+    @EnvironmentObject var clientesViewModel: ClienteViewModel
 
+   
     var body: some View {
         VStack {
             Text(cliente.nome ?? "")
@@ -27,8 +29,9 @@ struct PerfilDoClienteView: View {
                     Button(action: {
                         clientesViewModel.deletarCliente(clienteADeletar: cliente)
                         
+                        if navegarParaListagemDeClientes {
                             navegarParaListagemDeClientes = true
-                        
+                        }
                         
                     }, label: {
                         Image(systemName: "trash.circle.fill")
@@ -38,7 +41,7 @@ struct PerfilDoClienteView: View {
             .background(
                         // Navega para a ListarClientesView quando o cliente for deletado
                         NavigationLink(destination: ListarClientesView(), isActive: $navegarParaListagemDeClientes) {
-                            EmptyView()
+                        EmptyView()
                         }
                     )
             }
