@@ -13,7 +13,7 @@ class ClienteViewModel: ObservableObject {
     var coreDataModel = CoreDataModel()
     @Published var clientesSalvos: [ClienteEntity] = []
 
-    @Published var cliente = Cliente(nome: "Antonio")
+    @Published var cliente = Cliente()
     
     init(){
         clientesSalvos = coreDataModel.buscarClientes()
@@ -26,9 +26,9 @@ class ClienteViewModel: ObservableObject {
         buscarClientesNoBanco()
     }
     
-    func atualizarNoBanco(entidade: NSManagedObject) {
+    func atualizarNoBanco(entidade: ClienteEntity) {
         self.cliente.nome += "!"
-        coreDataModel.atualizar(entidade: entidade, objeto: self.cliente)
+        coreDataModel.editarCliente(cliente: self.cliente, entidade: entidade)
     }
     
     func buscarClientesNoBanco() {

@@ -69,12 +69,35 @@ class CoreDataModel: ObservableObject {
             salvar()
         }
     }
-
+    
+    func atualizarCliente(cliente: Cliente, clienteEntity: ClienteEntity) {
+        clienteEntity.id = cliente.id
+        clienteEntity.nome = cliente.nome
+        clienteEntity.telefone = cliente.telefone
+        
+        if let clienteFoto = cliente.foto {
+            let fotoEntity = FotoEntity(context: container.viewContext)
+            fotoEntity.imagem = clienteFoto.imagem
+            clienteEntity.foto = fotoEntity
+        }
+        if let medidas = cliente.medidas {
+            clienteEntity.medidas = NSSet(array: medidas)
+        }
+        if let pedidos = cliente.pedidos {
+            clienteEntity.pedidos = NSSet(array: pedidos)
+        }
+            
+    }
     
     func adicionarCliente(cliente: Cliente) {
-      let novoCliente = ClienteEntity(context: container.viewContext)
-        novoCliente.nome = cliente.nome
+        let novoClienteEntity = ClienteEntity(context: container.viewContext)
+        atualizarCliente(cliente: cliente, clienteEntity: novoClienteEntity)
+        salvar()
         
+    }
+    
+    func editarCliente(cliente: Cliente, entidade: ClienteEntity) {
+        atualizarCliente(cliente: cliente, clienteEntity: entidade)
         salvar()
         
     }

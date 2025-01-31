@@ -8,10 +8,10 @@
 import Foundation
 
 struct Foto {
-    var foto: Data
+    var imagem: Data
     
-    init(foto: Data) {
-        self.foto = foto
+    init(imagem: Data) {
+        self.imagem = imagem
     }
 
 }
