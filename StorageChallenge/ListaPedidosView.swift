@@ -11,9 +11,9 @@ struct ListaPedidosView: View {
     @ObservedObject var pedidoVM = PedidoViewModel()
     
     var body: some View {
-        List(pedidoVM.todosPedidos){pedido in
+        List(pedidoVM.pedidos){pedido in
             NavigationLink {
-                ListarClientesView()
+                CriarPedido(pedido: pedido, cliente: pedidosTeste[0].cliente)
             } label: {
                 Text(pedido.titulo)
             }
