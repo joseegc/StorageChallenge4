@@ -8,15 +8,15 @@
 import SwiftUI
 import PhotosUI
 
-class Medida {
-    @State var descricao: String
-   @State  var valor: Float
-    
-    init() {
-        descricao = ""
-        valor = 0
-    }
-}
+//class Medida {
+//    @State var descricao: String
+//   @State  var valor: Float
+//    
+//    init() {
+//        descricao = ""
+//        valor = 0
+//    }
+//}
 struct CadastrarEditarClienteView: View {
     @StateObject var clientesViewModel = ClienteViewModel()
     var tituloDaView = "Cadastrar Cliente"
@@ -28,6 +28,7 @@ struct CadastrarEditarClienteView: View {
     
     
     @State var medidas: [Medida] = []
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 30) {
             
@@ -64,7 +65,7 @@ struct CadastrarEditarClienteView: View {
                 HStack {
                     
                     Button(action: {
-                        medidas.append(Medida())
+//                        medidas.append(Medida())
                     }, label: {
                         Image(systemName: "plus")
                         Text("Adicionar Medida")
