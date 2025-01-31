@@ -80,8 +80,8 @@ class CoreDataModel: ObservableObject {
         
     }
     
-    func deletarCliente(cliente: ClienteEntity) {
-        container.viewContext.delete(cliente)
+    func deletarCliente(clienteADeletar: ClienteEntity) {
+        container.viewContext.delete(clienteADeletar)
         salvar()
     }
 
