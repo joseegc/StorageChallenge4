@@ -32,6 +32,7 @@ struct CadastrarEditarClienteView: View {
     
     
     @State var medidas: [Medida] = []
+    
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 30) {

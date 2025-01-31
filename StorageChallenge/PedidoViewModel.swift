@@ -12,8 +12,8 @@ var pedidosTeste = [Pedido(titulo: "titulo 1", statusDaEntrega: "Pendente", data
 
 class PedidoViewModel: ObservableObject{
     @Published var todosPedidos: [Pedido] = pedidosTeste
-    
-    
-    
+    @Published var pedido: Pedido? = nil
+    @Published var cliente: Cliente? = pedidosTeste[0].cliente
+
     
 }

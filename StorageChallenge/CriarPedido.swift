@@ -8,23 +8,24 @@
 import SwiftUI
 
 struct CriarPedido: View {
-    @State var pedido: Pedido
+    @ObservedObject var pedidoVM = PedidoViewModel()
+    
     
     var body: some View {
         HStack{
             Text("Cliente:")
-            Text(pedido.cliente.nome)
+            Text(pedidoVM.pedido?.cliente.nome ?? "")
         }
         HStack {
             Text("Titulo:")
                 .frame(width: 100, alignment: .leading) // Alinhar o título
-            TextField("Titulo", text: $pedido.titulo)
+            TextField("Titulo", text: $pedidoVM.pedido?.titulo ?? "")
         }
         .padding()
         Divider()
         DatePicker(
                 "Data de Entrega",
-                selection: $pedido.dataDeEntrega,
+                selection: $pedidoVM.pedido.dataDeEntrega,
                 displayedComponents: [.date]
             )
         Divider()
