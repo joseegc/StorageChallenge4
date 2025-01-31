@@ -31,7 +31,7 @@ class CoreDataModel: ObservableObject {
            
             return resposta
         } catch let error {
-            print("erro ao buscar clientes")
+            print("erro ao buscar clientes \(error)")
         }
         return []
     }
@@ -76,12 +76,14 @@ class CoreDataModel: ObservableObject {
         novoCliente.nome = cliente.nome
         
         novoCliente.idade = Int64(cliente.idade)
+        
         salvar()
         
     }
     
     func deletarCliente(cliente: ClienteEntity) {
         container.viewContext.delete(cliente)
+        
         salvar()
     }
 
@@ -94,7 +96,7 @@ class CoreDataModel: ObservableObject {
                 entidade.setValue(valorPropriedade, forKey: nomePropriedade)
             }
             
-            
+    
             salvar()
         
     }
@@ -104,7 +106,6 @@ class CoreDataModel: ObservableObject {
             try container.viewContext.save()
             
             
-            buscarClientes()
             
             
         } catch let error {
