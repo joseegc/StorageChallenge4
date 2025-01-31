@@ -22,7 +22,7 @@ class ClienteViewModel: ObservableObject {
     
    
     func adicionarAoBanco() {
-        coreDataModel.adicionarCliente(cliente: self.cliente)
+        coreDataModel.adicionar(objeto: self.cliente)
         
         buscarClientesNoBanco()
     }

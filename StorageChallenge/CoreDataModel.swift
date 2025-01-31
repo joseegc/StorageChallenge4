@@ -47,21 +47,28 @@ class CoreDataModel: ObservableObject {
     
    
     // MARK: Tentando fazer os genericos
-//    func adicionar<Objeto: NSManagedObject>(objeto: Objeto) {
-//        let contexto = container.viewContext
-//        let entidade = Objeto(context: contexto)
-//
-//        // Usando Reflection para obter as propriedades do objeto e seus valores
-//        let mirror = Mirror(reflecting: objeto)
-//
-//        // Iterando sobre as propriedades do objeto
-//        for (nomePropriedade, valorPropriedade) in mirror.children {
-//            guard let nomePropriedade = nomePropriedade else { continue }
-//            entidade.setValue(valorPropriedade, forKey: nomePropriedade)
-//        }
-//
-//        salvar()
-//    }
+    func adicionar<Objeto>(objeto: Objeto) {
+        let contexto = container.viewContext
+        var entidade : NSManagedObject?
+        
+        if objeto is Cliente {
+             entidade = ClienteEntity(context: contexto)
+
+        }
+
+        // Usando Reflection para obter as propriedades do objeto e seus valores
+        let mirror = Mirror(reflecting: objeto)
+
+        if let entidade = entidade {
+            // Iterando sobre as propriedades do objeto
+            for (nomePropriedade, valorPropriedade) in mirror.children {
+                guard let nomePropriedade = nomePropriedade else { continue }
+                entidade.setValue(valorPropriedade, forKey: nomePropriedade)
+            }
+            
+            salvar()
+        }
+    }
 
     
     func adicionarCliente(cliente: Cliente) {
