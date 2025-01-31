@@ -9,15 +9,13 @@ import SwiftUI
 
 
 struct ListarClientesView: View {
-    @StateObject var clientesViewModel = ClienteViewModel()
+    @StateObject var clientesViewModel: ClienteViewModel
     
     var body: some View {
         VStack {
-            Text("teste")
+            Text(clientesViewModel.cliente.nome)
             Text("Cadastrar Cliente")
             TextField("nome", text: $clientesViewModel.cliente.nome)
-            TextField("idade", value: $clientesViewModel.cliente.telefone, formatter: NumberFormatter())
-                .keyboardType(.numberPad)
             
             Button(action: {
                 clientesViewModel.adicionarAoBanco()

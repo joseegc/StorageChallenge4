@@ -10,12 +10,12 @@ import Foundation
 struct Cliente: Identifiable {
     var id = UUID()
     var nome: String
-    var telefone: String
+    var telefone: String?
     var foto: Foto?
     var pedidos: [Pedido]?
     var medidas: [Medida]?
 
-    init(id: UUID = UUID(), nome: String, telefone: String, foto: Foto? = nil, pedidos: [Pedido]? = nil, medidas: [Medida]? = nil) {
+init(id: UUID = UUID(), nome: String, telefone: String? = nil, foto: Foto? = nil, pedidos: [Pedido]? = nil, medidas: [Medida]? = nil) {
         self.id = id
         self.nome = nome
         self.telefone = telefone
