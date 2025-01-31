@@ -15,8 +15,7 @@ class ClienteViewModel: ObservableObject {
     @ObservedObject var coreDataModel = CoreDataModel()  // Agora usa a instância compartilhada de CoreDataModel
     @Published var clientesSalvos: [ClienteEntity] = []
 
-    @Published var cliente = Cliente(nome: "Nome Padrao",
-                               idade: 0)
+    @Published var cliente = Cliente(nome: "Antonio")
     
     init(){
 
