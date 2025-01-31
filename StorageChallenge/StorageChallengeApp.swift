@@ -9,7 +9,7 @@ import SwiftUI
 
 @main
 struct StorageChallengeApp: App {
-    @StateObject var coreDataModel = CoreDataModel()
+    let coreDataModel = CoreDataModel()
     
     var body: some Scene {
         WindowGroup {
