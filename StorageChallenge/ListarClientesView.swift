@@ -18,8 +18,6 @@ struct ListarClientesView: View {
                     Text(clientesViewModel.cliente.nome )
                     Text("Cadastrar Cliente")
                     TextField("nome", text: $clientesViewModel.cliente.nome)
-                    TextField("idade", value: $clientesViewModel.cliente.idade, formatter: NumberFormatter())
-                        .keyboardType(.numberPad)
                     
                     Button(action: {
                         clientesViewModel.adicionarAoBanco()

@@ -15,8 +15,7 @@ class CadastrarEditarClienteViewModel: ObservableObject {
 
     @Published var clientesSalvos: [ClienteEntity] = []
 
-    @Published var cliente = Cliente(nome: "Nome Padrao",
-                               idade: 0)
+    @Published var cliente = Cliente()
     
     init(){
         clientesSalvos = coreDataModel.buscarClientes()

@@ -8,15 +8,15 @@
 import SwiftUI
 import PhotosUI
 
-class Medida {
-    @State var descricao: String
-   @State  var valor: Float
-    
-    init() {
-        descricao = ""
-        valor = 0
-    }
-}
+//class Medida {
+//    @State var descricao: String
+//   @State  var valor: Float
+//    
+//    init() {
+//        descricao = ""
+//        valor = 0
+//    }
+//}
 struct CadastrarEditarClienteView: View {
     @StateObject var clientesViewModel = ClienteViewModel()
     var tituloDaView = "Cadastrar Cliente"
