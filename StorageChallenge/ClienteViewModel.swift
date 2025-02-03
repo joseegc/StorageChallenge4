@@ -22,16 +22,17 @@ class ClienteViewModel: ObservableObject {
     
    
     func adicionarClienteAoBanco() {
+        print(self.cliente)
         CoreDataModel.shared.adicionarCliente(cliente: self.cliente)
         
         buscarClientesNoBanco()
     }
     
-    func atualizarNoBanco(entidade: ClienteEntity) {
-        self.cliente.nome += "!"
-        CoreDataModel.shared.editarCliente(cliente: self.cliente, entidade: entidade)
-    }
-    
+//    func atualizarNoBanco(entidade: ClienteEntity) {
+//        self.cliente.nome += "!"
+//        CoreDataModel.shared.editarCliente(cliente: self.cliente, entidade: entidade)
+//    }
+//    
     func buscarClientesNoBanco() {
         self.clientesSalvos = CoreDataModel.shared.buscarClientes()
        

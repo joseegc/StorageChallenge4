@@ -21,6 +21,7 @@ struct ListarClientesView: View {
                         
                         NavigationLink(destination: PerfilDoClienteView(cliente: cliente)) {
                             Text(cliente.nome ?? "Sem nome")
+                               
 //                                .onTapGesture {
 //                                    clientesViewModel.atualizarNoBanco(entidade: cliente)
 //                                }

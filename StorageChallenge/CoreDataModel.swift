@@ -10,10 +10,10 @@ import CoreData
 
 class CoreDataModel: ObservableObject {
     let container: NSPersistentContainer
-//    @Published var clientesSalvos: [ClienteEntity] = []
+    //    @Published var clientesSalvos: [ClienteEntity] = []
     
     static let shared = CoreDataModel()
-
+    
     
     init() {
         container = NSPersistentContainer(name: "AppContainer")
@@ -31,7 +31,7 @@ class CoreDataModel: ObservableObject {
         // faz a busca no container e alimenta a array de pedidosSalvos
         do {
             let resposta = try container.viewContext.fetch(requisicao)
-           
+            
             return resposta
         } catch let error {
             print("erro ao buscar clientes \(error)")
@@ -39,7 +39,7 @@ class CoreDataModel: ObservableObject {
         return []
     }
     
-  
+    
     
     func adicionarPedido(titulo: String) {
         let novoPedido = PedidoEntity(context: container.viewContext)
@@ -48,20 +48,20 @@ class CoreDataModel: ObservableObject {
         salvar()
     }
     
-   
+    
     // MARK: Tentando fazer os genericos
     func adicionar<Objeto>(objeto: Objeto) {
         let contexto = container.viewContext
         var entidade : NSManagedObject?
         
         if objeto is Cliente {
-             entidade = ClienteEntity(context: contexto)
-
+            entidade = ClienteEntity(context: contexto)
+            
         }
-
+        
         // Usando Reflection para obter as propriedades do objeto e seus valores
         let mirror = Mirror(reflecting: objeto)
-
+        
         if let entidade = entidade {
             // Iterando sobre as propriedades do objeto
             for (nomePropriedade, valorPropriedade) in mirror.children {
@@ -83,49 +83,89 @@ class CoreDataModel: ObservableObject {
             fotoEntity.imagem = clienteFoto.imagem
             clienteEntity.foto = fotoEntity
         }
-        if let medidas = cliente.medidas {
+        if cliente.medidas != nil {
             for medida in cliente.medidas ?? [] {
-                    let medidaEntity = MedidaEntity(context: CoreDataModel.shared.container.viewContext)
-                    medidaEntity.descricao = medida.descricao
-                    medidaEntity.valor = medida.valor
+                let medidaEntity = MedidaEntity(context: CoreDataModel.shared.container.viewContext)
+                medidaEntity.descricao = medida.descricao
+                medidaEntity.valor = medida.valor
                 medidaEntity.cliente = clienteEntity
-                }
+            }
         }
-//        if let pedidos = cliente.pedidos {
-//            clienteEntity.pedidos = NSSet(array: pedidos)
-//        }
-            
+        //        if let pedidos = cliente.pedidos {
+        //            clienteEntity.pedidos = NSSet(array: pedidos)
+        //        }
+        
     }
     
     func adicionarCliente(cliente: Cliente) {
-        let novoClienteEntity = ClienteEntity(context: container.viewContext)
-        atualizarCliente(cliente: cliente, clienteEntity: novoClienteEntity)
-        salvar()
+        // Buscar cliente existente no Core Data pelo ID (convertendo UUID para String)
+        let fetchRequest: NSFetchRequest<ClienteEntity> = ClienteEntity.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", cliente.id.uuidString)
         
+        do {
+            let clientesExistentes = try container.viewContext.fetch(fetchRequest)
+            
+            if let clienteExistente = clientesExistentes.first {
+                // Se o cliente já existe, chama a função editarCliente
+                atualizarCliente(cliente: cliente, clienteEntity: clienteExistente)
+                salvar()
+            } else {
+                // Caso contrário, adiciona um novo cliente
+                let novoClienteEntity = ClienteEntity(context: container.viewContext)
+                atualizarCliente(cliente: cliente, clienteEntity: novoClienteEntity)
+                salvar()
+            }
+        } catch {
+            print("Erro ao buscar cliente no Core Data: \(error)")
+        }
     }
     
-    func editarCliente(cliente: Cliente, entidade: ClienteEntity) {
-        atualizarCliente(cliente: cliente, clienteEntity: entidade)
-        salvar()
-        
-    }
+    //    func editarCliente(cliente: Cliente, entidade: ClienteEntity) {
+    //        atualizarCliente(cliente: cliente, clienteEntity: entidade)
+    //        salvar()
+    //    }
+    
+    //
+    //    func adicionarCliente(cliente: Cliente) {
+    //        let novoClienteEntity = ClienteEntity(context: container.viewContext)
+    //        atualizarCliente(cliente: cliente, clienteEntity: novoClienteEntity)
+    //        salvar()
+    //
+    //    }
+    
+    //    func editarCliente(cliente: Cliente, entidade: ClienteEntity) {
+    //        atualizarCliente(cliente: cliente, clienteEntity: entidade)
+    //        salvar()
+    //
+    //    }
+    //
+    //    func deletarCliente(clienteADeletar: Cliente) {
+    //        container.viewContext.delete(clienteADeletar)
+    //        salvar()
+    //    }
+    //
     
     func deletarCliente(clienteADeletar: ClienteEntity) {
+        
+        
         container.viewContext.delete(clienteADeletar)
+        
         salvar()
+        
     }
-
+    
+    
     func atualizar<Objeto>(entidade: NSManagedObject, objeto: Objeto) {
         let mirror = Mirror(reflecting: objeto)
         
-            // Iterando sobre as propriedades do objeto
-            for (nomePropriedade, valorPropriedade) in mirror.children {
-                guard let nomePropriedade = nomePropriedade else { continue }
-                entidade.setValue(valorPropriedade, forKey: nomePropriedade)
-            }
-            
-    
-            salvar()
+        // Iterando sobre as propriedades do objeto
+        for (nomePropriedade, valorPropriedade) in mirror.children {
+            guard let nomePropriedade = nomePropriedade else { continue }
+            entidade.setValue(valorPropriedade, forKey: nomePropriedade)
+        }
+        
+        
+        salvar()
         
     }
     

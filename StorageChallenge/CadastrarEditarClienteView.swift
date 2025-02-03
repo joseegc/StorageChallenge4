@@ -26,8 +26,9 @@ struct CadastrarEditarClienteView: View {
 
     @State private var imagem: UIImage?
         @State var photosPickerItem: PhotosPickerItem?
+
     
-    var cliente: ClienteEntity? = nil
+    var clienteInput: ClienteEntity?
 
     
     
@@ -121,7 +122,13 @@ struct CadastrarEditarClienteView: View {
                 
                 Button(action: {
                     clientesViewModel.adicionarClienteAoBanco()
-                    presentationMode.wrappedValue.dismiss()
+                    
+                    
+                    clientesViewModel.cliente = Cliente()
+                    
+                        presentationMode.wrappedValue.dismiss()
+                 
+                    
                 }, label: {
                     Text("Cadastrar")
                         .frame(width: 200, height: 50)
@@ -134,11 +141,33 @@ struct CadastrarEditarClienteView: View {
         }
         .navigationTitle(tituloDaView)
         .task {
-            if let cliente = cliente {
+            if let cliente = clienteInput {
+                clientesViewModel.cliente.id = cliente.id!
+                
+                
                 clientesViewModel.cliente.nome = cliente.nome ?? ""
-                clientesViewModel.cliente.telefone = cliente.telefone
+                
+                clientesViewModel.cliente.telefone = cliente.telefone ?? ""
+                
+//                clientesViewModel.foto = client
+                
+                
+                if let medidasSalvas = cliente.medidas?.allObjects as? [MedidaEntity] {
+                    for medida in medidasSalvas {
+                        let medida = Medida(descricao: medida.descricao ?? "", valor: medida.valor)
+                        clientesViewModel.cliente.medidas?.append(medida)
+                    }
+                   
+                }
+                
+                
+             
                 
             }
+        }
+    
+        .onDisappear {
+            clientesViewModel.cliente = Cliente()
         }
         
     }
