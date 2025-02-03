@@ -19,6 +19,23 @@ struct PerfilDoClienteView: View {
             Text(cliente.nome ?? "")
             Text(cliente.telefone ?? "")
             
+            if let imageData = cliente.foto?.imagem, let uiImage = UIImage(data: imageData) {
+                Image(uiImage: uiImage)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: 100, height: 100)
+                    .clipShape(Circle())
+                    .overlay(Circle().stroke(Color.blue, lineWidth: 4))
+            }
+            else {
+            Image(systemName: "person.circle.fill")
+               .resizable()
+               .aspectRatio(contentMode: .fill)
+               .frame(width: 100, height: 100)
+               .clipShape(Circle())
+               .overlay(Circle().stroke(Color.blue, lineWidth: 4))
+            }
+            
             ForEach((cliente.medidas?.allObjects as? [MedidaEntity] ?? []).reversed(), id: \.self) { medida in
                 HStack {
                     Text("\(medida.descricao ?? "Sem descrição"):")

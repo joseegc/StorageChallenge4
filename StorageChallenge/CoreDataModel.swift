@@ -77,12 +77,17 @@ class CoreDataModel: ObservableObject {
         clienteEntity.id = cliente.id
         clienteEntity.nome = cliente.nome
         clienteEntity.telefone = cliente.telefone
+    
+        if clienteEntity.foto == nil {
+            clienteEntity.foto = FotoEntity(context: CoreDataModel.shared.container.viewContext)
+        }
         
         if let clienteFoto = cliente.foto {
-            let fotoEntity = FotoEntity(context: container.viewContext)
-            fotoEntity.imagem = clienteFoto.imagem
-            clienteEntity.foto = fotoEntity
+            clienteEntity.foto?.imagem = clienteFoto.imagem
+            clienteEntity.foto?.cliente = clienteEntity
         }
+        
+        
         if let medidas = cliente.medidas {
             for medida in cliente.medidas ?? [] {
                     let medidaEntity = MedidaEntity(context: CoreDataModel.shared.container.viewContext)
@@ -94,7 +99,7 @@ class CoreDataModel: ObservableObject {
 //        if let pedidos = cliente.pedidos {
 //            clienteEntity.pedidos = NSSet(array: pedidos)
 //        }
-            
+            salvar()
     }
     
     func adicionarCliente(cliente: Cliente) {

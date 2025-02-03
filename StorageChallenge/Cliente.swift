@@ -15,7 +15,7 @@ struct Cliente: Identifiable {
     var pedidos: [Pedido]?
     var medidas: [Medida]?
 
-init(id: UUID = UUID(), nome: String = "", telefone: String? = nil, foto: Foto? = nil, pedidos: [Pedido]? = nil, medidas: [Medida]? = []) {
+init(id: UUID = UUID(), nome: String = "", telefone: String? = nil, foto: Foto? = Foto(imagem: Data()), pedidos: [Pedido]? = nil, medidas: [Medida]? = []) {
         self.id = id
         self.nome = nome
         self.telefone = telefone

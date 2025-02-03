@@ -4,7 +4,6 @@
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="nome" optional="YES" attributeType="String"/>
         <attribute name="telefone" optional="YES" attributeType="String"/>
-        <relationship name="foto" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FotoEntity"/>
         <relationship name="foto" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FotoEntity" inverseName="cliente" inverseEntity="FotoEntity"/>
         <relationship name="medidas" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MedidaEntity" inverseName="cliente" inverseEntity="MedidaEntity"/>
         <relationship name="pedidos" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PedidoEntity" inverseName="cliente" inverseEntity="PedidoEntity"/>
