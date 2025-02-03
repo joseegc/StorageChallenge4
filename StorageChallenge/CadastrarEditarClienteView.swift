@@ -191,7 +191,7 @@ struct CadastrarEditarClienteView: View {
                 
                 if let medidasSalvas = cliente.medidas?.allObjects as? [MedidaEntity] {
                     for medida in medidasSalvas {
-                        let medida = Medida(descricao: medida.descricao ?? "", valor: medida.valor)
+                        let medida = Medida(id: medida.id!, descricao: medida.descricao ?? "", valor: medida.valor)
                         clientesViewModel.cliente.medidas?.append(medida)
                     }
                    

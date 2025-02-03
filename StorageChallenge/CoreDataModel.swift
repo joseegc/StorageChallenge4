@@ -103,7 +103,7 @@ class CoreDataModel: ObservableObject {
                     medidaEntity = MedidaEntity(context: CoreDataModel.shared.container.viewContext)
                     print("nova medida")
                 }
-                
+                    medidaEntity?.id = medida.id
                     medidaEntity?.descricao = medida.descricao
                     medidaEntity?.valor = medida.valor
                     medidaEntity?.cliente = clienteEntity
@@ -125,9 +125,10 @@ class CoreDataModel: ObservableObject {
             let medidasExistentes = try container.viewContext.fetch(fetchRequest)
             
             if let medidaExistente = medidasExistentes.first {
-               
+               print("A MEDIDA EXISTE")
                 return medidaExistente
             } else {
+                print("A MEDIDA NAO EXISTE")
                return nil
             }
         } catch {
