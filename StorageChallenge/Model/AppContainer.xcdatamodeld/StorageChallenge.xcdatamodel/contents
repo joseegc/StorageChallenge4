@@ -15,6 +15,7 @@
     </entity>
     <entity name="MedidaEntity" representedClassName="MedidaEntity" syncable="YES" codeGenerationType="class">
         <attribute name="descricao" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="valor" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
         <relationship name="cliente" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ClienteEntity" inverseName="medidas" inverseEntity="ClienteEntity"/>
         <relationship name="pedido" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PedidoEntity" inverseName="medidas" inverseEntity="PedidoEntity"/>

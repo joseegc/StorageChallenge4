@@ -88,17 +88,48 @@ class CoreDataModel: ObservableObject {
         }
         if cliente.medidas != nil {
             for medida in cliente.medidas ?? [] {
-                let medidaEntity = MedidaEntity(context: CoreDataModel.shared.container.viewContext)
-                medidaEntity.descricao = medida.descricao
-                medidaEntity.valor = medida.valor
-                medidaEntity.cliente = clienteEntity
+                
+                
+                print(cliente.medidas?.count)
+                var medidaEntity = verificarSeMedidaExiste(medida: medida)
+                
+                if medidaEntity == nil {
+                    medidaEntity = MedidaEntity(context: CoreDataModel.shared.container.viewContext)
+                    
+                }
+                
+                    medidaEntity?.descricao = medida.descricao
+                    medidaEntity?.valor = medida.valor
+                    medidaEntity?.cliente = clienteEntity
+                }
             }
         }
         //        if let pedidos = cliente.pedidos {
         //            clienteEntity.pedidos = NSSet(array: pedidos)
         //        }
         
+    
+    
+    func verificarSeMedidaExiste(medida: Medida) -> MedidaEntity? {
+        // Buscar cliente existente no Core Data pelo ID (convertendo UUID para String)
+        let fetchRequest: NSFetchRequest<MedidaEntity> = MedidaEntity.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", medida.id.uuidString)
+        
+        do {
+            let medidasExistentes = try container.viewContext.fetch(fetchRequest)
+            
+            if let medidaExistente = medidasExistentes.first {
+               
+                return medidaExistente
+            } else {
+               return nil
+            }
+        } catch {
+            print("Erro ao buscar cliente no Core Data: \(error)")
+        }
+        return nil
     }
+
     
     func adicionarCliente(cliente: Cliente) {
         // Buscar cliente existente no Core Data pelo ID (convertendo UUID para String)
