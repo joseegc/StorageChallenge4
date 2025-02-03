@@ -10,7 +10,6 @@ import SwiftUI
 
 struct ListarClientesView: View {
     @EnvironmentObject var clientesViewModel: ClienteViewModel
-    @State var pesquisa = ""
 
     var body: some View {
         NavigationView {
@@ -28,7 +27,6 @@ struct ListarClientesView: View {
                         }
                         
                     }
-                    .searchable(text: $pesquisa)
                     
                     
                 }

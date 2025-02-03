@@ -165,7 +165,7 @@ struct CadastrarEditarClienteView: View {
                  
                     
                 }, label: {
-                    Text("Cadastrar")
+                    Text((clienteInput != nil) ? "Editar" : "Cadastrar")
                         .frame(width: 200, height: 50)
                         .background(.blue)
                         .foregroundStyle(Color(.white))
@@ -184,7 +184,9 @@ struct CadastrarEditarClienteView: View {
                 
                 clientesViewModel.cliente.telefone = cliente.telefone ?? ""
                 
-//                clientesViewModel.foto = client
+                if let imagemSalva = cliente.foto {
+                    imagem = UIImage(data: imagemSalva)
+                }
                 
                 
                 if let medidasSalvas = cliente.medidas?.allObjects as? [MedidaEntity] {

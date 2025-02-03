@@ -95,13 +95,13 @@ class CoreDataModel: ObservableObject {
         if cliente.medidas != nil {
             for medida in cliente.medidas ?? [] {
                 
-                
+                print("AAVWWEFBWEBGRTR")
                 print(cliente.medidas?.count)
                 var medidaEntity = verificarSeMedidaExiste(medida: medida)
                 
                 if medidaEntity == nil {
                     medidaEntity = MedidaEntity(context: CoreDataModel.shared.container.viewContext)
-                    
+                    print("nova medida")
                 }
                 
                     medidaEntity?.descricao = medida.descricao
@@ -148,6 +148,8 @@ class CoreDataModel: ObservableObject {
             if let clienteExistente = clientesExistentes.first {
                 // Se o cliente já existe, chama a função editarCliente
                 atualizarCliente(cliente: cliente, clienteEntity: clienteExistente)
+                print("ENTIDADE")
+                print(clienteExistente)
                 salvar()
             } else {
                 // Caso contrário, adiciona um novo cliente
