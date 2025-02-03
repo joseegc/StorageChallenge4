@@ -11,7 +11,7 @@ import PhotosUI
 //class Medida {
 //    @State var descricao: String
 //   @State  var valor: Float
-//    
+//
 //    init() {
 //        descricao = ""
 //        valor = 0
@@ -25,8 +25,7 @@ struct CadastrarEditarClienteView: View {
     @State var navegarParaListagemDeClientes = false
 
     @State private var imagem: UIImage?
-        @State var photosPickerItem: PhotosPickerItem?
-
+    @State var photosPickerItem: PhotosPickerItem?
     
     var clienteInput: ClienteEntity?
 
@@ -41,14 +40,43 @@ struct CadastrarEditarClienteView: View {
                 Text(clientesViewModel.cliente.nome)
                 PhotosPicker(selection: $photosPickerItem, matching: .images) {
                     
-                    Image(uiImage: imagem ?? UIImage(named: "fotoPerfil")!.resized(to:200)!)
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(width: 100, height: 100)
-                        .clipShape(Circle())
-                        .overlay(Circle().stroke(Color.blue, lineWidth: 4))  // Optional: add a border
+                    if let imagem = self.imagem {
+                        Image(uiImage: imagem)
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 100, height: 100)
+                            .clipShape(Circle())
+                            .overlay(Circle().stroke(Color.blue, lineWidth: 4))  // Optional: add a border
+                    } else {
+                        Image(systemName: "person.circle.fill")
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 100, height: 100)
+                            .clipShape(Circle())
+                            .overlay(Circle().stroke(Color.blue, lineWidth: 4))  // Optional: add a border
+                    }
+
                     
-                }
+                }.onChange(of: photosPickerItem, { _, _ in
+                    Task {
+                        if let photosPickerItem, let data = try? await photosPickerItem.loadTransferable(type: Data.self) {
+                            if let image = UIImage(data: data) {
+                                DispatchQueue.main.async {
+                                    self.imagem = image
+                                    print("📸 Imagem carregada com sucesso") // Verifica se a imagem foi atribuída
+                                }
+                            } else {
+                                print("⚠️ Erro ao converter data para UIImage")
+                            }
+                        } else {
+                            print("⚠️ Erro ao carregar a imagem do PhotosPicker")
+                        }
+                        photosPickerItem = nil
+                    }
+                })
+            
+
+                
                 
                 
                 
@@ -121,6 +149,12 @@ struct CadastrarEditarClienteView: View {
                 }
                 
                 Button(action: {
+                    
+                    //guard let imagem = imagem else { return }
+                    
+                    if let imageData = self.imagem?.pngData() {
+                        clientesViewModel.cliente.foto?.imagem = imageData
+                    }
                     clientesViewModel.adicionarClienteAoBanco()
                     
                     

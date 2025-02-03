@@ -77,11 +77,14 @@ class CoreDataModel: ObservableObject {
         clienteEntity.id = cliente.id
         clienteEntity.nome = cliente.nome
         clienteEntity.telefone = cliente.telefone
+    
+        if clienteEntity.foto == nil {
+            clienteEntity.foto = FotoEntity(context: CoreDataModel.shared.container.viewContext)
+        }
         
         if let clienteFoto = cliente.foto {
-            let fotoEntity = FotoEntity(context: container.viewContext)
-            fotoEntity.imagem = clienteFoto.imagem
-            clienteEntity.foto = fotoEntity
+            clienteEntity.foto?.imagem = clienteFoto.imagem
+            clienteEntity.foto?.cliente = clienteEntity
         }
         if cliente.medidas != nil {
             for medida in cliente.medidas ?? [] {
