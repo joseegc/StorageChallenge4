@@ -153,7 +153,8 @@ struct CadastrarEditarClienteView: View {
                     //guard let imagem = imagem else { return }
                     
                     if let imageData = self.imagem?.pngData() {
-                        clientesViewModel.cliente.foto?.imagem = imageData
+                        clientesViewModel.cliente.foto = imageData
+                        //clientesViewModel.cliente.foto?.imagem = imageData
                     }
                     clientesViewModel.adicionarClienteAoBanco()
                     

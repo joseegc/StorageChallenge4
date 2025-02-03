@@ -19,7 +19,7 @@ struct PerfilDoClienteView: View {
             Text(cliente.nome ?? "" )
             Text(cliente.telefone ?? "")
             
-            if let imageData = cliente.foto?.imagem, let uiImage = UIImage(data: imageData) {
+            if let imageData = cliente.foto, let uiImage = UIImage(data: imageData) {
                 Image(uiImage: uiImage)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
