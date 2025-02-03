@@ -13,7 +13,7 @@ import SwiftUI
 class ClienteViewModel: ObservableObject {
     @Published var clientesSalvos: [ClienteEntity] = []
 
-    @Published var cliente = Cliente()
+    @Published var cliente = ClienteEntity()
     
     init(){
 
@@ -28,7 +28,6 @@ class ClienteViewModel: ObservableObject {
     }
     
     func atualizarNoBanco(entidade: ClienteEntity) {
-        self.cliente.nome += "!"
         CoreDataModel.shared.editarCliente(cliente: self.cliente, entidade: entidade)
     }
     

@@ -15,6 +15,8 @@
 		8B73953F2D4D4A6300FAC6D2 /* ListaPedidosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B73953E2D4D4A6300FAC6D2 /* ListaPedidosView.swift */; };
 		8B7395412D4D529F00FAC6D2 /* PedidoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B7395402D4D529F00FAC6D2 /* PedidoViewModel.swift */; };
 		8B7395432D4D584400FAC6D2 /* CriarPedido.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B7395422D4D584400FAC6D2 /* CriarPedido.swift */; };
+		9F0F9C3C2D51376A00EE6602 /* ClienteEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0F9C3A2D51376A00EE6602 /* ClienteEntity+CoreDataClass.swift */; };
+		9F0F9C3D2D51376A00EE6602 /* ClienteEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0F9C3B2D51376A00EE6602 /* ClienteEntity+CoreDataProperties.swift */; };
 		9F58B1B62D4D4977009ABAB7 /* PerfilDoClienteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F58B1B52D4D4977009ABAB7 /* PerfilDoClienteView.swift */; };
 		9F58B1B82D4D4B73009ABAB7 /* CadastrarEditarClienteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F58B1B72D4D4B73009ABAB7 /* CadastrarEditarClienteView.swift */; };
 		9F5E21322D4BF79D00B2F7F2 /* StorageChallengeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5E21312D4BF79D00B2F7F2 /* StorageChallengeApp.swift */; };
@@ -25,7 +27,6 @@
 		9F5E214C2D4BFCA400B2F7F2 /* PedidosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5E214B2D4BFCA400B2F7F2 /* PedidosView.swift */; };
 		9F8C24872D4C0DBD0046FB2E /* ListarClientesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8C24862D4C0DBD0046FB2E /* ListarClientesView.swift */; };
 		9F8C24892D4C10090046FB2E /* ClienteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8C24882D4C10090046FB2E /* ClienteViewModel.swift */; };
-		9F8C248B2D4C10410046FB2E /* Cliente.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8C248A2D4C10410046FB2E /* Cliente.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,8 @@
 		8B73953E2D4D4A6300FAC6D2 /* ListaPedidosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListaPedidosView.swift; sourceTree = "<group>"; };
 		8B7395402D4D529F00FAC6D2 /* PedidoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PedidoViewModel.swift; sourceTree = "<group>"; };
 		8B7395422D4D584400FAC6D2 /* CriarPedido.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CriarPedido.swift; sourceTree = "<group>"; };
+		9F0F9C3A2D51376A00EE6602 /* ClienteEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ClienteEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
+		9F0F9C3B2D51376A00EE6602 /* ClienteEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ClienteEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		9F58B1B52D4D4977009ABAB7 /* PerfilDoClienteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerfilDoClienteView.swift; sourceTree = "<group>"; };
 		9F58B1B72D4D4B73009ABAB7 /* CadastrarEditarClienteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CadastrarEditarClienteView.swift; sourceTree = "<group>"; };
 		9F5E212E2D4BF79D00B2F7F2 /* StorageChallenge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StorageChallenge.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -49,7 +52,6 @@
 		9F5E214B2D4BFCA400B2F7F2 /* PedidosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PedidosView.swift; sourceTree = "<group>"; };
 		9F8C24862D4C0DBD0046FB2E /* ListarClientesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListarClientesView.swift; sourceTree = "<group>"; };
 		9F8C24882D4C10090046FB2E /* ClienteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClienteViewModel.swift; sourceTree = "<group>"; };
-		9F8C248A2D4C10410046FB2E /* Cliente.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cliente.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,8 @@
 		9F5E21252D4BF79D00B2F7F2 = {
 			isa = PBXGroup;
 			children = (
+				9F0F9C3A2D51376A00EE6602 /* ClienteEntity+CoreDataClass.swift */,
+				9F0F9C3B2D51376A00EE6602 /* ClienteEntity+CoreDataProperties.swift */,
 				9F5E21302D4BF79D00B2F7F2 /* StorageChallenge */,
 				9F5E212F2D4BF79D00B2F7F2 /* Products */,
 			);
@@ -87,7 +91,6 @@
 				9F5E214B2D4BFCA400B2F7F2 /* PedidosView.swift */,
 				9F5E21492D4BFB1500B2F7F2 /* CoreDataModel.swift */,
 				9F8C24882D4C10090046FB2E /* ClienteViewModel.swift */,
-				9F8C248A2D4C10410046FB2E /* Cliente.swift */,
 				547451E22D4D447B00F94D3E /* Foto.swift */,
 				547451E42D4D44F400F94D3E /* Medida.swift */,
 				547451E02D4D41A400F94D3E /* Pedido.swift */,
@@ -193,9 +196,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				9F5E214A2D4BFB1500B2F7F2 /* CoreDataModel.swift in Sources */,
+				9F0F9C3D2D51376A00EE6602 /* ClienteEntity+CoreDataProperties.swift in Sources */,
 				8B7395412D4D529F00FAC6D2 /* PedidoViewModel.swift in Sources */,
 				9F8C24892D4C10090046FB2E /* ClienteViewModel.swift in Sources */,
-				9F8C248B2D4C10410046FB2E /* Cliente.swift in Sources */,
 				547451E32D4D447B00F94D3E /* Foto.swift in Sources */,
 				9F5E21322D4BF79D00B2F7F2 /* StorageChallengeApp.swift in Sources */,
 				9F58B1B62D4D4977009ABAB7 /* PerfilDoClienteView.swift in Sources */,
@@ -205,6 +208,7 @@
 				9F58B1B82D4D4B73009ABAB7 /* CadastrarEditarClienteView.swift in Sources */,
 				547451E52D4D44F400F94D3E /* Medida.swift in Sources */,
 				8B7395432D4D584400FAC6D2 /* CriarPedido.swift in Sources */,
+				9F0F9C3C2D51376A00EE6602 /* ClienteEntity+CoreDataClass.swift in Sources */,
 				9F8C24872D4C0DBD0046FB2E /* ListarClientesView.swift in Sources */,
 				9F5E214C2D4BFCA400B2F7F2 /* PedidosView.swift in Sources */,
 				8B73953D2D4D46A000FAC6D2 /* TabbarView.swift in Sources */,

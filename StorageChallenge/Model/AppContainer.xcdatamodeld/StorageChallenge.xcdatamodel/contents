@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22522" systemVersion="23F79" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="ClienteEntity" representedClassName="ClienteEntity" syncable="YES" codeGenerationType="class">
+    <entity name="ClienteEntity" representedClassName="ClienteEntity" syncable="YES">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="nome" optional="YES" attributeType="String"/>
         <attribute name="telefone" optional="YES" attributeType="String"/>
-        <relationship name="foto" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FotoEntity"/>
         <relationship name="foto" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FotoEntity" inverseName="cliente" inverseEntity="FotoEntity"/>
         <relationship name="medidas" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MedidaEntity" inverseName="cliente" inverseEntity="MedidaEntity"/>
         <relationship name="pedidos" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PedidoEntity" inverseName="cliente" inverseEntity="PedidoEntity"/>

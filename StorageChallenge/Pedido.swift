@@ -13,13 +13,13 @@ struct Pedido: Identifiable {
     var statusDaEntrega: String
     var observacoes: String?
     var dataDeEntrega: Date
-    var cliente: Cliente
+    var cliente: ClienteEntity
     var medidas: [Medida]?
     var pagamento: Pagamento?
     var referencias: [Foto]?
     
     
-    init(id: UUID = UUID(), titulo: String, statusDaEntrega: String, observacoes: String? = nil, dataDeEntrega: Date, cliente: Cliente, medidas: [Medida]? = nil, pagamento: Pagamento? = nil, referencias: [Foto]? = nil) {
+    init(id: UUID = UUID(), titulo: String, statusDaEntrega: String, observacoes: String? = nil, dataDeEntrega: Date, cliente: ClienteEntity, medidas: [Medida]? = nil, pagamento: Pagamento? = nil, referencias: [Foto]? = nil) {
         self.id = id
         self.titulo = titulo
         self.statusDaEntrega = statusDaEntrega

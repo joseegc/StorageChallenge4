@@ -10,7 +10,7 @@ import SwiftUI
 struct CriarPedido: View {
     @ObservedObject var pedidoVM = PedidoViewModel()
     @State var pedido: Pedido? = nil
-    @State var cliente: Cliente
+    @State var cliente: ClienteEntity
     @State private var date: Date = Date()
     
     var body: some View {

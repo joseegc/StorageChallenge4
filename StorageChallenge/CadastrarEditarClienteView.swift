@@ -37,7 +37,7 @@ struct CadastrarEditarClienteView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 30) {
                 
-                Text(clientesViewModel.cliente.nome)
+                Text(clientesViewModel.cliente.nome ?? "")
                 PhotosPicker(selection: $photosPickerItem, matching: .images) {
                     
                     Image(uiImage: imagem ?? UIImage(named: "fotoPerfil")!.resized(to:200)!)

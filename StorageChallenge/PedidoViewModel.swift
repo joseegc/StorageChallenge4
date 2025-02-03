@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-var pedidosTeste = [Pedido(titulo: "titulo 1", statusDaEntrega: "Pendente", dataDeEntrega: Date(), cliente: Cliente(nome: "Cliente1")), Pedido(titulo: "titulo 1", statusDaEntrega: "Pendente", dataDeEntrega: Date(), cliente: Cliente(nome: "Cliente1")), Pedido(titulo: "titulo 1", statusDaEntrega: "Pendente", dataDeEntrega: Date(), cliente: Cliente(nome: "Cliente1"))]
+var pedidosTeste = [Pedido(titulo: "titulo 1", statusDaEntrega: "Pendente", dataDeEntrega: Date(), cliente: ClienteEntity(nome: "Cliente1")), Pedido(titulo: "titulo 1", statusDaEntrega: "Pendente", dataDeEntrega: Date(), cliente: ClienteEntity(nome: "Cliente1")), Pedido(titulo: "titulo 1", statusDaEntrega: "Pendente", dataDeEntrega: Date(), cliente: ClienteEntity(nome: "Cliente1"))]
 
 
 class PedidoViewModel: ObservableObject{
@@ -24,7 +24,7 @@ class PedidoViewModel: ObservableObject{
         self.pedidos = pedidosTeste
     }
     
-    func buscarPedidosDoCliente(cliente: Cliente) {
+    func buscarPedidosDoCliente(cliente: ClienteEntity) {
         self.pedidos = []
         for pedido in pedidos {
             if pedido.cliente.id == cliente.id {
