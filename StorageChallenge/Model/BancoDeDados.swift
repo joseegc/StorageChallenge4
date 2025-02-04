@@ -20,11 +20,12 @@ protocol BancoDeDados {
     func buscarTodasMedidas<T>(id: UUID, entity: T) throws -> [Medida]
     func buscarTodasReferencias(id: UUID) throws -> [Foto]
     
+    func buscarPorIdClientes(id: UUID) throws -> Cliente
+    func buscarPorIdPedidos(id: UUID) throws -> Pedido
     
-    
-    
-    func editar<T>(item: T) throws
-    func deletar<T>(item: T) throws
-    func buscarTodos<T>() throws -> [T]
-    func buscarPorId<T>(id: String) throws -> T?
+    func deletarCliente(id: UUID) throws
+    func deletarPedido(id: UUID) throws
+    func deletarMedida(id: UUID) throws
+    func deletarReferencia(id: UUID) throws
+
 }
