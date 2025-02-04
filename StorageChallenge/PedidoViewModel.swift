@@ -11,10 +11,14 @@ import Combine
 var pedidosTeste = [Pedido(titulo: "titulo 1", statusDaEntrega: "Pendente", dataDeEntrega: Date(), cliente: Cliente(nome: "Cliente1")), Pedido(titulo: "titulo 1", statusDaEntrega: "Pendente", dataDeEntrega: Date(), cliente: Cliente(nome: "Cliente1")), Pedido(titulo: "titulo 1", statusDaEntrega: "Pendente", dataDeEntrega: Date(), cliente: Cliente(nome: "Cliente1"))]
 
 
+
 class PedidoViewModel: ObservableObject{
     @Published var pedidos: [Pedido] = [] // Lista de pedidos
     @Published var pedidoSelecionado: Pedido? // Pedido para visualização ou edição
     @Published var descricao: String = "" // Descrição para cadastro ou edição
+    
+    @Published var pedido = Pedido()
+
 
     init() {
         buscarTodosOsPedidos()
@@ -35,6 +39,11 @@ class PedidoViewModel: ObservableObject{
     
     func editarPedido(pedido: Pedido) {
         self.pedidoSelecionado = pedido
+    }
+    
+    func deletarPedido(id: UUID) {
+        CoreDataModel.shared.deletarPedido(id: id)
+        buscarTodosOsPedidos()
     }
     
     
