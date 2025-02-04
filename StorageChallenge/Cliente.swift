@@ -6,10 +6,10 @@ struct Cliente: Identifiable {
     var nome: String
     var telefone: String?
     var foto: Data?
-    var pedidos: [Pedido]?
-    var medidas: [Medida]?
+    var pedidos: [Pedido]
+    var medidas: [Medida]
 
-init(id: UUID = UUID(), nome: String = "", telefone: String? = nil, foto: Data? = nil , pedidos: [Pedido]? = nil, medidas: [Medida]? = []) {
+init(id: UUID = UUID(), nome: String = "", telefone: String? = nil, foto: Data? = nil , pedidos: [Pedido] = [], medidas: [Medida] = []) {
         self.id = id
         self.nome = nome
         self.telefone = telefone

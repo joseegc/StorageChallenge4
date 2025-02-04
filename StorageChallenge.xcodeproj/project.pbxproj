@@ -14,8 +14,6 @@
 		8B504FAB2D51355D00019D23 /* BancoDeDados.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B504FAA2D51355D00019D23 /* BancoDeDados.swift */; };
 		8B504FAD2D5135AE00019D23 /* CoreDataImplementacao.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B504FAC2D5135AE00019D23 /* CoreDataImplementacao.swift */; };
 		8B504FAF2D5135C300019D23 /* SwiftDataImplementacao.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B504FAE2D5135C300019D23 /* SwiftDataImplementacao.swift */; };
-		8B504FB32D51461E00019D23 /* ClienteCoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B504FB22D51461E00019D23 /* ClienteCoreData.swift */; };
-		8B504FB52D51546800019D23 /* PedidoCoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B504FB42D51546800019D23 /* PedidoCoreData.swift */; };
 		8B73953D2D4D46A000FAC6D2 /* TabbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B73953C2D4D46A000FAC6D2 /* TabbarView.swift */; };
 		8B73953F2D4D4A6300FAC6D2 /* ListaPedidosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B73953E2D4D4A6300FAC6D2 /* ListaPedidosView.swift */; };
 		8B7395412D4D529F00FAC6D2 /* PedidoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B7395402D4D529F00FAC6D2 /* PedidoViewModel.swift */; };
@@ -41,8 +39,6 @@
 		8B504FAA2D51355D00019D23 /* BancoDeDados.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BancoDeDados.swift; sourceTree = "<group>"; };
 		8B504FAC2D5135AE00019D23 /* CoreDataImplementacao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataImplementacao.swift; sourceTree = "<group>"; };
 		8B504FAE2D5135C300019D23 /* SwiftDataImplementacao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDataImplementacao.swift; sourceTree = "<group>"; };
-		8B504FB22D51461E00019D23 /* ClienteCoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClienteCoreData.swift; sourceTree = "<group>"; };
-		8B504FB42D51546800019D23 /* PedidoCoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PedidoCoreData.swift; sourceTree = "<group>"; };
 		8B73953C2D4D46A000FAC6D2 /* TabbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarView.swift; sourceTree = "<group>"; };
 		8B73953E2D4D4A6300FAC6D2 /* ListaPedidosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListaPedidosView.swift; sourceTree = "<group>"; };
 		8B7395402D4D529F00FAC6D2 /* PedidoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PedidoViewModel.swift; sourceTree = "<group>"; };
@@ -130,8 +126,6 @@
 				9F5E21352D4BF79D00B2F7F2 /* AppContainer.xcdatamodeld */,
 				8B504FAA2D51355D00019D23 /* BancoDeDados.swift */,
 				8B504FAC2D5135AE00019D23 /* CoreDataImplementacao.swift */,
-				8B504FB22D51461E00019D23 /* ClienteCoreData.swift */,
-				8B504FB42D51546800019D23 /* PedidoCoreData.swift */,
 				8B504FAE2D5135C300019D23 /* SwiftDataImplementacao.swift */,
 			);
 			path = Model;
@@ -216,13 +210,11 @@
 				9F5E21322D4BF79D00B2F7F2 /* StorageChallengeApp.swift in Sources */,
 				9F58B1B62D4D4977009ABAB7 /* PerfilDoClienteView.swift in Sources */,
 				547451E12D4D41A400F94D3E /* Pedido.swift in Sources */,
-				8B504FB32D51461E00019D23 /* ClienteCoreData.swift in Sources */,
 				547451E72D4D453800F94D3E /* Pagamento.swift in Sources */,
 				9F5E21372D4BF79D00B2F7F2 /* AppContainer.xcdatamodeld in Sources */,
 				9F58B1B82D4D4B73009ABAB7 /* CadastrarEditarClienteView.swift in Sources */,
 				547451E52D4D44F400F94D3E /* Medida.swift in Sources */,
 				8B504FAD2D5135AE00019D23 /* CoreDataImplementacao.swift in Sources */,
-				8B504FB52D51546800019D23 /* PedidoCoreData.swift in Sources */,
 				8B7395432D4D584400FAC6D2 /* CriarPedido.swift in Sources */,
 				9F8C24872D4C0DBD0046FB2E /* ListarClientesView.swift in Sources */,
 				9F5E214C2D4BFCA400B2F7F2 /* PedidosView.swift in Sources */,
