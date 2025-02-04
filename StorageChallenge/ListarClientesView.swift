@@ -21,9 +21,6 @@ struct ListarClientesView: View {
                         NavigationLink(destination: PerfilDoClienteView(idDoCliente: cliente.id)) {
                             Text(cliente.nome ?? "Sem nome")
                                
-//                                .onTapGesture {
-//                                    clientesViewModel.atualizarNoBanco(entidade: cliente)
-//                                }
                         }
                         
                     }.onAppear {
@@ -38,8 +35,6 @@ struct ListarClientesView: View {
             }
             .task {
                 clientesViewModel.buscarClientesNoBanco()
-                print(clientesViewModel.clientesSalvos)
-                print("atualizano")
             }
             .padding(.horizontal)
             .navigationTitle("Clientes")

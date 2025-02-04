@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-struct TabbarView: View {
+struct TabBarView: View {
     
     var body: some View {
         TabView {
             // Pedidos
-            ListaPedidosView()
+            ListarPedidosView()
                 .tabItem {
                     Label("Pedidos", systemImage: "calendar")
                 }
@@ -28,6 +28,7 @@ struct TabbarView: View {
 }
 
 #Preview {
-    TabbarView()
+    TabBarView()
         .environmentObject(ClienteViewModel())
+        .environmentObject(PedidoViewModel())
 }

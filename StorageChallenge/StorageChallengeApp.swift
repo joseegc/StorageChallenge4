@@ -9,12 +9,14 @@ import SwiftUI
 
 @main
 struct StorageChallengeApp: App {
-    @StateObject var clientesViewModel = ClienteViewModel()
+    @StateObject var clienteViewModel = ClienteViewModel()
+    @StateObject var pedidoViewModel = PedidoViewModel()
     
     var body: some Scene {
         WindowGroup {
-            TabbarView()
-                .environmentObject(clientesViewModel)  // Passa o CoreDataModel para o ambiente
+            TabBarView()
+                .environmentObject(clienteViewModel)
+                .environmentObject(pedidoViewModel)
 
         }
     }

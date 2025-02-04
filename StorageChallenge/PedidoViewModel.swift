@@ -24,6 +24,10 @@ class PedidoViewModel: ObservableObject{
         buscarTodosOsPedidos()
     }
     
+    func buscarPedidoPorId(id: UUID) {
+//        self.pedido = CoreDataModel.shared.buscarPedidoPorId(id: id)
+    }
+    
     func buscarTodosOsPedidos() {
         self.pedidos = pedidosTeste
     }

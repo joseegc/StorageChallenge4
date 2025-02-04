@@ -21,7 +21,6 @@ struct CadastrarEditarClienteView: View {
     @EnvironmentObject var clientesViewModel: ClienteViewModel
     @Environment(\.presentationMode) var presentationMode  // Acesso ao modo de apresentação
 
-    @State var navegarParaListagemDeClientes = false
     @State private var imagem: UIImage?
     @State var photosPickerItem: PhotosPickerItem?
     
