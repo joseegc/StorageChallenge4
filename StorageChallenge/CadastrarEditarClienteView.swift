@@ -36,9 +36,7 @@ struct CadastrarEditarClienteView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 30) {
-                
-                Text(clientesViewModel.cliente.nome)
-                PhotosPicker(selection: $photosPickerItem, matching: .images) {
+                                PhotosPicker(selection: $photosPickerItem, matching: .images) {
                     
                     if let imagem = self.imagem {
                         Image(uiImage: imagem)
@@ -203,4 +201,10 @@ extension UIImage {
         
         return resizedImage
     }
+}
+
+
+#Preview {
+    CadastrarEditarClienteView()
+        .environmentObject(ClienteViewModel())
 }
