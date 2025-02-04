@@ -55,7 +55,7 @@ struct CadastrarEditarClienteView: View {
                             .clipShape(Circle())
                             .overlay(Circle().stroke(Color.blue, lineWidth: 4))  // Optional: add a border
                     }
-
+                    
                     
                 }.onChange(of: photosPickerItem, { _, _ in
                     Task {
@@ -74,8 +74,8 @@ struct CadastrarEditarClienteView: View {
                         photosPickerItem = nil
                     }
                 })
-            
-
+                
+                
                 
                 
                 
@@ -161,9 +161,9 @@ struct CadastrarEditarClienteView: View {
                     }
                     clientesViewModel.adicionarClienteAoBanco()
                     clientesViewModel.buscarClientesNoBanco()
-
+                    
                     presentationMode.wrappedValue.dismiss()
-                 
+                    
                     
                 }, label: {
                     Text(idDoCliente != nil ? "Editar" : "Cadastrar")
@@ -179,48 +179,16 @@ struct CadastrarEditarClienteView: View {
         .task {
             if idDoCliente != nil {
                 clientesViewModel.buscarClientePorId(idDoCliente: idDoCliente!)
+                imagem = UIImage(data: clientesViewModel.cliente.foto!)
             } else {
                 clientesViewModel.cliente = Cliente()
             }
-//            clienteInput = clientesViewModel.buscarClientePorId(idDoCliente: idDoCliente)
             
-//            if let cliente = clienteInput {
-//                clientesViewModel.cliente.id = cliente.id!
-//                
-//                
-//                clientesViewModel.cliente.nome = cliente.nome ?? ""
-//                
-//                clientesViewModel.cliente.telefone = cliente.telefone ?? ""
-//                
-//                if let imagemSalva = cliente.foto {
-//                    imagem = UIImage(data: imagemSalva)
-//                }
-//                
-//                
-//                if let medidasSalvas = cliente.medidas?.allObjects as? [MedidaEntity] {
-//                    for medida in medidasSalvas {
-//                        let medida = Medida(id: medida.id!, descricao: medida.descricao ?? "", valor: medida.valor)
-//                        clientesViewModel.cliente.medidas?.append(medida)
-//                    }
-//                   
-//                }
-//                
-//                
-//             
-//                
-//            }
-        }
-    
-        .onDisappear {
-//            clientesViewModel.cliente = Cliente()
         }
         
     }
 }
 
-//#Preview {
-//    CadastrarEditarClienteView()
-//}
 
 extension UIImage {
     func resized(to maxWidth: CGFloat) -> UIImage? {
