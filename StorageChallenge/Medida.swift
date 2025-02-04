@@ -8,12 +8,13 @@
 import Foundation
 
 struct Medida: Identifiable {
-    var id = UUID()
+    var id: UUID
     var descricao: String
     var valor: Float
     
     
-    init(descricao: String = "", valor: Float = 0) {
+    init(id: UUID = UUID(), descricao: String = "", valor: Float = 0) {
+        self.id = id
         self.descricao = descricao
         self.valor = valor
     }

@@ -8,53 +8,84 @@
 import SwiftUI
 
 struct PerfilDoClienteView: View {
-    let cliente: ClienteEntity
+//    let cliente: ClienteEntity
+    let idDoCliente: UUID?
     @State var navegarParaListagemDeClientes = false
     
     @EnvironmentObject var clientesViewModel: ClienteViewModel
-
-   
+    
+    
     var body: some View {
         VStack {
-            Text(cliente.nome ?? "")
-            Text(cliente.telefone ?? "")
+            Text(clientesViewModel.cliente.nome )
+            Text(clientesViewModel.cliente.telefone ?? "")
             
-            ForEach((cliente.medidas?.allObjects as? [MedidaEntity] ?? []).reversed(), id: \.self) { medida in
+            if let imageData = clientesViewModel.cliente.foto, let uiImage = UIImage(data: imageData) {
+                Image(uiImage: uiImage)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: 100, height: 100)
+                    .clipShape(Circle())
+                    .overlay(Circle().stroke(Color.blue, lineWidth: 4))
+            }
+            else {
+            Image(systemName: "person.circle.fill")
+               .resizable()
+               .aspectRatio(contentMode: .fill)
+               .frame(width: 100, height: 100)
+               .clipShape(Circle())
+               .overlay(Circle().stroke(Color.blue, lineWidth: 4))
+            }
+            
+            ForEach(clientesViewModel.cliente.medidas ?? []) { medida in
                 HStack {
-                    Text("\(medida.descricao ?? "Sem descrição"):")
+                    Text("\(medida.descricao):")
                     Text("\(String(format: "%.2f", medida.valor)) cm")
                 }
             }
+            
+            
+        }.onAppear {
+            
+            //            if idDoCliente != nil {
+            //                clientesViewModel.buscarClientePorId(idDoCliente: idDoCliente!)
+            //                print("buscou o cliente")
+            //                print(clientesViewModel.cliente)
+            //            }
+            //            print(clientesViewModel.cliente.nome)
+            //
+            if let idDoCliente = idDoCliente {
+                clientesViewModel.buscarClientePorId(idDoCliente: idDoCliente)
+                }
+            
+        }
+                
 
-
-        }.navigationTitle(cliente.nome ?? "Cliente")
-            .toolbar {
-                ToolbarItem {
-                    NavigationLink(destination: CadastrarEditarClienteView(tituloDaView: "Editar Cliente", cliente: cliente)) {
-                        Image(systemName: "pencil.circle.fill")
-                    }
+        
+        .toolbar {
+            ToolbarItem {
+                
+                NavigationLink(destination: CadastrarEditarClienteView(idDoCliente: idDoCliente)) {
+                    Image(systemName: "pencil.circle.fill")
                 }
                 
-                ToolbarItem {
-                    Button(action: {
-                        clientesViewModel.deletarCliente(clienteADeletar: cliente)
-                        
-                        if navegarParaListagemDeClientes {
-                            navegarParaListagemDeClientes = true
-                        }
-                        
-                    }, label: {
-                        Image(systemName: "trash.circle.fill")
-                    })
-                    }
-                }
-            .background(
-                        // Navega para a ListarClientesView quando o cliente for deletado
-                        NavigationLink(destination: ListarClientesView(), isActive: $navegarParaListagemDeClientes) {
-                        EmptyView()
-                        }
-                    )
             }
+            
+        
+            ToolbarItem {
+                Button(action: {
+                    clientesViewModel.deletarCliente(idDoCliente: idDoCliente!)
+                            
+                         
+                        }) {
+                            Image(systemName: "trash.circle.fill")
+                        }
+            }
+        }
+       
+        .navigationTitle(clientesViewModel.cliente.nome ?? "")
+       
+    }
     
 }
 

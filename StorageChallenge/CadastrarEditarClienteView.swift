@@ -11,7 +11,7 @@ import PhotosUI
 //class Medida {
 //    @State var descricao: String
 //   @State  var valor: Float
-//    
+//
 //    init() {
 //        descricao = ""
 //        valor = 0
@@ -19,15 +19,15 @@ import PhotosUI
 //}
 struct CadastrarEditarClienteView: View {
     @EnvironmentObject var clientesViewModel: ClienteViewModel
-    var tituloDaView = "Cadastrar Cliente"
     @Environment(\.presentationMode) var presentationMode  // Acesso ao modo de apresentação
 
     @State var navegarParaListagemDeClientes = false
 
     @State private var imagem: UIImage?
-        @State var photosPickerItem: PhotosPickerItem?
+    @State var photosPickerItem: PhotosPickerItem?
     
-    var cliente: ClienteEntity? = nil
+    var clienteInput: ClienteEntity?
+    var idDoCliente: UUID?
 
     
     
@@ -40,14 +40,43 @@ struct CadastrarEditarClienteView: View {
                 Text(clientesViewModel.cliente.nome)
                 PhotosPicker(selection: $photosPickerItem, matching: .images) {
                     
-                    Image(uiImage: imagem ?? UIImage(named: "fotoPerfil")!.resized(to:200)!)
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(width: 100, height: 100)
-                        .clipShape(Circle())
-                        .overlay(Circle().stroke(Color.blue, lineWidth: 4))  // Optional: add a border
+                    if let imagem = self.imagem {
+                        Image(uiImage: imagem)
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 100, height: 100)
+                            .clipShape(Circle())
+                            .overlay(Circle().stroke(Color.blue, lineWidth: 4))  // Optional: add a border
+                    } else {
+                        Image(systemName: "person.circle.fill")
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 100, height: 100)
+                            .clipShape(Circle())
+                            .overlay(Circle().stroke(Color.blue, lineWidth: 4))  // Optional: add a border
+                    }
                     
-                }
+                    
+                }.onChange(of: photosPickerItem, { _, _ in
+                    Task {
+                        if let photosPickerItem, let data = try? await photosPickerItem.loadTransferable(type: Data.self) {
+                            if let image = UIImage(data: data) {
+                                DispatchQueue.main.async {
+                                    self.imagem = image
+                                    print("📸 Imagem carregada com sucesso") // Verifica se a imagem foi atribuída
+                                }
+                            } else {
+                                print("⚠️ Erro ao converter data para UIImage")
+                            }
+                        } else {
+                            print("⚠️ Erro ao carregar a imagem do PhotosPicker")
+                        }
+                        photosPickerItem = nil
+                    }
+                })
+                
+                
+                
                 
                 
                 
@@ -119,11 +148,25 @@ struct CadastrarEditarClienteView: View {
                     .keyboardType(.numberPad)
                 }
                 
+                NavigationLink(destination: PerfilDoClienteView(idDoCliente: idDoCliente)) {
+                    Text("Voltar")
+                }
                 Button(action: {
+                    
+                    //guard let imagem = imagem else { return }
+                    
+                    if let imageData = self.imagem?.pngData() {
+                        clientesViewModel.cliente.foto = imageData
+                        //clientesViewModel.cliente.foto?.imagem = imageData
+                    }
                     clientesViewModel.adicionarClienteAoBanco()
+                    clientesViewModel.buscarClientesNoBanco()
+                    
                     presentationMode.wrappedValue.dismiss()
+                    
+                    
                 }, label: {
-                    Text("Cadastrar")
+                    Text(idDoCliente != nil ? "Editar" : "Cadastrar")
                         .frame(width: 200, height: 50)
                         .background(.blue)
                         .foregroundStyle(Color(.white))
@@ -132,21 +175,20 @@ struct CadastrarEditarClienteView: View {
             }
             .padding(.horizontal)
         }
-        .navigationTitle(tituloDaView)
+        .navigationTitle(idDoCliente != nil ? "Editar Cliente" : "Cadastrar Cliente")
         .task {
-            if let cliente = cliente {
-                clientesViewModel.cliente.nome = cliente.nome ?? ""
-                clientesViewModel.cliente.telefone = cliente.telefone
-                
+            if idDoCliente != nil {
+                clientesViewModel.buscarClientePorId(idDoCliente: idDoCliente!)
+                imagem = UIImage(data: clientesViewModel.cliente.foto!)
+            } else {
+                clientesViewModel.cliente = Cliente()
             }
+            
         }
         
     }
 }
 
-#Preview {
-    CadastrarEditarClienteView()
-}
 
 extension UIImage {
     func resized(to maxWidth: CGFloat) -> UIImage? {

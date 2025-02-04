@@ -10,27 +10,36 @@ import SwiftUI
 
 struct ListarClientesView: View {
     @EnvironmentObject var clientesViewModel: ClienteViewModel
-    @State var pesquisa = ""
 
     var body: some View {
         NavigationView {
             ScrollView {
                 VStack {
                    
-                    ForEach(clientesViewModel.clientesSalvos, id: \.self) { cliente in
+                    ForEach(clientesViewModel.clientesSalvos) { cliente in
                         
-                        NavigationLink(destination: PerfilDoClienteView(cliente: cliente)) {
+                        NavigationLink(destination: PerfilDoClienteView(idDoCliente: cliente.id)) {
                             Text(cliente.nome ?? "Sem nome")
+                               
 //                                .onTapGesture {
 //                                    clientesViewModel.atualizarNoBanco(entidade: cliente)
 //                                }
                         }
                         
+                    }.onAppear {
+
+                        clientesViewModel.buscarClientesNoBanco()
+                        print(clientesViewModel.clientesSalvos)
+                        print("atualizano")
                     }
-                    .searchable(text: $pesquisa)
                     
                     
                 }
+            }
+            .task {
+                clientesViewModel.buscarClientesNoBanco()
+                print(clientesViewModel.clientesSalvos)
+                print("atualizano")
             }
             .padding(.horizontal)
             .navigationTitle("Clientes")
