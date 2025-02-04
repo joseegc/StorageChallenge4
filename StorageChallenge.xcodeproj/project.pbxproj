@@ -11,6 +11,11 @@
 		547451E32D4D447B00F94D3E /* Foto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547451E22D4D447B00F94D3E /* Foto.swift */; };
 		547451E52D4D44F400F94D3E /* Medida.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547451E42D4D44F400F94D3E /* Medida.swift */; };
 		547451E72D4D453800F94D3E /* Pagamento.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547451E62D4D453800F94D3E /* Pagamento.swift */; };
+		8B504FAB2D51355D00019D23 /* BancoDeDados.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B504FAA2D51355D00019D23 /* BancoDeDados.swift */; };
+		8B504FAD2D5135AE00019D23 /* CoreDataImplementacao.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B504FAC2D5135AE00019D23 /* CoreDataImplementacao.swift */; };
+		8B504FAF2D5135C300019D23 /* SwiftDataImplementacao.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B504FAE2D5135C300019D23 /* SwiftDataImplementacao.swift */; };
+		8B73953D2D4D46A000FAC6D2 /* TabbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B73953C2D4D46A000FAC6D2 /* TabbarView.swift */; };
+		8B73953F2D4D4A6300FAC6D2 /* ListaPedidosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B73953E2D4D4A6300FAC6D2 /* ListaPedidosView.swift */; };
 		8B73953D2D4D46A000FAC6D2 /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B73953C2D4D46A000FAC6D2 /* TabBarView.swift */; };
 		8B73953F2D4D4A6300FAC6D2 /* ListarPedidosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B73953E2D4D4A6300FAC6D2 /* ListarPedidosView.swift */; };
 		8B7395412D4D529F00FAC6D2 /* PedidoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B7395402D4D529F00FAC6D2 /* PedidoViewModel.swift */; };
@@ -37,6 +42,11 @@
 		547451E62D4D453800F94D3E /* Pagamento.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pagamento.swift; sourceTree = "<group>"; };
 		8B73953C2D4D46A000FAC6D2 /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
 		8B73953E2D4D4A6300FAC6D2 /* ListarPedidosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListarPedidosView.swift; sourceTree = "<group>"; };
+		8B504FAA2D51355D00019D23 /* BancoDeDados.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BancoDeDados.swift; sourceTree = "<group>"; };
+		8B504FAC2D5135AE00019D23 /* CoreDataImplementacao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataImplementacao.swift; sourceTree = "<group>"; };
+		8B504FAE2D5135C300019D23 /* SwiftDataImplementacao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDataImplementacao.swift; sourceTree = "<group>"; };
+		8B73953C2D4D46A000FAC6D2 /* TabbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarView.swift; sourceTree = "<group>"; };
+		8B73953E2D4D4A6300FAC6D2 /* ListaPedidosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListaPedidosView.swift; sourceTree = "<group>"; };
 		8B7395402D4D529F00FAC6D2 /* PedidoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PedidoViewModel.swift; sourceTree = "<group>"; };
 		8B7395422D4D584400FAC6D2 /* CriarPedido.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CriarPedido.swift; sourceTree = "<group>"; };
 		9F58B1B52D4D4977009ABAB7 /* PerfilDoClienteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerfilDoClienteView.swift; sourceTree = "<group>"; };
@@ -124,6 +134,9 @@
 			isa = PBXGroup;
 			children = (
 				9F5E21352D4BF79D00B2F7F2 /* AppContainer.xcdatamodeld */,
+				8B504FAA2D51355D00019D23 /* BancoDeDados.swift */,
+				8B504FAC2D5135AE00019D23 /* CoreDataImplementacao.swift */,
+				8B504FAE2D5135C300019D23 /* SwiftDataImplementacao.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -199,6 +212,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9F5E214A2D4BFB1500B2F7F2 /* CoreDataModel.swift in Sources */,
+				8B504FAF2D5135C300019D23 /* SwiftDataImplementacao.swift in Sources */,
 				8B7395412D4D529F00FAC6D2 /* PedidoViewModel.swift in Sources */,
 				9F8C24892D4C10090046FB2E /* ClienteViewModel.swift in Sources */,
 				9F8C248B2D4C10410046FB2E /* Cliente.swift in Sources */,
@@ -212,11 +226,15 @@
 				9F5E21372D4BF79D00B2F7F2 /* AppContainer.xcdatamodeld in Sources */,
 				9F58B1B82D4D4B73009ABAB7 /* CadastrarEditarClienteView.swift in Sources */,
 				547451E52D4D44F400F94D3E /* Medida.swift in Sources */,
+				8B504FAD2D5135AE00019D23 /* CoreDataImplementacao.swift in Sources */,
 				8B7395432D4D584400FAC6D2 /* CriarPedido.swift in Sources */,
 				9F8C24872D4C0DBD0046FB2E /* ListarClientesView.swift in Sources */,
 				9F5E214C2D4BFCA400B2F7F2 /* PedidosView.swift in Sources */,
 				8B73953D2D4D46A000FAC6D2 /* TabBarView.swift in Sources */,
 				8B73953F2D4D4A6300FAC6D2 /* ListarPedidosView.swift in Sources */,
+				8B73953D2D4D46A000FAC6D2 /* TabbarView.swift in Sources */,
+				8B504FAB2D51355D00019D23 /* BancoDeDados.swift in Sources */,
+				8B73953F2D4D4A6300FAC6D2 /* ListaPedidosView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -346,7 +364,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"StorageChallenge/Preview Content\"";
-				DEVELOPMENT_TEAM = MW6PQWZHST;
+				DEVELOPMENT_TEAM = GL239H9337;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Swedle;
@@ -365,10 +383,11 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.2;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.academy.swedle;
+				PRODUCT_BUNDLE_IDENTIFIER = com.swedle;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -384,7 +403,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"StorageChallenge/Preview Content\"";
-				DEVELOPMENT_TEAM = MW6PQWZHST;
+				DEVELOPMENT_TEAM = GL239H9337;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Swedle;
@@ -403,10 +422,11 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.2;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.academy.swedle;
+				PRODUCT_BUNDLE_IDENTIFIER = com.swedle;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
