@@ -7,11 +7,13 @@
 
 import Foundation
 
-struct Pagamento {
+struct Pagamento: Identifiable {
+    var id: UUID
     var statusDoPagamento: String
     var valor: Double
     
-    init(statusDoPagamento: String, valor: Double) {
+    init(id: UUID = UUID(), statusDoPagamento: String, valor: Double) {
+        self.id = id
         self.statusDoPagamento = statusDoPagamento
         self.valor = valor
     }

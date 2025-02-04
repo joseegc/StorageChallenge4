@@ -204,8 +204,23 @@ class CoreDataModel: ObservableObject {
         } catch {
             print("Erro ao buscar cliente no Core Data: \(error)")
         }
-
+    }
+    
+    func deletarPedido(id: UUID) {
+        let fetchRequest: NSFetchRequest<PedidoEntity> = PedidoEntity.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", id.uuidString)
         
+        do {
+            let pedidosExistentes = try container.viewContext.fetch(fetchRequest)
+            
+            if let pedidoADeletar = pedidosExistentes.first {
+                // Se o cliente já existe, chama a função editarCliente
+                container.viewContext.delete(pedidoADeletar)
+                salvar()
+            }
+        } catch {
+            print("Erro ao buscar cliente no Core Data: \(error)")
+        }
     }
     
     

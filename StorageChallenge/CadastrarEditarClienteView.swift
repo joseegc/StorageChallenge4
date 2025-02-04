@@ -69,7 +69,7 @@ struct CadastrarEditarClienteView: View {
                             .foregroundStyle(Color("preto"))
                         Spacer()
                     }
-
+                    
                     
                 }.onChange(of: photosPickerItem, { _, _ in
                     Task {
@@ -191,9 +191,9 @@ struct CadastrarEditarClienteView: View {
                     }
                     clientesViewModel.adicionarClienteAoBanco()
                     clientesViewModel.buscarClientesNoBanco()
-
+                    
                     presentationMode.wrappedValue.dismiss()
-                 
+                    
                     
                 }, label: {
                     Text(idDoCliente != nil ? "Editar" : "Cadastrar")
@@ -219,37 +219,7 @@ struct CadastrarEditarClienteView: View {
             } else {
                 clientesViewModel.cliente = Cliente()
             }
-//            clienteInput = clientesViewModel.buscarClientePorId(idDoCliente: idDoCliente)
             
-//            if let cliente = clienteInput {
-//                clientesViewModel.cliente.id = cliente.id!
-//                
-//                
-//                clientesViewModel.cliente.nome = cliente.nome ?? ""
-//                
-//                clientesViewModel.cliente.telefone = cliente.telefone ?? ""
-//                
-//                if let imagemSalva = cliente.foto {
-//                    imagem = UIImage(data: imagemSalva)
-//                }
-//                
-//                
-//                if let medidasSalvas = cliente.medidas?.allObjects as? [MedidaEntity] {
-//                    for medida in medidasSalvas {
-//                        let medida = Medida(id: medida.id!, descricao: medida.descricao ?? "", valor: medida.valor)
-//                        clientesViewModel.cliente.medidas?.append(medida)
-//                    }
-//                   
-//                }
-//                
-//                
-//             
-//                
-//            }
-        }
-    
-        .onDisappear {
-//            clientesViewModel.cliente = Cliente()
         }
         
     }
@@ -274,4 +244,10 @@ extension UIImage {
         
         return resizedImage
     }
+}
+
+
+#Preview {
+    CadastrarEditarClienteView()
+        .environmentObject(ClienteViewModel())
 }
