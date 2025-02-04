@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct PerfilDoClienteView: View {
-    let cliente: ClienteEntity
+//    let cliente: ClienteEntity
+    let idDoCliente: UUID?
     @State var navegarParaListagemDeClientes = false
     
     @EnvironmentObject var clientesViewModel: ClienteViewModel
@@ -16,10 +17,10 @@ struct PerfilDoClienteView: View {
     
     var body: some View {
         VStack {
-            Text(cliente.nome ?? "" )
-            Text(cliente.telefone ?? "")
+            Text(clientesViewModel.cliente.nome )
+            Text(clientesViewModel.cliente.telefone ?? "")
             
-            if let imageData = cliente.foto, let uiImage = UIImage(data: imageData) {
+            if let imageData = clientesViewModel.cliente.foto, let uiImage = UIImage(data: imageData) {
                 Image(uiImage: uiImage)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
@@ -36,18 +37,35 @@ struct PerfilDoClienteView: View {
                .overlay(Circle().stroke(Color.blue, lineWidth: 4))
             }
             
-            ForEach((cliente.medidas?.allObjects as? [MedidaEntity] ?? []).reversed(), id: \.self) { medida in
+            ForEach(clientesViewModel.cliente.medidas ?? []) { medida in
                 HStack {
-                    Text("\(medida.descricao ?? "Sem descrição"):")
+                    Text("\(medida.descricao):")
                     Text("\(String(format: "%.2f", medida.valor)) cm")
                 }
             }
             
             
-        }.toolbar {
+        }.onAppear {
+            
+            //            if idDoCliente != nil {
+            //                clientesViewModel.buscarClientePorId(idDoCliente: idDoCliente!)
+            //                print("buscou o cliente")
+            //                print(clientesViewModel.cliente)
+            //            }
+            //            print(clientesViewModel.cliente.nome)
+            //
+            if let idDoCliente = idDoCliente {
+                clientesViewModel.buscarClientePorId(idDoCliente: idDoCliente)
+                }
+            
+        }
+                
+
+        
+        .toolbar {
             ToolbarItem {
                 
-                NavigationLink(destination: CadastrarEditarClienteView(tituloDaView: "Editar Cliente", clienteInput: cliente)) {
+                NavigationLink(destination: CadastrarEditarClienteView(idDoCliente: idDoCliente)) {
                     Image(systemName: "pencil.circle.fill")
                 }
                 
@@ -56,7 +74,7 @@ struct PerfilDoClienteView: View {
         
             ToolbarItem {
                 Button(action: {
-                            clientesViewModel.deletarCliente(clienteADeletar: cliente)
+                    clientesViewModel.deletarCliente(idDoCliente: idDoCliente!)
                             
                          
                         }) {
@@ -65,7 +83,7 @@ struct PerfilDoClienteView: View {
             }
         }
        
-        .navigationTitle(cliente.nome ?? "")
+        .navigationTitle(clientesViewModel.cliente.nome ?? "")
        
     }
     

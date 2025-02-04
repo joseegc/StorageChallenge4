@@ -103,10 +103,13 @@ class CoreDataModel: ObservableObject {
                     medidaEntity = MedidaEntity(context: CoreDataModel.shared.container.viewContext)
                     print("nova medida")
                 }
-                    medidaEntity?.id = medida.id
-                    medidaEntity?.descricao = medida.descricao
+                
+                print(medidaEntity?.descricao)
+                print(medida.descricao)
+                medidaEntity?.descricao = medida.descricao
                     medidaEntity?.valor = medida.valor
-                    medidaEntity?.cliente = clienteEntity
+                print("editoou")
+                print(medidaEntity?.descricao)
                 }
             }
         }
@@ -163,37 +166,45 @@ class CoreDataModel: ObservableObject {
         }
     }
     
-    //    func editarCliente(cliente: Cliente, entidade: ClienteEntity) {
-    //        atualizarCliente(cliente: cliente, clienteEntity: entidade)
-    //        salvar()
-    //    }
     
-    //
-    //    func adicionarCliente(cliente: Cliente) {
-    //        let novoClienteEntity = ClienteEntity(context: container.viewContext)
-    //        atualizarCliente(cliente: cliente, clienteEntity: novoClienteEntity)
-    //        salvar()
-    //
-    //    }
+    func buscarClientePorId(idDoCliente: UUID) -> ClienteEntity? {
+        // Buscar cliente existente no Core Data pelo ID (convertendo UUID para String)
+        let fetchRequest: NSFetchRequest<ClienteEntity> = ClienteEntity.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", idDoCliente.uuidString)
+        
+        do {
+            let clientesExistentes = try container.viewContext.fetch(fetchRequest)
+            
+            if let clienteExistente = clientesExistentes.first {
+               print("O CLIENTE EXISTE")
+                return clienteExistente
+            } else {
+                print("O CLIENTE NAO EXISTE")
+               return nil
+            }
+        } catch {
+            print("Erro ao buscar cliente no Core Data: \(error)")
+        }
+        return nil
+    }
     
-    //    func editarCliente(cliente: Cliente, entidade: ClienteEntity) {
-    //        atualizarCliente(cliente: cliente, clienteEntity: entidade)
-    //        salvar()
-    //
-    //    }
-    //
-    //    func deletarCliente(clienteADeletar: Cliente) {
-    //        container.viewContext.delete(clienteADeletar)
-    //        salvar()
-    //    }
-    //
-    
-    func deletarCliente(clienteADeletar: ClienteEntity) {
+ 
+    func deletarCliente(idDoCliente: UUID) {
+        let fetchRequest: NSFetchRequest<ClienteEntity> = ClienteEntity.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", idDoCliente.uuidString)
         
-        
-        container.viewContext.delete(clienteADeletar)
-        
-        salvar()
+        do {
+            let clientesExistentes = try container.viewContext.fetch(fetchRequest)
+            
+            if let clienteADeletar = clientesExistentes.first {
+                // Se o cliente já existe, chama a função editarCliente
+                container.viewContext.delete(clienteADeletar)
+                salvar()
+            }
+        } catch {
+            print("Erro ao buscar cliente no Core Data: \(error)")
+        }
+
         
     }
     

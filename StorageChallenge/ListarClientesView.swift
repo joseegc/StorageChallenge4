@@ -16,9 +16,9 @@ struct ListarClientesView: View {
             ScrollView {
                 VStack {
                    
-                    ForEach(clientesViewModel.clientesSalvos, id: \.self) { cliente in
+                    ForEach(clientesViewModel.clientesSalvos) { cliente in
                         
-                        NavigationLink(destination: PerfilDoClienteView(cliente: cliente)) {
+                        NavigationLink(destination: PerfilDoClienteView(idDoCliente: cliente.id)) {
                             Text(cliente.nome ?? "Sem nome")
                                
 //                                .onTapGesture {
@@ -26,10 +26,20 @@ struct ListarClientesView: View {
 //                                }
                         }
                         
+                    }.onAppear {
+
+                        clientesViewModel.buscarClientesNoBanco()
+                        print(clientesViewModel.clientesSalvos)
+                        print("atualizano")
                     }
                     
                     
                 }
+            }
+            .task {
+                clientesViewModel.buscarClientesNoBanco()
+                print(clientesViewModel.clientesSalvos)
+                print("atualizano")
             }
             .padding(.horizontal)
             .navigationTitle("Clientes")

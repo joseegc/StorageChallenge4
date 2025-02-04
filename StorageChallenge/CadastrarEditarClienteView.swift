@@ -19,7 +19,6 @@ import PhotosUI
 //}
 struct CadastrarEditarClienteView: View {
     @EnvironmentObject var clientesViewModel: ClienteViewModel
-    var tituloDaView = "Cadastrar Cliente"
     @Environment(\.presentationMode) var presentationMode  // Acesso ao modo de apresentação
 
     @State var navegarParaListagemDeClientes = false
@@ -28,6 +27,7 @@ struct CadastrarEditarClienteView: View {
     @State var photosPickerItem: PhotosPickerItem?
     
     var clienteInput: ClienteEntity?
+    var idDoCliente: UUID?
 
     
     
@@ -148,6 +148,9 @@ struct CadastrarEditarClienteView: View {
                     .keyboardType(.numberPad)
                 }
                 
+                NavigationLink(destination: PerfilDoClienteView(idDoCliente: idDoCliente)) {
+                    Text("Voltar")
+                }
                 Button(action: {
                     
                     //guard let imagem = imagem else { return }
@@ -157,15 +160,13 @@ struct CadastrarEditarClienteView: View {
                         //clientesViewModel.cliente.foto?.imagem = imageData
                     }
                     clientesViewModel.adicionarClienteAoBanco()
-                    
-                    
-                    clientesViewModel.cliente = Cliente()
-                    
-                        presentationMode.wrappedValue.dismiss()
+                    clientesViewModel.buscarClientesNoBanco()
+
+                    presentationMode.wrappedValue.dismiss()
                  
                     
                 }, label: {
-                    Text((clienteInput != nil) ? "Editar" : "Cadastrar")
+                    Text(idDoCliente != nil ? "Editar" : "Cadastrar")
                         .frame(width: 200, height: 50)
                         .background(.blue)
                         .foregroundStyle(Color(.white))
@@ -174,45 +175,52 @@ struct CadastrarEditarClienteView: View {
             }
             .padding(.horizontal)
         }
-        .navigationTitle(tituloDaView)
+        .navigationTitle(idDoCliente != nil ? "Editar Cliente" : "Cadastrar Cliente")
         .task {
-            if let cliente = clienteInput {
-                clientesViewModel.cliente.id = cliente.id!
-                
-                
-                clientesViewModel.cliente.nome = cliente.nome ?? ""
-                
-                clientesViewModel.cliente.telefone = cliente.telefone ?? ""
-                
-                if let imagemSalva = cliente.foto {
-                    imagem = UIImage(data: imagemSalva)
-                }
-                
-                
-                if let medidasSalvas = cliente.medidas?.allObjects as? [MedidaEntity] {
-                    for medida in medidasSalvas {
-                        let medida = Medida(id: medida.id!, descricao: medida.descricao ?? "", valor: medida.valor)
-                        clientesViewModel.cliente.medidas?.append(medida)
-                    }
-                   
-                }
-                
-                
-             
-                
+            if idDoCliente != nil {
+                clientesViewModel.buscarClientePorId(idDoCliente: idDoCliente!)
+            } else {
+                clientesViewModel.cliente = Cliente()
             }
+//            clienteInput = clientesViewModel.buscarClientePorId(idDoCliente: idDoCliente)
+            
+//            if let cliente = clienteInput {
+//                clientesViewModel.cliente.id = cliente.id!
+//                
+//                
+//                clientesViewModel.cliente.nome = cliente.nome ?? ""
+//                
+//                clientesViewModel.cliente.telefone = cliente.telefone ?? ""
+//                
+//                if let imagemSalva = cliente.foto {
+//                    imagem = UIImage(data: imagemSalva)
+//                }
+//                
+//                
+//                if let medidasSalvas = cliente.medidas?.allObjects as? [MedidaEntity] {
+//                    for medida in medidasSalvas {
+//                        let medida = Medida(id: medida.id!, descricao: medida.descricao ?? "", valor: medida.valor)
+//                        clientesViewModel.cliente.medidas?.append(medida)
+//                    }
+//                   
+//                }
+//                
+//                
+//             
+//                
+//            }
         }
     
         .onDisappear {
-            clientesViewModel.cliente = Cliente()
+//            clientesViewModel.cliente = Cliente()
         }
         
     }
 }
 
-#Preview {
-    CadastrarEditarClienteView()
-}
+//#Preview {
+//    CadastrarEditarClienteView()
+//}
 
 extension UIImage {
     func resized(to maxWidth: CGFloat) -> UIImage? {

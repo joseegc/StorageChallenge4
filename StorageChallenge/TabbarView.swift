@@ -23,6 +23,7 @@ struct TabbarView: View {
                     Label("Clientes", systemImage: "person.3.fill")
                 }
         }
+        
     }
 }
 
