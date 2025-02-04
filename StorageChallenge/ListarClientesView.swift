@@ -56,6 +56,6 @@ struct ListarClientesView: View {
     }
 }
 
-#Preview {
-    ListarClientesView().environmentObject(ClienteViewModel())
-}
+//#Preview {
+//    ListarClientesView().environmentObject(ClienteViewModel())
+//}

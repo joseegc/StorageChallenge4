@@ -43,16 +43,16 @@ struct CadastrarEditarClienteView: View {
     
     let numberFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
-        formatter.maximumSignificantDigits = 4
+        formatter.maximumIntegerDigits = 4
         return formatter
     }()
     
     var body: some View {
         ScrollView {
             HStack {
-                Text("Informações do cliente")                    .font(.title3)
+                Text("Informações do cliente").font(.title3)
                 Spacer()
-            }
+            }.padding(.top, 50)
             
             VStack(alignment: .leading, spacing: 30) {
                 
@@ -65,7 +65,17 @@ struct CadastrarEditarClienteView: View {
                             .aspectRatio(contentMode: .fill)
                             .frame(width: 83, height: 83)
                             .clipShape(Circle())
-                            .overlay(Circle().stroke(Color.blue, lineWidth: 4))
+                            .overlay
+                        {
+                            ZStack {
+                                
+                                Circle()
+                                    .fill(Color("cinzaMedio"))
+                                    .frame(width: 31, height: 31)
+                                Image(systemName: "camera")
+                                    
+                            }.offset(x: 25, y: 25)
+                        }
                             .foregroundStyle(Color("preto"))
                         Spacer()
                     }
@@ -157,12 +167,9 @@ struct CadastrarEditarClienteView: View {
                             Rectangle()
                                 .fill(Color("cinzaEscuro"))
                                 .frame(height: 1)
-                        }
+                        }.padding(.bottom, 10)
                     }
-                    
-                    
-                    
-                     
+    
                         
                         Button(action: {
                             clientesViewModel.cliente.medidas?.append(Medida())
@@ -181,26 +188,6 @@ struct CadastrarEditarClienteView: View {
                     
                 }
                 
-                Button(action: {
-                    
-                    //guard let imagem = imagem else { return }
-                    
-                    if let imageData = self.imagem?.pngData() {
-                        clientesViewModel.cliente.foto = imageData
-                        //clientesViewModel.cliente.foto?.imagem = imageData
-                    }
-                    clientesViewModel.adicionarClienteAoBanco()
-                    clientesViewModel.buscarClientesNoBanco()
-                    
-                    presentationMode.wrappedValue.dismiss()
-                    
-                    
-                }, label: {
-                    Text(idDoCliente != nil ? "Editar" : "Cadastrar")
-                        .frame(width: 200, height: 50)
-                        .background(.blue)
-                        .foregroundStyle(Color(.white))
-                })
                 
             }
             .padding(.horizontal)
@@ -210,6 +197,7 @@ struct CadastrarEditarClienteView: View {
             
         }.padding(.horizontal, 21)
         .navigationTitle(idDoCliente != nil ? "Editar Cliente" : "Cadastrar Cliente")
+        .navigationBarTitleDisplayMode(.inline)
         .task {
             if idDoCliente != nil {
                 clientesViewModel.buscarClientePorId(idDoCliente: idDoCliente!)
@@ -220,6 +208,26 @@ struct CadastrarEditarClienteView: View {
                 clientesViewModel.cliente = Cliente()
             }
             
+        }.toolbar {
+            ToolbarItem {
+                
+                Button(action: {
+
+                    if let imageData = self.imagem?.pngData() {
+                        clientesViewModel.cliente.foto = imageData
+                        //clientesViewModel.cliente.foto?.imagem = imageData
+                    }
+                    clientesViewModel.adicionarClienteAoBanco()
+                    clientesViewModel.buscarClientesNoBanco()
+
+                    presentationMode.wrappedValue.dismiss()
+
+
+                }, label: {
+                    Text("Salvar")
+                })
+                
+            }
         }
         
     }
