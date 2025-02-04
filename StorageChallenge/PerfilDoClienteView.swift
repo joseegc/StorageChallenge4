@@ -89,6 +89,6 @@ struct PerfilDoClienteView: View {
     
 }
 
-//#Preview {
-//    perfilDoClienteView(cliente: ClienteEntity(entity: , insertInto: <#T##NSManagedObjectContext?#>))
-//}
+#Preview {
+    PerfilDoClienteView(idDoCliente: UUID() ).environmentObject(ClienteViewModel())
+}
