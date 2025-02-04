@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct ListaPedidosView: View {
-    @ObservedObject var pedidoVM = PedidoViewModel()
+    @ObservedObject var pedidosViewModel = PedidoViewModel()
     
     var body: some View {
-        List(pedidoVM.pedidos){pedido in
+        List(pedidosViewModel.pedidos){pedido in
             NavigationLink {
                 CriarPedido(pedido: pedido, cliente: pedidosTeste[0].cliente)
             } label: {
