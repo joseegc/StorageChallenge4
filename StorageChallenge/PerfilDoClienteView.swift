@@ -11,6 +11,8 @@ struct PerfilDoClienteView: View {
 //    let cliente: ClienteEntity
     let idDoCliente: UUID?
     @Environment(\.presentationMode) var presentationMode
+    @Environment(\.colorScheme) var colorScheme
+
 
     @EnvironmentObject var clientesViewModel: ClienteViewModel
     
@@ -49,6 +51,7 @@ struct PerfilDoClienteView: View {
                                             Text("\(medida.descricao)")
                                                 .font(.callout)
                                                 .fontWeight(.thin)
+
                                             
                                             Spacer()
                                             Text("\(String(format: "%.1f", medida.valor)) cm")
@@ -56,9 +59,11 @@ struct PerfilDoClienteView: View {
                                             
                                         }
                                         Divider()
-                                            .foregroundStyle(Color(.black))
                                             .padding(.vertical, 12)
                                     }
+                                    .foregroundStyle(Color(.black))
+
+
                                 }
                                 
                             }
@@ -102,18 +107,22 @@ struct PerfilDoClienteView: View {
                             .frame(height: 93)
                             .background(Color(.amarelo))
                             .clipShape(.rect(cornerRadius: 16))
+                            .foregroundStyle(Color(.black))
+
                         
                     }
                 }
               
                 Spacer()
             }
+           
         
             .padding(.horizontal, 24)
             .padding(.top, 50)
             .navigationTitle(clienteExibido.nome ?? "")
             .navigationBarTitleDisplayMode(.inline)
-            
+            .background(Color(.corDeFundo))
+            .edgesIgnoringSafeArea(.bottom)
             .toolbar {
                 ToolbarItem {
                     
