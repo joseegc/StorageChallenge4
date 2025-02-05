@@ -211,7 +211,7 @@ class CoreDataModel: ObservableObject {
         do {
             let retorno = try container.viewContext.fetch(fetchRequest)
             
-            var clienteBD = retorno.first
+            let clienteBD = retorno.first
             if clienteBD?.nome != cliente.nome {
                 clienteBD?.nome = cliente.nome
             }

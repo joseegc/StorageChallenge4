@@ -48,11 +48,6 @@ class ClienteViewModel: ObservableObject {
         buscarTodosClientes()
     }
     
-    //    func atualizarNoBanco(entidade: ClienteEntity) {
-    //        self.cliente.nome += "!"
-    //        CoreDataModel.shared.editarCliente(cliente: self.cliente, entidade: entidade)
-    //    }
-    //
     func buscarClientesNoBanco() {
         //        self.clientesSalvos = CoreDataModel.shared.buscarClientes()
         let novosClientes = CoreDataModel.shared.buscarClientes()
