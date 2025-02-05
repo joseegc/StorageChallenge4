@@ -14,7 +14,7 @@ class ClienteViewModel: ObservableObject {
     @Published var clientesSalvos: [ClienteEntity] = []
     @Published var clientes: [Cliente] = []
 
-    @Published var cliente = Cliente(id: UUID(),nome: "Antonio", pedidos: [Pedido(titulo: "Vestido", statusDaEntrega: "Completo", observacoes: "Braco gigantesco", dataDeEntrega: Date(), cliente: Cliente(nome: "Antonio"))], medidas:[Medida(descricao: "Corpo", valor: 15), Medida(descricao: "Rosto", valor: 99)])
+    @Published var cliente = Cliente(id: UUID(),nome: "Antonio", telefone: "(11) 98078-9146", pedidos: [Pedido(titulo: "Vestido", statusDaEntrega: "Completo", observacoes: "Braco gigantesco", dataDeEntrega: Date(), cliente: Cliente(nome: "Antonio"))], medidas:[Medida(descricao: "Corpo", valor: 15), Medida(descricao: "Rosto", valor: 99)])
     
     init(){
         
