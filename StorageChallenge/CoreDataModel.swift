@@ -19,7 +19,7 @@ class CoreDataModel: ObservableObject {
         container = NSPersistentContainer(name: "AppContainer")
         container.loadPersistentStores { (description, error) in
             if let error = error {
-                print("Erro ao buscar o container \(error)")
+                print("Erro ao buscar container \(error)")
             }
         }
     }
