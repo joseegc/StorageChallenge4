@@ -9,14 +9,13 @@ import SwiftUI
 
 struct PerfilDoClienteView: View {
 //    let cliente: ClienteEntity
-    let idDoCliente: UUID?
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.colorScheme) var colorScheme
 
 
     @EnvironmentObject var clientesViewModel: ClienteViewModel
     
-    @State var clienteExibido = Cliente()
+    @State var cliente: Cliente
     
     var body: some View {
             VStack(spacing: 50) {
@@ -45,7 +44,7 @@ struct PerfilDoClienteView: View {
                         
                         VStack {
                             ScrollView {
-                                ForEach(clienteExibido.medidas) { medida in
+                                ForEach(cliente.medidas) { medida in
                                     VStack(spacing: 0) {
                                         HStack {
                                             Text("\(medida.descricao)")
@@ -92,7 +91,7 @@ struct PerfilDoClienteView: View {
                     }
                     
                     //MARK: LISTA DE PEDIDOS
-                    ForEach(clienteExibido.pedidos) { pedido in
+                    ForEach(cliente.pedidos) { pedido in
                         VStack(spacing: 0) {
                             HStack {
                                 Text("\(pedido.titulo)")
@@ -119,14 +118,14 @@ struct PerfilDoClienteView: View {
         
             .padding(.horizontal, 24)
             .padding(.top, 50)
-            .navigationTitle(clienteExibido.nome ?? "")
+            .navigationTitle(cliente.nome)
             .navigationBarTitleDisplayMode(.inline)
             .background(Color(.corDeFundo))
             .edgesIgnoringSafeArea(.bottom)
             .toolbar {
                 ToolbarItem {
                     
-                    NavigationLink(destination: CadastrarEditarClienteView(idDoCliente: idDoCliente)) {
+                    NavigationLink(destination: CadastrarEditarClienteView(idDoCliente: cliente.id)) {
                         Image(systemName: "pencil.circle.fill")
                     }
                     
@@ -135,42 +134,18 @@ struct PerfilDoClienteView: View {
             
                 ToolbarItem {
                     Button(action: {
-                        clientesViewModel.deletarCliente(idDoCliente: idDoCliente!)
+                        clientesViewModel.deletarCliente(idDoCliente: cliente.id)
                         presentationMode.wrappedValue.dismiss()
 
-                             
                             }) {
                                 Image(systemName: "trash.circle.fill")
                             }
                 }
             }
-        .onAppear {
-            
-            //            if idDoCliente != nil {
-            //                clientesViewModel.buscarClientePorId(idDoCliente: idDoCliente!)
-            //                print("buscou o cliente")
-            //                print(clientesViewModel.cliente)
-            //            }
-            //            print(clientesViewModel.cliente.nome)
-            //
-            if let idDoCliente = idDoCliente {
-                clienteExibido = clientesViewModel.buscarClientePorId(idDoCliente: idDoCliente)
-           
-            } else {
-                clienteExibido = clientesViewModel.cliente
-            }
-            
-        }
-                
-
-    
-       
-        
-       
     }
     
 }
 
 #Preview {
-    PerfilDoClienteView( idDoCliente: nil).environmentObject(ClienteViewModel())
+    PerfilDoClienteView( cliente: Cliente(id: UUID(), nome: "Teste")).environmentObject(ClienteViewModel())
 }

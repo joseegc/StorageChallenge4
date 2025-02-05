@@ -7,17 +7,16 @@
 
 import SwiftUI
 
-var clientesTeset = [Cliente(nome: "Teste 0"), Cliente(nome: "Teste 1"), Cliente(nome: "Teste 2")]
-
 struct ListaDeClientes: View {
-    @State var clientes: [Cliente] = []
+    @EnvironmentObject var viewModel: ClienteViewModel
+    
     var body: some View {
-        if clientes.isEmpty {
-            Text("Não há nenhum cliente cadastrado")
-        } else{
-            VStack(spacing: 20){
-                ForEach(clientes){ cliente in
-                    NavigationLink(destination: ListarPedidosView()){
+        VStack(spacing: 20){
+            if viewModel.clientes.isEmpty {
+                Text("Não há nenhum cliente cadastrado")
+            } else{
+                ForEach(viewModel.clientes){ cliente in
+                    NavigationLink(destination: PerfilDoClienteView(cliente: cliente)){
                         HStack(spacing:10){
                             if let imageData = cliente.foto, let uiImage = UIImage(data: imageData) {
                                 Image(uiImage: uiImage)
@@ -33,40 +32,50 @@ struct ListaDeClientes: View {
                                     .frame(width: 60, height: 60)
                                     .clipShape(Circle())
                             }
-                            VStack{
+                            VStack(alignment: .leading){
                                 Text(cliente.nome)
                                     .font(.title2)
+                                
                                 if let telefone = cliente.telefone {
                                     Text(telefone).font(.title3)
                                 }
-                            }
+                            }.background(Color.blue)
                             Spacer()
                             Image(systemName: "chevron.forward")
                         }.padding(20)
                             .background(.amarelo)
                             .cornerRadius(8).foregroundColor(Color.accentColor)
-                        
-                    }.padding(.horizontal, 20)
-                }
-            }
-            Spacer()
-                .navigationTitle("Clientes")
-                .toolbar {
-                            // Botão de adicionar na parte superior direita
-                            ToolbarItem(placement: .navigationBarTrailing) {
-                                NavigationLink(destination: ListarPedidosView()) {
-                                    Image(systemName: "plus")
-                                        .fontWeight(.black)
+                            .contextMenu {
+                                Button("Deletar Cliente"){
+                                    
                                 }
                             }
-                        }
-        }
+                        
+                    }
+                }
+                Spacer()
+            }
+        }.padding(20)
+            .navigationTitle("Clientes")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    NavigationLink(destination: CadastrarEditarClienteView()) {
+                        Image(systemName: "plus")
+                            .fontWeight(.black)
+                    }
+                }
+            }
+            .onAppear{
+                viewModel.buscarClientesNoBanco()
+            }
     }
 }
 
+
 #Preview {
     NavigationStack{
-        ListaDeClientes(clientes: clientesTeset)
+        ListaDeClientes()
+            .environmentObject(ClienteViewModel())
     }
     
 }
