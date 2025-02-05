@@ -66,7 +66,7 @@ struct ListaDeClientes: View {
                 }
             }
             .onAppear{
-                viewModel.buscarClientesNoBanco()
+                viewModel.buscarTodosClientes()
             }
     }
 }

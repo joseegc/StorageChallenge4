@@ -45,7 +45,7 @@ struct PerfilDoClienteView: View {
                         
                         
                         VStack {
-                            if clienteExibido.medidas.isEmpty {
+                            if cliente.medidas.isEmpty {
                                 VStack {
                                     Spacer()
                                     Text("Sem medidas cadastradas")
@@ -57,7 +57,7 @@ struct PerfilDoClienteView: View {
                                     ScrollView {
                                         
                                        
-                                            ForEach(clienteExibido.medidas) { medida in
+                                            ForEach(cliente.medidas) { medida in
                                                 VStack(spacing: 0) {
                                                     HStack {
                                                         Text("\(medida.descricao)")
@@ -100,35 +100,35 @@ struct PerfilDoClienteView: View {
                 
                 
                 //MARK: PEDIDOS E LISTA
-                VStack(spacing: 14) {
-                    HStack {
-                        Text("Pedidos")
-                            .font(.title2)
-                            .bold()
-                        Spacer()
-                    }
-                    
-                    //MARK: LISTA DE PEDIDOS
-                    ForEach(cliente.pedidos) { pedido in
-                        VStack(spacing: 0) {
-                            HStack {
-                                Text("\(pedido.titulo)")
-                                
-                                
-                                Spacer()
-                                Image(systemName: "chevron.right")
-                            }
-                            .padding(36)
-                            
-                        }.frame(maxWidth: .infinity)
-                            .frame(height: 93)
-                            .background(Color(.amarelo))
-                            .clipShape(.rect(cornerRadius: 16))
-                            .foregroundStyle(Color(.pretoFix))
-
-                        
-                    }
-                }
+//                VStack(spacing: 14) {
+//                    HStack {
+//                        Text("Pedidos")
+//                            .font(.title2)
+//                            .bold()
+//                        Spacer()
+//                    }
+//                    
+//                    //MARK: LISTA DE PEDIDOS
+//                    ForEach(cliente.pedidos) { pedido in
+//                        VStack(spacing: 0) {
+//                            HStack {
+//                                Text("\(pedido.titulo)")
+//                                
+//                                
+//                                Spacer()
+//                                Image(systemName: "chevron.right")
+//                            }
+//                            .padding(36)
+//                            
+//                        }.frame(maxWidth: .infinity)
+//                            .frame(height: 93)
+//                            .background(Color(.amarelo))
+//                            .clipShape(.rect(cornerRadius: 16))
+//                            .foregroundStyle(Color(.pretoFix))
+//
+//                        
+//                    }
+//                }
               
                 Spacer()
             }
@@ -145,7 +145,7 @@ struct PerfilDoClienteView: View {
                                 title: Text("Excluir Cliente"),
                                 message: Text("Tem certeza de que deseja excluir este cliente? Esta ação não pode ser desfeita."),
                                 primaryButton: .destructive(Text("Excluir")) {
-                                    clientesViewModel.deletarCliente(idDoCliente: idDoCliente!)
+                                    clientesViewModel.deletarCliente(idDoCliente: cliente.id)
                                     presentationMode.wrappedValue.dismiss()
 
                                 },
@@ -187,12 +187,9 @@ struct PerfilDoClienteView: View {
             //            }
             //            print(clientesViewModel.cliente.nome)
             //
-            if let idDoCliente = idDoCliente {
-                clienteExibido = clientesViewModel.buscarClientePorId(idDoCliente: idDoCliente)
+            cliente = clientesViewModel.buscarClientePorId(idDoCliente: cliente.id)
            
-            } else {
-                clienteExibido = clientesViewModel.cliente
-            }
+          
             
         }
                 
@@ -205,8 +202,8 @@ struct PerfilDoClienteView: View {
     
 }
 
-#Preview {
-    NavigationStack {
-        PerfilDoClienteView( idDoCliente: nil).environmentObject(ClienteViewModel())
-    }
-}
+//#Preview {
+//    NavigationStack {
+//        PerfilDoClienteView( idDoCliente: nil).environmentObject(ClienteViewModel())
+//    }
+//}
