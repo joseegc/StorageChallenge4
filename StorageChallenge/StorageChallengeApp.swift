@@ -10,13 +10,16 @@ import SwiftUI
 @main
 struct StorageChallengeApp: App {
     @StateObject var clienteViewModel = ClienteViewModel()
-    @StateObject var pedidoViewModel = PedidoViewModel()
+//    @StateObject var pedidoViewModel = PedidoViewModel()
     
     var body: some Scene {
         WindowGroup {
-            TabBarView()
-                .environmentObject(clienteViewModel)
-                .environmentObject(pedidoViewModel)
+            NavigationStack{
+                ListaDeClientes()
+          }
+            .environmentObject(clienteViewModel)
+
+//                .environmentObject(pedidoViewModel)
 
         }
     }

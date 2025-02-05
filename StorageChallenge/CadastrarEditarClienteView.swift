@@ -183,9 +183,9 @@ struct CadastrarEditarClienteView: View {
 
                     }
                 }
-                else {
-                    clientesViewModel.cliente = Cliente()
-                }
+//                else {
+//                    clientesViewModel.cliente = Cliente()
+//                }
             }
             .toolbar {
                 ToolbarItem {
