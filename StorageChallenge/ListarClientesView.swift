@@ -17,7 +17,7 @@ struct ListarClientesView: View {
                 VStack {
                    
                     ForEach(clientesViewModel.clientes) { cliente in
-                        NavigationLink(destination: PerfilDoClienteView(idDoCliente: cliente.id)) {
+                        NavigationLink(destination: PerfilDoClienteView(cliente: cliente)) {
                             Text(cliente.nome ?? "Sem nome")
                         }
                     }

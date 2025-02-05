@@ -9,14 +9,13 @@ import SwiftUI
 
 struct PerfilDoClienteView: View {
 //    let cliente: ClienteEntity
-    let idDoCliente: UUID?
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.colorScheme) var colorScheme
 
 
     @EnvironmentObject var clientesViewModel: ClienteViewModel
     
-    @State var clienteExibido = Cliente()
+    @State var cliente: Cliente
     
     @State var mostrarAlertaDeExcluir = false
     
@@ -110,7 +109,7 @@ struct PerfilDoClienteView: View {
                     }
                     
                     //MARK: LISTA DE PEDIDOS
-                    ForEach(clienteExibido.pedidos) { pedido in
+                    ForEach(cliente.pedidos) { pedido in
                         VStack(spacing: 0) {
                             HStack {
                                 Text("\(pedido.titulo)")
@@ -137,7 +136,7 @@ struct PerfilDoClienteView: View {
         
             .padding(.horizontal, 24)
             .padding(.top, 50)
-            .navigationTitle(clienteExibido.nome ?? "")
+            .navigationTitle(cliente.nome)
             .navigationBarTitleDisplayMode(.inline)
             .background(Color(.corDeFundo))
             .edgesIgnoringSafeArea(.bottom)
@@ -156,7 +155,7 @@ struct PerfilDoClienteView: View {
             .toolbar {
                 ToolbarItem {
                     
-                    NavigationLink(destination: CadastrarEditarClienteView(idDoCliente: idDoCliente)) {
+                    NavigationLink(destination: CadastrarEditarClienteView(idDoCliente: cliente.id)) {
                         Image(systemName: "pencil.circle.fill")
                     }
                     

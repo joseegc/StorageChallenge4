@@ -14,14 +14,16 @@ struct TabBarView: View {
     var body: some View {
         TabView {
             // Pedidos
-            ListarPedidosView()
-                .tabItem {
-                    Label("Pedidos", systemImage: "calendar")
+            NavigationStack{
+                ListarPedidosView()
+            }.tabItem {
+                Label("Pedidos", systemImage: "calendar")
                 }
             
             // Clientes
-            ListarClientesView()
-                .tabItem {
+            NavigationStack{
+                ListaDeClientes()
+            }.tabItem {
                     Label("Clientes", systemImage: "person.3.fill")
                 }
         }.accentColor(colorScheme == .dark ? Color.white : Color.black)
