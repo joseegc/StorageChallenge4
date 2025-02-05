@@ -31,12 +31,15 @@ struct ListarClientesView: View {
 
                 }
             }
+            
             .task {
                 clientesViewModel.buscarTodosClientes()
                 clientesViewModel.buscarClientesNoBanco()
             }
+            
             .padding(.horizontal)
             .navigationTitle("Clientes")
+            
             .toolbar {
                 ToolbarItem {
                     NavigationLink(destination: CadastrarEditarClienteView()){
