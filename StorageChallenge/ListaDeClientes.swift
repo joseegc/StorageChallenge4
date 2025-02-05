@@ -57,6 +57,8 @@ struct ListaDeClientes: View {
             }
         }.padding(20)
             .navigationTitle("Clientes")
+            .background(Color(.corDeFundo))
+            .edgesIgnoringSafeArea(.bottom)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     NavigationLink(destination: CadastrarEditarClienteView()) {

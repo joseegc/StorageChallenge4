@@ -192,6 +192,7 @@ struct CadastrarEditarClienteView: View {
 //                    clientesViewModel.cliente = Cliente()
 //                }
             }
+            
             .toolbar {
                 ToolbarItem {
                     Button(action: {
@@ -221,11 +222,13 @@ struct CadastrarEditarClienteView: View {
                         clientesViewModel.buscarClientesNoBanco()
                         presentationMode.wrappedValue.dismiss()
                     }) {
-                        Text(idDoCliente != nil ? "Editar" : "Salvar")
+                        Text("Salvar")
                     }
                 }
             }
         }.padding(.top, 50)
+            .background(Color(.corDeFundo))
+            .edgesIgnoringSafeArea(.bottom)
     }
 }
 

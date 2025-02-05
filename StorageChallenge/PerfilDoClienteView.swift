@@ -156,7 +156,7 @@ struct PerfilDoClienteView: View {
                 ToolbarItem {
                     
                     NavigationLink(destination: CadastrarEditarClienteView(idDoCliente: cliente.id)) {
-                        Image(systemName: "pencil.circle.fill")
+                        Image(systemName: "pencil")
                     }
                     
                 }
@@ -169,7 +169,7 @@ struct PerfilDoClienteView: View {
                         mostrarAlertaDeExcluir.toggle()
                     } 
                 label: {
-                        Image(systemName: "trash.circle.fill")
+                        Image(systemName: "trash.fill")
                         .padding(.leading, -5)
 
                     }
