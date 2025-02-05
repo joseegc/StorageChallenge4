@@ -29,7 +29,6 @@ class ClienteViewModel: ObservableObject {
     
     func adicionarClienteAoBanco() {
         print(self.cliente)
-        
         do {
             try CoreDataModel.shared.salvarCliente(cliente: self.cliente)
         } catch {

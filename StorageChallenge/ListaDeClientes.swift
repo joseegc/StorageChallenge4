@@ -39,7 +39,7 @@ struct ListaDeClientes: View {
                                 if let telefone = cliente.telefone {
                                     Text(telefone).font(.title3)
                                 }
-                            }.background(Color.blue)
+                            }
                             Spacer()
                             Image(systemName: "chevron.forward")
                         }.padding(20)
