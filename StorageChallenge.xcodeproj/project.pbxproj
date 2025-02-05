@@ -14,6 +14,7 @@
 		8B504FAB2D51355D00019D23 /* BancoDeDados.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B504FAA2D51355D00019D23 /* BancoDeDados.swift */; };
 		8B504FAD2D5135AE00019D23 /* CoreDataImplementacao.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B504FAC2D5135AE00019D23 /* CoreDataImplementacao.swift */; };
 		8B504FAF2D5135C300019D23 /* SwiftDataImplementacao.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B504FAE2D5135C300019D23 /* SwiftDataImplementacao.swift */; };
+		8B6633092D53D58B00A6E5CC /* ListaDeClientes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6633082D53D58B00A6E5CC /* ListaDeClientes.swift */; };
 		8B73953D2D4D46A000FAC6D2 /* TabbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B73953C2D4D46A000FAC6D2 /* TabbarView.swift */; };
 		8B73953F2D4D4A6300FAC6D2 /* ListarPedidosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B73953E2D4D4A6300FAC6D2 /* ListarPedidosView.swift */; };
 		8B7395412D4D529F00FAC6D2 /* PedidoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B7395402D4D529F00FAC6D2 /* PedidoViewModel.swift */; };
@@ -41,6 +42,7 @@
 		8B504FAA2D51355D00019D23 /* BancoDeDados.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BancoDeDados.swift; sourceTree = "<group>"; };
 		8B504FAC2D5135AE00019D23 /* CoreDataImplementacao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataImplementacao.swift; sourceTree = "<group>"; };
 		8B504FAE2D5135C300019D23 /* SwiftDataImplementacao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDataImplementacao.swift; sourceTree = "<group>"; };
+		8B6633082D53D58B00A6E5CC /* ListaDeClientes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListaDeClientes.swift; sourceTree = "<group>"; };
 		8B73953C2D4D46A000FAC6D2 /* TabbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarView.swift; sourceTree = "<group>"; };
 		8B73953E2D4D4A6300FAC6D2 /* ListarPedidosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListarPedidosView.swift; sourceTree = "<group>"; };
 		8B7395402D4D529F00FAC6D2 /* PedidoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PedidoViewModel.swift; sourceTree = "<group>"; };
@@ -106,6 +108,7 @@
 				8B73953E2D4D4A6300FAC6D2 /* ListarPedidosView.swift */,
 				9FCD73A52D52AF1B00A5FC53 /* CadastrarEditarPedidoView.swift */,
 				9F60AE8E2D52B46A00F09776 /* SelecionarClienteView.swift */,
+				8B6633082D53D58B00A6E5CC /* ListaDeClientes.swift */,
 				8B7395422D4D584400FAC6D2 /* CriarPedido.swift */,
 				8B7395402D4D529F00FAC6D2 /* PedidoViewModel.swift */,
 				9F8C24862D4C0DBD0046FB2E /* ListarClientesView.swift */,
@@ -207,6 +210,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B6633092D53D58B00A6E5CC /* ListaDeClientes.swift in Sources */,
 				9F5E214A2D4BFB1500B2F7F2 /* CoreDataModel.swift in Sources */,
 				8B504FAF2D5135C300019D23 /* SwiftDataImplementacao.swift in Sources */,
 				8B7395412D4D529F00FAC6D2 /* PedidoViewModel.swift in Sources */,
