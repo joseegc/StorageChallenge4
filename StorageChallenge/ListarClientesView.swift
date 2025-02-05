@@ -17,20 +17,18 @@ struct ListarClientesView: View {
                 VStack {
                    
                     ForEach(clientesViewModel.clientes) { cliente in
-                        
                         NavigationLink(destination: PerfilDoClienteView(idDoCliente: cliente.id)) {
                             Text(cliente.nome ?? "Sem nome")
-                               
-                        }.onAppear {
-                            if cliente.nome == "A" {
-                                print("IMPRIMINDO A ENTIDADE NO FOREACH")
-                                print(cliente)
-                            }
                         }
-
-                        
                     }
-                    
+                    .onDelete { indices in
+                        // Aqui você usa o índice para acessar o cliente correto
+                        for index in indices {
+                            let cliente = clientesViewModel.clientes[index]
+                            clientesViewModel.deletarCliente(idDoCliente: cliente.id)
+                        }
+                    }
+
                 }
             }
             .task {

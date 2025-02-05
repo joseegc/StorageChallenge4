@@ -16,7 +16,7 @@ struct CadastrarEditarPedidoView: View {
     
     let numberFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
-        formatter.maximumSignificantDigits = 4
+        formatter.maximumIntegerDigits = 4
         return formatter
     }()
     
