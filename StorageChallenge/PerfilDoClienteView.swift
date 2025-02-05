@@ -18,6 +18,8 @@ struct PerfilDoClienteView: View {
     
     @State var clienteExibido = Cliente()
     
+    @State var mostrarAlertaDeExcluir = false
+    
     var body: some View {
             VStack(spacing: 50) {
                
@@ -44,32 +46,48 @@ struct PerfilDoClienteView: View {
                         
                         
                         VStack {
-                            ScrollView {
-                                ForEach(clienteExibido.medidas) { medida in
-                                    VStack(spacing: 0) {
-                                        HStack {
-                                            Text("\(medida.descricao)")
-                                                .font(.callout)
-                                                .fontWeight(.thin)
-
-                                            
-                                            Spacer()
-                                            Text("\(String(format: "%.1f", medida.valor)) cm")
-                                                .fontWeight(.thin)
+                            if clienteExibido.medidas.isEmpty {
+                                VStack {
+                                    Spacer()
+                                    Text("Sem medidas cadastradas")
+                                        .foregroundStyle(Color.pretoFix)
+                                    
+                                    Spacer()
+                                }
+                            }else {
+                                    ScrollView {
+                                        
+                                       
+                                            ForEach(clienteExibido.medidas) { medida in
+                                                VStack(spacing: 0) {
+                                                    HStack {
+                                                        Text("\(medida.descricao)")
+                                                            .frame(width: 100, alignment: .leading)  // Define uma largura fixa e alinha o texto à esquerda
+                                                            .lineLimit(1)       // Limita a uma linha
+                                                            .truncationMode(.tail) // Adiciona reticências no final do texto
+                                                            .multilineTextAlignment(.leading)  // Alinha o texto à esquerda
+                                                            .font(.callout)
+                                                            .fontWeight(.thin)
+                                                        
+                                                        
+                                                        Spacer()
+                                                        Text("\(String(format: "%.1f", medida.valor)) cm")
+                                                            .fontWeight(.thin)
+                                                        
+                                                    }
+                                                    Divider()
+                                                        .padding(.vertical, 12)
+                                                }
+                                                .foregroundStyle(Color(.pretoFix))
+                                                
+                                                
                                             
                                         }
-                                        Divider()
-                                            .padding(.vertical, 12)
+                                        
                                     }
-                                    .foregroundStyle(Color(.black))
-
-
+                                    .padding(24)
+                                    .scrollIndicators(.visible) // Garante que a barra de rolagem seja visível
                                 }
-                                
-                            }
-                            .padding(24)
-                            .scrollIndicators(.visible) // Garante que a barra de rolagem seja visível
-                            
                             
                         }.frame(maxWidth: .infinity, maxHeight: .infinity)
                             .background(Color(.amarelo))
@@ -107,7 +125,7 @@ struct PerfilDoClienteView: View {
                             .frame(height: 93)
                             .background(Color(.amarelo))
                             .clipShape(.rect(cornerRadius: 16))
-                            .foregroundStyle(Color(.black))
+                            .foregroundStyle(Color(.pretoFix))
 
                         
                     }
@@ -123,6 +141,18 @@ struct PerfilDoClienteView: View {
             .navigationBarTitleDisplayMode(.inline)
             .background(Color(.corDeFundo))
             .edgesIgnoringSafeArea(.bottom)
+            .alert(isPresented: $mostrarAlertaDeExcluir) {
+                            Alert(
+                                title: Text("Excluir Cliente"),
+                                message: Text("Tem certeza de que deseja excluir este cliente? Esta ação não pode ser desfeita."),
+                                primaryButton: .destructive(Text("Excluir")) {
+                                    clientesViewModel.deletarCliente(idDoCliente: idDoCliente!)
+                                    presentationMode.wrappedValue.dismiss()
+
+                                },
+                                secondaryButton: .cancel()
+                            )
+                        }
             .toolbar {
                 ToolbarItem {
                     
@@ -134,14 +164,19 @@ struct PerfilDoClienteView: View {
                 
             
                 ToolbarItem {
-                    Button(action: {
-                        clientesViewModel.deletarCliente(idDoCliente: idDoCliente!)
-                        presentationMode.wrappedValue.dismiss()
+                    
+                    
+                    Button {
+                        mostrarAlertaDeExcluir.toggle()
+                    } 
+                label: {
+                        Image(systemName: "trash.circle.fill")
+                        .padding(.leading, -5)
 
-                             
-                            }) {
-                                Image(systemName: "trash.circle.fill")
-                            }
+                    }
+                    
+
+                    
                 }
             }
         .onAppear {
@@ -172,5 +207,7 @@ struct PerfilDoClienteView: View {
 }
 
 #Preview {
-    PerfilDoClienteView( idDoCliente: nil).environmentObject(ClienteViewModel())
+    NavigationStack {
+        PerfilDoClienteView( idDoCliente: nil).environmentObject(ClienteViewModel())
+    }
 }

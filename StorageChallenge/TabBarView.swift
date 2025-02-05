@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct TabBarView: View {
+    @Environment(\.colorScheme) var colorScheme
+
     
     var body: some View {
         TabView {
@@ -22,7 +24,8 @@ struct TabBarView: View {
                 .tabItem {
                     Label("Clientes", systemImage: "person.3.fill")
                 }
-        }
+        }.accentColor(colorScheme == .dark ? Color.white : Color.black)
+        
         
     }
 }
