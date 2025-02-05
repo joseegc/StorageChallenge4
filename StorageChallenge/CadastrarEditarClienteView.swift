@@ -20,6 +20,7 @@ import PhotosUI
 struct CadastrarEditarClienteView: View {
     @EnvironmentObject var clientesViewModel: ClienteViewModel
     @Environment(\.presentationMode) var presentationMode
+    @Environment(\.colorScheme) var colorScheme
 
     @State private var imagem: UIImage?
     @State var photosPickerItem: PhotosPickerItem?
@@ -40,6 +41,7 @@ struct CadastrarEditarClienteView: View {
 
     let numberFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
         formatter.maximumIntegerDigits = 4
         return formatter
     }()
@@ -47,43 +49,43 @@ struct CadastrarEditarClienteView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 30) {
-                PhotosPicker(selection: $photosPickerItem, matching: .images) {
-                    HStack() {
-                        Spacer()
-                        fotoExibida
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: 83, height: 83)
-                            .clipShape(Circle())
-                            .overlay {
-                                ZStack {
-                                    Circle()
-                                        .fill(Color("cinzaMedio"))
-                                        .frame(width: 31, height: 31)
-                                    Image(systemName: "camera")
-                                }.offset(x: 25, y: 25)
-                            }
-                            .foregroundStyle(Color("preto"))
-                        Spacer()
-                    }
-                }
-                .onChange(of: photosPickerItem) { _, _ in
-                    Task {
-                        if let photosPickerItem, let data = try? await photosPickerItem.loadTransferable(type: Data.self) {
-                            if let image = UIImage(data: data) {
-                                DispatchQueue.main.async {
-                                    self.imagem = image
+                HStack {
+                    Spacer()
+                    PhotosPicker(selection: $photosPickerItem, matching: .images) {
+                            fotoExibida
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 83, height: 83)
+                                .clipShape(Circle())
+                                .overlay {
+                                    ZStack {
+                                        Circle()
+                                            .fill(Color(colorScheme == .dark ? Color("cinzaMedio"): Color("cinzaClaro")))
+                                            .frame(width: 31, height: 31)
+                                        Image(systemName: "camera").foregroundStyle(Color("pretoFixo"))
+                                    }.offset(x: 25, y: 25)
                                 }
+                                .foregroundStyle(Color(colorScheme == .dark ? Color("cinzaClaro"): Color("cinzaEscuro")))
+                    }.frame(width: 50, height: 50).padding(.top, 80)
+                        .onChange(of: photosPickerItem) { _, _ in
+                            Task {
+                                if let photosPickerItem, let data = try? await photosPickerItem.loadTransferable(type: Data.self) {
+                                    if let image = UIImage(data: data) {
+                                        DispatchQueue.main.async {
+                                            self.imagem = image
+                                        }
+                                    }
+                                }
+                                photosPickerItem = nil
                             }
                         }
-                        photosPickerItem = nil
-                    }
+                    Spacer()
                 }
                 
                 VStack(alignment: .leading, spacing: 5) {
                     TextField("Nome", text: $clienteInput.nome)
                     Rectangle().fill(Color("cinzaEscuro")).frame(height: 1)
-                }
+                }.padding(.horizontal)
                 
                 VStack(alignment: .leading, spacing: 5) {
                     TextField("Telefone", text: Binding(
@@ -92,13 +94,13 @@ struct CadastrarEditarClienteView: View {
                     ))
                     .keyboardType(.decimalPad)
                     Rectangle().fill(Color("cinzaEscuro")).frame(height: 1)
-                }
+                }.padding(.horizontal)
                 
                 
                 VStack(alignment: .center) {
                     HStack {
                         Spacer()
-                        Text("Medidas do Cliente").foregroundStyle(Color("cinzaEscuro"))
+                        Text("Medidas do Cliente").foregroundColor(colorScheme == .dark ? Color("amarelo") : Color("pretoFixo"))
                         Spacer()
                     }
                 
@@ -127,6 +129,7 @@ struct CadastrarEditarClienteView: View {
                                     
                                     TextField("Valor", value: $medida.valor, formatter: numberFormatter)
                                         .frame(width: 45)
+                                        .keyboardType(.decimalPad)
                                     
                                     
                                     
@@ -149,23 +152,25 @@ struct CadastrarEditarClienteView: View {
                         HStack(spacing: 4) {
                             Image(systemName: "plus.circle.fill")
                                 .font(.system(size: 20))
-                                .foregroundStyle(Color("preto"))
+                                .foregroundColor(colorScheme == .dark ? Color("amarelo"): Color("pretoFixo"))
                             Text("Adicionar Medida")
                                 .font(.system(size: 13))
-                                .foregroundStyle(Color("preto"))
+                                .foregroundColor(colorScheme == .dark ? Color("amarelo"): Color("pretoFixo"))
                         }
                         .padding(EdgeInsets(top: 5, leading: 7, bottom: 5, trailing: 7))
                     }
-                    .background(Color(.white))
+                    .background().foregroundColor(colorScheme == .dark ? Color("pretoFixo"): Color("cinzaMedio"))
                     .cornerRadius(20)
                 }
                 .padding(.horizontal)
                 .padding(.vertical, 53)
-                .background(Color("cinzaClaro"))
+                
                 .cornerRadius(20)
             }
+            .background(Color(colorScheme == .dark ? Color("pretoFixo"): Color("cinzaClaro")))
+            .cornerRadius(20)
             .padding(.horizontal, 21)
-            .navigationTitle(idDoCliente != nil ? "Editar Teste Cliente" : "Cadastrar Teste Cliente")
+            .navigationTitle(idDoCliente != nil ? "Editar Cliente" : "Cadastrar Cliente")
             .navigationBarTitleDisplayMode(.inline)
             .task {
                 if idDoCliente != nil {
@@ -220,7 +225,7 @@ struct CadastrarEditarClienteView: View {
                     }
                 }
             }
-        }
+        }.padding(.top, 50)
     }
 }
 

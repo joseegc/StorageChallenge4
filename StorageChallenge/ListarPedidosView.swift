@@ -52,6 +52,6 @@ struct ListarPedidosView: View {
 
 #Preview {
     NavigationStack{
-        ListarPedidosView()
+       //ListarPedidosView()
     }
 }
