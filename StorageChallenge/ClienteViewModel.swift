@@ -12,20 +12,41 @@ import SwiftUI
 
 class ClienteViewModel: ObservableObject {
     @Published var clientesSalvos: [ClienteEntity] = []
+    @Published var clientes: [Cliente] = []
 
     @Published var cliente = Cliente(id: UUID(),nome: "Antonio", pedidos: [Pedido(titulo: "Vestido", statusDaEntrega: "Completo", observacoes: "Braco gigantesco", dataDeEntrega: Date(), cliente: Cliente(nome: "Antonio"))], medidas:[Medida(descricao: "Corpo", valor: 15), Medida(descricao: "Rosto", valor: 99)])
     
     init(){
         
+        do {
+            try self.clientes = CoreDataModel.shared.buscarTodosClientes()
+        } catch {
+            print("erro ao salvar")
+        }
         buscarClientesNoBanco()
     }
     
     
     func adicionarClienteAoBanco() {
         print(self.cliente)
-        CoreDataModel.shared.adicionarCliente(cliente: self.cliente)
-        
+        print("OOOIIII")
+        do {
+            try CoreDataModel.shared.salvarCliente(cliente: self.cliente)
+        } catch {
+            print("erro ao salvar")
+        }
         buscarClientesNoBanco()
+        buscarTodosClientes()
+    }
+    
+    func editarCliente() {
+        do {
+            try CoreDataModel.shared.editarCliente(cliente: self.cliente)
+        } catch {
+            print("erro ao salvar")
+        }
+        buscarClientesNoBanco()
+        buscarTodosClientes()
     }
     
     //    func atualizarNoBanco(entidade: ClienteEntity) {
@@ -40,24 +61,34 @@ class ClienteViewModel: ObservableObject {
         
     }
     
-    func buscarClientePorId(idDoCliente: UUID) {
+    func buscarTodosClientes() {
+        
+        do {
+                self.clientes = try CoreDataModel.shared.buscarTodosClientes()
+            
+        } catch {
+            print("erro ao buscar")
+        }
+    }
+    func buscarClientePorId(idDoCliente: UUID) -> Cliente {
+        var cliente = Cliente()
         if let clienteBuscado = CoreDataModel.shared.buscarClientePorId(idDoCliente: idDoCliente) {
-            self.cliente.id = clienteBuscado.id!
+            cliente.id = clienteBuscado.id!
             
             
-            self.cliente.nome = clienteBuscado.nome ?? ""
+            cliente.nome = clienteBuscado.nome ?? ""
             
-            self.cliente.telefone = clienteBuscado.telefone ?? ""
+            cliente.telefone = clienteBuscado.telefone ?? ""
             
             if let imagemSalva = clienteBuscado.foto {
-                self.cliente.foto = imagemSalva
+                cliente.foto = imagemSalva
             }
             
             
             if let medidasSalvas = clienteBuscado.medidas?.allObjects as? [MedidaEntity] {
                 for medida in medidasSalvas {
                     let medida = Medida(id: medida.id!, descricao: medida.descricao ?? "", valor: medida.valor)
-                    self.cliente.medidas?.append(medida)
+                    cliente.medidas.append(medida)
                 }
                 
             }
@@ -70,9 +101,11 @@ class ClienteViewModel: ObservableObject {
             //
             //            }
         }
+        return cliente
     }
     
     func deletarCliente(idDoCliente: UUID) {
+        print("deletando cliente de id \(idDoCliente)")
         CoreDataModel.shared.deletarCliente(idDoCliente: idDoCliente)
         buscarClientesNoBanco()
     }

@@ -77,17 +77,17 @@ class CoreDataModel: ObservableObject {
         clienteEntity.id = cliente.id
         clienteEntity.nome = cliente.nome
         clienteEntity.telefone = cliente.telefone
-    
+        
         //Vai usar em medidas mesma ideia
         
-//        if clienteEntity.foto == nil {
-//            clienteEntity.foto = FotoEntity(context: CoreDataModel.shared.container.viewContext)
-//        }
-//        
-//        if let clienteFoto = cliente.foto {
-//            clienteEntity.foto?.imagem = clienteFoto.imagem
-//            clienteEntity.foto?.cliente = clienteEntity
-//        }
+        //        if clienteEntity.foto == nil {
+        //            clienteEntity.foto = FotoEntity(context: CoreDataModel.shared.container.viewContext)
+        //        }
+        //        
+        //        if let clienteFoto = cliente.foto {
+        //            clienteEntity.foto?.imagem = clienteFoto.imagem
+        //            clienteEntity.foto?.cliente = clienteEntity
+        //        }
         
         clienteEntity.foto = cliente.foto
         
@@ -95,8 +95,7 @@ class CoreDataModel: ObservableObject {
         if cliente.medidas != nil {
             for medida in cliente.medidas ?? [] {
                 
-                print("AAVWWEFBWEBGRTR")
-                print(cliente.medidas?.count)
+                
                 var medidaEntity = verificarSeMedidaExiste(medida: medida)
                 
                 if medidaEntity == nil {
@@ -107,16 +106,16 @@ class CoreDataModel: ObservableObject {
                 print(medidaEntity?.descricao)
                 print(medida.descricao)
                 medidaEntity?.descricao = medida.descricao
-                    medidaEntity?.valor = medida.valor
+                medidaEntity?.valor = medida.valor
                 print("editoou")
                 print(medidaEntity?.descricao)
-                }
             }
         }
-        //        if let pedidos = cliente.pedidos {
-        //            clienteEntity.pedidos = NSSet(array: pedidos)
-        //        }
-        
+    }
+    //        if let pedidos = cliente.pedidos {
+    //            clienteEntity.pedidos = NSSet(array: pedidos)
+    //        }
+    
     
     
     func verificarSeMedidaExiste(medida: Medida) -> MedidaEntity? {
@@ -128,18 +127,18 @@ class CoreDataModel: ObservableObject {
             let medidasExistentes = try container.viewContext.fetch(fetchRequest)
             
             if let medidaExistente = medidasExistentes.first {
-               print("A MEDIDA EXISTE")
+                print("A MEDIDA EXISTE")
                 return medidaExistente
             } else {
                 print("A MEDIDA NAO EXISTE")
-               return nil
+                return nil
             }
         } catch {
             print("Erro ao buscar cliente no Core Data: \(error)")
         }
         return nil
     }
-
+    
     
     func adicionarCliente(cliente: Cliente) {
         // Buscar cliente existente no Core Data pelo ID (convertendo UUID para String)
@@ -166,6 +165,154 @@ class CoreDataModel: ObservableObject {
         }
     }
     
+    func salvarCliente(cliente: Cliente) throws {
+        let novoCliente = ClienteEntity(context: container.viewContext)
+        novoCliente.id = cliente.id
+        novoCliente.nome = cliente.nome
+        novoCliente.telefone = cliente.telefone
+        novoCliente.foto = cliente.foto
+        try container.viewContext.save()
+
+        for medida in cliente.medidas  {
+            try salvarMedidaAoCliente(medida: medida, cliente: cliente)
+            print("salvou a medida \(medida.descricao)")
+        }
+        
+        print("O CLIENTE SALVO É")
+        print(novoCliente)
+    }
+    
+    func salvarMedidaAoCliente(medida: Medida, cliente: Cliente) throws{
+        let novaMedida = MedidaEntity(context: container.viewContext)
+        novaMedida.id = medida.id
+        novaMedida.descricao = medida.descricao
+        novaMedida.valor = medida.valor
+        
+        let fetchRequest: NSFetchRequest<ClienteEntity> = ClienteEntity.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", cliente.id.uuidString)
+        
+        do {
+               let retorno = try container.viewContext.fetch(fetchRequest)
+               if let clienteBD = retorno.first {
+                   novaMedida.cliente = clienteBD
+                   print("Associação da medida \(medida.id) com o cliente \(cliente.id) feita com sucesso.")
+               } else {
+                   print("Cliente não encontrado no Core Data para associar a medida.")
+               }
+               try container.viewContext.save()
+           } catch {
+               print("Erro ao salvar medida do cliente no Core Data: \(error)")
+           }
+    }
+    
+    func editarCliente(cliente: Cliente) throws{
+        let fetchRequest: NSFetchRequest<ClienteEntity> = ClienteEntity.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", cliente.id.uuidString)
+        do {
+            let retorno = try container.viewContext.fetch(fetchRequest)
+            
+            var clienteBD = retorno.first
+            if clienteBD?.nome != cliente.nome {
+                clienteBD?.nome = cliente.nome
+            }
+            
+            if clienteBD?.telefone != cliente.telefone {
+                clienteBD?.telefone = cliente.telefone
+            }
+            
+            if clienteBD?.foto != cliente.foto {
+                clienteBD?.foto = cliente.foto
+            }
+            
+            for medida in cliente.medidas{
+                try editarMedidaDoCliente(medida: medida, cliente: cliente)
+            }
+            
+            try container.viewContext.save()
+            
+        } catch {
+            print("Erro ao editar cliente no Core Data: \(error)")
+        }
+        
+    }
+    
+    func editarMedidaDoCliente(medida: Medida, cliente: Cliente) throws{
+        let fetchRequestMedida: NSFetchRequest<MedidaEntity> = MedidaEntity.fetchRequest()
+        fetchRequestMedida.predicate = NSPredicate(format: "id == %@", medida.id.uuidString)
+        do{
+            let retornoMedida = try container.viewContext.fetch(fetchRequestMedida)
+            var medidaBD = retornoMedida.first
+            if medidaBD == nil {
+                try salvarMedidaAoCliente(medida: medida, cliente: cliente)
+                
+            } else {
+                if medidaBD?.descricao != medida.descricao {
+                    medidaBD?.descricao = medida.descricao
+                }
+                if medidaBD?.valor != medida.valor {
+                    medidaBD?.valor = medida.valor
+                }
+                try container.viewContext.save()
+            }
+        } catch {
+            print("Erro ao editar medida no Core Data: \(error)")
+        }
+    }
+    
+    func buscarTodosClientes() throws -> [Cliente] {
+        let requisicao = NSFetchRequest<ClienteEntity>(entityName: "ClienteEntity")
+        do {
+            let resposta = try container.viewContext.fetch(requisicao)
+            var clientes: [Cliente] = []
+            if !resposta.isEmpty {
+                for clienteBD in resposta{
+                    var cliente = Cliente(
+                        id: clienteBD.id!,
+                        nome: clienteBD.nome!,
+                        telefone: clienteBD.telefone,
+                        foto: clienteBD.foto
+                    )
+                    if clienteBD.medidas != nil{
+                        let medidasDoCliente = try buscarTodasMedidasDoCliente(cliente: clienteBD)
+                        cliente.medidas = medidasDoCliente
+                    }
+                    
+//                    if clienteBD.pedidos != nil{
+//                        let pedidosDoCliente = try buscarTodosPedidosDoCliente(idDoCliente: clienteBD.id!)
+//                        cliente.pedidos = pedidosDoCliente
+//                    }
+                    clientes.append(cliente)
+                }
+            }
+            return clientes
+        } catch let error {
+            print("erro ao buscar clientes \(error)")
+        }
+        return []
+    }
+    
+    func buscarTodasMedidasDoCliente(cliente: ClienteEntity) throws -> [Medida] {
+        let fetchRequest: NSFetchRequest<MedidaEntity> = MedidaEntity.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "cliente == %@", cliente)
+        do{
+            let retorno = try container.viewContext.fetch(fetchRequest)
+            var medidas: [Medida] = []
+            
+            if (!retorno.isEmpty){
+                for medidaBD in retorno{
+                    let medida = Medida(id: medidaBD.id!, descricao: medidaBD.descricao!, valor: medidaBD.valor)
+                    medidas.append(medida)
+                }
+            }
+            return medidas
+        } catch let error {
+            print("erro ao buscar medidas do cliente \(error)")
+        }
+        return []
+    }
+
+    
+    
     
     func buscarClientePorId(idDoCliente: UUID) -> ClienteEntity? {
         // Buscar cliente existente no Core Data pelo ID (convertendo UUID para String)
@@ -176,11 +323,11 @@ class CoreDataModel: ObservableObject {
             let clientesExistentes = try container.viewContext.fetch(fetchRequest)
             
             if let clienteExistente = clientesExistentes.first {
-               print("O CLIENTE EXISTE")
+                print("O CLIENTE EXISTE")
                 return clienteExistente
             } else {
                 print("O CLIENTE NAO EXISTE")
-               return nil
+                return nil
             }
         } catch {
             print("Erro ao buscar cliente no Core Data: \(error)")
@@ -188,7 +335,7 @@ class CoreDataModel: ObservableObject {
         return nil
     }
     
- 
+    
     func deletarCliente(idDoCliente: UUID) {
         let fetchRequest: NSFetchRequest<ClienteEntity> = ClienteEntity.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id == %@", idDoCliente.uuidString)

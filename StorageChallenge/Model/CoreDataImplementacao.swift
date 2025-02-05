@@ -8,6 +8,14 @@
 import CoreData
 
 class CoreDataImplementacao: BancoDeDados {
+    func buscarTodosPedidos() throws -> [Pedido] {
+        return [Pedido()]
+    }
+    
+    func buscarTodasReferencias(idDoPedido: UUID) throws -> [Foto?] {
+        return  [Foto(imagem: Data())]
+    }
+    
     
     let container: NSPersistentContainer
     
@@ -75,6 +83,8 @@ class CoreDataImplementacao: BancoDeDados {
             print("Erro ao salvar medida do cliente no Core Data: \(error)")
         }
     }
+    
+    
     
     
     func salvarMedidaAoPedido(medida: Medida, pedido: Pedido) throws {
@@ -284,7 +294,7 @@ class CoreDataImplementacao: BancoDeDados {
         
     }
     
-    func buscarTodosClientes() throws -> [Cliente?] {
+    func buscarTodosClientes() throws -> [Cliente] {
         let requisicao = NSFetchRequest<ClienteEntity>(entityName: "ClienteEntity")
         do {
             let resposta = try container.viewContext.fetch(requisicao)
@@ -313,6 +323,7 @@ class CoreDataImplementacao: BancoDeDados {
         } catch let error {
             print("erro ao buscar clientes \(error)")
         }
+        return []
     }
     
     func buscarTodasMedidasDoCliente(cliente: ClienteEntity) throws -> [Medida] {
@@ -332,6 +343,7 @@ class CoreDataImplementacao: BancoDeDados {
         } catch let error {
             print("erro ao buscar medidas do cliente \(error)")
         }
+        return []
     }
     
     func buscarTodasMedidasDoPedido(pedido: PedidoEntity) throws -> [Medida] {
@@ -351,9 +363,10 @@ class CoreDataImplementacao: BancoDeDados {
         } catch let error {
             print("erro ao buscar medidas do cliente \(error)")
         }
+        return []
     }
     
-    func buscarTodosPedidosDoCliente(idDoCliente: UUID) throws -> [Pedido?] {
+    func buscarTodosPedidosDoCliente(idDoCliente: UUID) throws -> [Pedido] {
 //        let fetchRequest: NSFetchRequest<ClienteEntity> = ClienteEntity.fetchRequest()
 //        fetchRequest.predicate = NSPredicate(format: "id == %@", idDoCliente)
 //        let fetchRequest: NSFetchRequest<PedidoEntity> = PedidoEntity.fetchRequest()
@@ -361,7 +374,7 @@ class CoreDataImplementacao: BancoDeDados {
 //        do{
 //            let retorno = try container.viewContext.fetch(fetchRequest)
 //            var medidas: [Medida] = []
-//            
+//
 //            if (!retorno.isEmpty){
 //                for medidaBD in retorno{
 //                    let medida = Medida(id: medidaBD.id!, descricao: medidaBD.descricao!, valor: medidaBD.valor)
@@ -372,10 +385,9 @@ class CoreDataImplementacao: BancoDeDados {
 //        } catch let error {
 //            print("erro ao buscar medidas do cliente \(error)")
 //        }
+        return[]
     }
-    func buscarTodosPedidos() throws -> [Pedido] {
-        return []
-    }
+  
     func buscarTodasMedidasDoCliente(idDoCliente: UUID) throws -> [Medida] {
         return []
     }

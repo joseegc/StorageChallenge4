@@ -22,9 +22,9 @@ protocol BancoDeDados {
     func editarMedidaDoPedido(medida: Medida, pedido: Pedido) throws
     func editarInfoPagamento(pagamento: Pagamento, pedidoBD: PedidoEntity) throws
     
-    func buscarTodosClientes() throws -> [Cliente?]
-    func buscarTodosPedidosDoCliente(idDoCliente: UUID) throws -> [Pedido?]
-    func buscarTodosPedidos() throws -> [Pedido?]
+    func buscarTodosClientes() throws -> [Cliente]
+    func buscarTodosPedidosDoCliente(idDoCliente: UUID) throws -> [Pedido]
+    func buscarTodosPedidos() throws -> [Pedido]
 //    func buscarTodasMedidasDoCliente(idDoCliente: UUID) throws -> [Medida]
 //    func buscarTodasMedidasDoPedido(idDoPedido: UUID) throws -> [Medida]
     func buscarTodasReferencias(idDoPedido: UUID) throws -> [Foto?]

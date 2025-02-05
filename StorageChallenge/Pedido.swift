@@ -11,7 +11,7 @@ struct Pedido: Identifiable {
     var id = UUID()
     var titulo : String
     var statusDaEntrega: String
-    
+    var observacoes: String?
     var dataDeEntrega: Date
     var cliente: Cliente
     var medidas: [Medida]

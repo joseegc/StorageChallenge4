@@ -16,24 +16,25 @@ struct ListarClientesView: View {
             ScrollView {
                 VStack {
                    
-                    ForEach(clientesViewModel.clientesSalvos) { cliente in
+                    ForEach(clientesViewModel.clientes) { cliente in
                         
                         NavigationLink(destination: PerfilDoClienteView(idDoCliente: cliente.id)) {
                             Text(cliente.nome ?? "Sem nome")
                                
+                        }.onAppear {
+                            if cliente.nome == "A" {
+                                print("IMPRIMINDO A ENTIDADE NO FOREACH")
+                                print(cliente)
+                            }
                         }
-                        
-                    }.onAppear {
 
-                        clientesViewModel.buscarClientesNoBanco()
-                        print(clientesViewModel.clientesSalvos)
-                        print("atualizano")
+                        
                     }
-                    
                     
                 }
             }
             .task {
+                clientesViewModel.buscarTodosClientes()
                 clientesViewModel.buscarClientesNoBanco()
             }
             .padding(.horizontal)

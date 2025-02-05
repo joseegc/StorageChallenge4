@@ -19,27 +19,25 @@ import PhotosUI
 //}
 struct CadastrarEditarClienteView: View {
     @EnvironmentObject var clientesViewModel: ClienteViewModel
-    @Environment(\.presentationMode) var presentationMode  // Acesso ao modo de apresentação
+    @Environment(\.presentationMode) var presentationMode
 
     @State private var imagem: UIImage?
     @State var photosPickerItem: PhotosPickerItem?
     
-    var clienteInput: ClienteEntity?
+    @State var clienteInput = Cliente()
     var idDoCliente: UUID?
-
     
+    @State var medidas :[Medida] = []
     
-    @State var medidas: [Medida] = []
     
     var fotoExibida: Image {
         if let imagem = self.imagem {
             return Image(uiImage: imagem)
         } else {
             return Image(systemName: "person.circle.fill")
-                
         }
     }
-    
+
     let numberFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.maximumIntegerDigits = 4
@@ -48,15 +46,8 @@ struct CadastrarEditarClienteView: View {
     
     var body: some View {
         ScrollView {
-            HStack {
-                Text("Informações do cliente").font(.title3)
-                Spacer()
-            }.padding(.top, 50)
-            
             VStack(alignment: .leading, spacing: 30) {
-                
                 PhotosPicker(selection: $photosPickerItem, matching: .images) {
-                    
                     HStack() {
                         Spacer()
                         fotoExibida
@@ -64,23 +55,19 @@ struct CadastrarEditarClienteView: View {
                             .aspectRatio(contentMode: .fill)
                             .frame(width: 83, height: 83)
                             .clipShape(Circle())
-                            .overlay
-                        {
-                            ZStack {
-                                
-                                Circle()
-                                    .fill(Color("cinzaMedio"))
-                                    .frame(width: 31, height: 31)
-                                Image(systemName: "camera")
-                                    
-                            }.offset(x: 25, y: 25)
-                        }
+                            .overlay {
+                                ZStack {
+                                    Circle()
+                                        .fill(Color("cinzaMedio"))
+                                        .frame(width: 31, height: 31)
+                                    Image(systemName: "camera")
+                                }.offset(x: 25, y: 25)
+                            }
                             .foregroundStyle(Color("preto"))
                         Spacer()
                     }
-                    
-                    
-                }.onChange(of: photosPickerItem, { _, _ in
+                }
+                .onChange(of: photosPickerItem) { _, _ in
                     Task {
                         if let photosPickerItem, let data = try? await photosPickerItem.loadTransferable(type: Data.self) {
                             if let image = UIImage(data: data) {
@@ -91,53 +78,44 @@ struct CadastrarEditarClienteView: View {
                         }
                         photosPickerItem = nil
                     }
-                })
-                
+                }
                 
                 VStack(alignment: .leading, spacing: 5) {
-                    TextField("Nome", text: $clientesViewModel.cliente.nome)
-                    Rectangle()
-                        .fill(Color("cinzaEscuro"))
-                        .frame(height: 1)
-            
+                    TextField("Nome", text: $clienteInput.nome)
+                    Rectangle().fill(Color("cinzaEscuro")).frame(height: 1)
                 }
                 
                 VStack(alignment: .leading, spacing: 5) {
                     TextField("Telefone", text: Binding(
-                        get: { clientesViewModel.cliente.telefone ?? "" },  // Se nome for nil, usa ""
-                        set: { clientesViewModel.cliente.telefone = $0 }
+                        get: { clienteInput.telefone ?? "" },
+                        set: { clienteInput.telefone = $0 }
                     ))
                     .keyboardType(.decimalPad)
-                    Rectangle()
-                        .fill(Color("cinzaEscuro"))
-                        .frame(height: 1)
+                    Rectangle().fill(Color("cinzaEscuro")).frame(height: 1)
                 }
                 
                 
-                
-                
                 VStack(alignment: .center) {
-                    
                     HStack {
                         Spacer()
                         Text("Medidas do Cliente").foregroundStyle(Color("cinzaEscuro"))
                         Spacer()
                     }
+                
                     
                     
-                    ForEach(clientesViewModel.cliente.medidas ?? [], id: \.id) { medida in
+                    // Exibe as medidas
+                    ForEach($clienteInput.medidas, id: \.id) { $medida in
+                        
+                        
+                        
+                        
+                        
                         VStack(spacing: 5) {
                             HStack {
                                 // TextField para Descricao
-                                TextField("Descriçao", text: Binding(
-                                    get: { medida.descricao },
-                                    set: { newValue in
-                                        // Encontra o índice de 'medida' e atualiza sua descrição
-                                        if let index = clientesViewModel.cliente.medidas?.firstIndex(where: { $0.id == medida.id }) {
-                                            clientesViewModel.cliente.medidas?[index].descricao = newValue
-                                        }
-                                    }
-                                ))
+                                TextField("Descrição", text: $medida.descricao) // Vincula diretamente ao estado da medida
+                                
                                 Spacer()
                                 
                                 HStack(spacing: 0) {
@@ -146,17 +124,10 @@ struct CadastrarEditarClienteView: View {
                                         .fill(Color("cinzaEscuro"))
                                         .frame(width: 1)
                                         .padding(.trailing, 10)
-                                   
-                                    TextField("Valor", value: Binding(
-                                        get: { medida.valor },
-                                        set: { newValue in
-                                            // Encontra o índice de 'medida' e atualiza seu valor
-                                            if let index = clientesViewModel.cliente.medidas?.firstIndex(where: { $0.id == medida.id }) {
-                                                clientesViewModel.cliente.medidas?[index].valor = newValue
-                                            }
-                                        }
-                                    ), formatter: numberFormatter)
-                                    .frame(width: 45)
+                                    
+                                    TextField("Valor", value: $medida.valor, formatter: numberFormatter)
+                                        .frame(width: 45)
+                                    
                                     
                                     
                                     Text("cm").padding(EdgeInsets(top: 0, leading: 3, bottom: 0, trailing: 3))
@@ -166,76 +137,92 @@ struct CadastrarEditarClienteView: View {
                             Rectangle()
                                 .fill(Color("cinzaEscuro"))
                                 .frame(height: 1)
-                        }.padding(.bottom, 10)
+                        }
+                        
+                        .padding(.bottom, 10)
                     }
-    
-                        
-                        Button(action: {
-                            clientesViewModel.cliente.medidas?.append(Medida())
-                        }, label: {
-                            HStack(spacing: 4) {
-                                Image(systemName: "plus.circle.fill")
-                                    .font(.system(size: 20))
-                                    .foregroundStyle(Color("preto"))
-                                Text("Adicionar Medida")
-                                    .font(.system(size: 13))
-                                    .foregroundStyle(Color("preto"))
-                            }.padding(EdgeInsets(top: 5, leading: 7, bottom: 5, trailing: 7))
-                        }).background(Color(.white)).cornerRadius(20)
-
-                        
                     
-                }
-                
-                
-            }
-            .padding(.horizontal)
-            .padding(.vertical , 53)
-            .background(Color("cinzaClaro"))
-            .cornerRadius(20)
-            
-        }.padding(.horizontal, 21)
-        .navigationTitle(idDoCliente != nil ? "Editar Cliente" : "Cadastrar Cliente")
-        .navigationBarTitleDisplayMode(.inline)
-        .task {
-            if idDoCliente != nil {
-                clientesViewModel.buscarClientePorId(idDoCliente: idDoCliente!)
-                if let foto = clientesViewModel.cliente.foto {
-                    imagem = UIImage(data: foto)
-                }
-            } else {
-                clientesViewModel.cliente = Cliente()
-            }
-            
-        }.toolbar {
-            ToolbarItem {
-                
-                Button(action: {
-
-                    if let imageData = self.imagem?.pngData() {
-                        clientesViewModel.cliente.foto = imageData
-                        //clientesViewModel.cliente.foto?.imagem = imageData
+                    Button(action: {
+                        // Adiciona uma nova medida no estado local
+                        clienteInput.medidas.append(Medida())
+                    }) {
+                        HStack(spacing: 4) {
+                            Image(systemName: "plus.circle.fill")
+                                .font(.system(size: 20))
+                                .foregroundStyle(Color("preto"))
+                            Text("Adicionar Medida")
+                                .font(.system(size: 13))
+                                .foregroundStyle(Color("preto"))
+                        }
+                        .padding(EdgeInsets(top: 5, leading: 7, bottom: 5, trailing: 7))
                     }
-                    clientesViewModel.adicionarClienteAoBanco()
-                    clientesViewModel.buscarClientesNoBanco()
+                    .background(Color(.white))
+                    .cornerRadius(20)
+                }
+                .padding(.horizontal)
+                .padding(.vertical, 53)
+                .background(Color("cinzaClaro"))
+                .cornerRadius(20)
+            }
+            .padding(.horizontal, 21)
+            .navigationTitle(idDoCliente != nil ? "Editar Teste Cliente" : "Cadastrar Teste Cliente")
+            .navigationBarTitleDisplayMode(.inline)
+            .task {
+                if idDoCliente != nil {
+                    clienteInput = clientesViewModel.buscarClientePorId(idDoCliente: idDoCliente!)
+//                    clientesViewModel.buscarClientePorId(idDoCliente: idDoCliente!)
+//                    if let foto = clientesViewModel.cliente.foto {
+//                        imagem = UIImage(data: foto)
+//                    }
+//
+                    
+                    print(clienteInput.medidas)
+                    
+                    if let imageData =  clienteInput.foto {
+                        imagem =  UIImage(data: imageData)
 
-                    presentationMode.wrappedValue.dismiss()
+                    }
+                }
+                else {
+                    clientesViewModel.cliente = Cliente()
+                }
+            }
+            .toolbar {
+                ToolbarItem {
+                    Button(action: {
+                        if let imageData = self.imagem?.pngData() {
+                            clienteInput.foto = imageData
+                        }
+                        
+//                        clienteInput.medidas = medidas
+                        clientesViewModel.cliente.medidas = clienteInput.medidas
+                      
+//                        print("Salvando")
+                        print("por aquii")
+                        print(clienteInput.medidas)
+//                        print(clientesViewModel.cliente.medidas)
+                        clientesViewModel.cliente = clienteInput
+                        print("PO AQUUUUIII")
+                        print(clientesViewModel.cliente.medidas)
+                        if idDoCliente != nil {
+                            clientesViewModel.editarCliente()
+                        } else {
+                            clientesViewModel.adicionarClienteAoBanco()
+                            print("Adicionando ao banco")
 
-
-                }, label: {
-                    Text("Salvar")
-                })
-                
+                        }
+                        
+                        
+                        clientesViewModel.buscarClientesNoBanco()
+                        presentationMode.wrappedValue.dismiss()
+                    }) {
+                        Text(idDoCliente != nil ? "Editar" : "Salvar")
+                    }
+                }
             }
         }
-        
     }
 }
-
-#Preview {
-    CadastrarEditarClienteView().environmentObject(ClienteViewModel())
-}
-
 
 
 extension UIImage {

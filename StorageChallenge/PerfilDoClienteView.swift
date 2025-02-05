@@ -10,17 +10,18 @@ import SwiftUI
 struct PerfilDoClienteView: View {
 //    let cliente: ClienteEntity
     let idDoCliente: UUID?
-    @State var navegarParaListagemDeClientes = false
-    
+    @Environment(\.presentationMode) var presentationMode
+
     @EnvironmentObject var clientesViewModel: ClienteViewModel
     
+    @State var clienteExibido = Cliente()
     
     var body: some View {
         VStack {
-            Text(clientesViewModel.cliente.nome )
-            Text(clientesViewModel.cliente.telefone ?? "")
+            Text(clienteExibido.nome )
+            Text(clienteExibido.telefone ?? "")
             
-            if let imageData = clientesViewModel.cliente.foto, let uiImage = UIImage(data: imageData) {
+            if let imageData = clienteExibido.foto, let uiImage = UIImage(data: imageData) {
                 Image(uiImage: uiImage)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
@@ -37,7 +38,7 @@ struct PerfilDoClienteView: View {
                .overlay(Circle().stroke(Color.blue, lineWidth: 4))
             }
             
-            ForEach(clientesViewModel.cliente.medidas ?? []) { medida in
+            ForEach(clienteExibido.medidas) { medida in
                 HStack {
                     Text("\(medida.descricao):")
                     Text("\(String(format: "%.2f", medida.valor)) cm")
@@ -55,8 +56,12 @@ struct PerfilDoClienteView: View {
             //            print(clientesViewModel.cliente.nome)
             //
             if let idDoCliente = idDoCliente {
-                clientesViewModel.buscarClientePorId(idDoCliente: idDoCliente)
-                }
+                clienteExibido = clientesViewModel.buscarClientePorId(idDoCliente: idDoCliente)
+            print("entrei e peguei o id")
+                print(clienteExibido)
+            } else {
+                print("nem chegou apegar o id")
+            }
             
         }
                 
@@ -75,7 +80,8 @@ struct PerfilDoClienteView: View {
             ToolbarItem {
                 Button(action: {
                     clientesViewModel.deletarCliente(idDoCliente: idDoCliente!)
-                            
+                    presentationMode.wrappedValue.dismiss()
+
                          
                         }) {
                             Image(systemName: "trash.circle.fill")
@@ -83,7 +89,7 @@ struct PerfilDoClienteView: View {
             }
         }
        
-        .navigationTitle(clientesViewModel.cliente.nome ?? "")
+        .navigationTitle(clienteExibido.nome ?? "")
        
     }
     
