@@ -43,8 +43,8 @@ struct ListaDeClientes: View {
                             Spacer()
                             Image(systemName: "chevron.forward")
                         }.padding(20)
-                            .background(.red)
-                            .cornerRadius(8)
+                            .background(.amarelo)
+                            .cornerRadius(8).foregroundColor(Color.accentColor)
                         
                     }.padding(.horizontal, 20)
                 }
@@ -56,7 +56,6 @@ struct ListaDeClientes: View {
                             ToolbarItem(placement: .navigationBarTrailing) {
                                 NavigationLink(destination: ListarPedidosView()) {
                                     Image(systemName: "plus")
-                                        .foregroundColor(.red)
                                         .fontWeight(.black)
                                 }
                             }
