@@ -21,7 +21,7 @@ struct CadastrarEditarClienteView: View {
     @EnvironmentObject var clientesViewModel: ClienteViewModel
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.colorScheme) var colorScheme
-
+    
     @State private var imagem: UIImage?
     @State var photosPickerItem: PhotosPickerItem?
     
@@ -38,7 +38,7 @@ struct CadastrarEditarClienteView: View {
             return Image(systemName: "person.circle.fill")
         }
     }
-
+    
     let numberFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
@@ -52,20 +52,20 @@ struct CadastrarEditarClienteView: View {
                 HStack {
                     Spacer()
                     PhotosPicker(selection: $photosPickerItem, matching: .images) {
-                            fotoExibida
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .frame(width: 83, height: 83)
-                                .clipShape(Circle())
-                                .overlay {
-                                    ZStack {
-                                        Circle()
-                                            .fill(Color(colorScheme == .dark ? Color("cinzaMedio"): Color("cinzaClaro")))
-                                            .frame(width: 31, height: 31)
-                                        Image(systemName: "camera").foregroundStyle(Color("pretoFixo"))
-                                    }.offset(x: 25, y: 25)
-                                }
-                                .foregroundStyle(Color(colorScheme == .dark ? Color("cinzaClaro"): Color("cinzaEscuro")))
+                        fotoExibida
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 83, height: 83)
+                            .clipShape(Circle())
+                            .overlay {
+                                ZStack {
+                                    Circle()
+                                        .fill(Color(colorScheme == .dark ? Color("cinzaMedio"): Color("cinzaClaro")))
+                                        .frame(width: 31, height: 31)
+                                    Image(systemName: "camera").foregroundStyle(Color("pretoFixo"))
+                                }.offset(x: 25, y: 25)
+                            }
+                            .foregroundStyle(Color(colorScheme == .dark ? Color("cinzaClaro"): Color("cinzaEscuro")))
                     }.frame(width: 50, height: 50).padding(.top, 80)
                         .onChange(of: photosPickerItem) { _, _ in
                             Task {
@@ -103,47 +103,59 @@ struct CadastrarEditarClienteView: View {
                         Text("Medidas do Cliente").foregroundColor(colorScheme == .dark ? Color("amarelo") : Color("pretoFixo"))
                         Spacer()
                     }
-                
+                    
+                    
                     
                     
                     // Exibe as medidas
-                    ForEach($clienteInput.medidas, id: \.id) { $medida in
-                        
-                        
-                        
-                        
-                        
-                        VStack(spacing: 5) {
-                            HStack {
-                                // TextField para Descricao
-                                TextField("Descrição", text: $medida.descricao) // Vincula diretamente ao estado da medida
-                                
-                                Spacer()
-                                
-                                HStack(spacing: 0) {
-                                    // TextField para Valor (número)
-                                    Rectangle()
-                                        .fill(Color("cinzaEscuro"))
-                                        .frame(width: 1)
-                                        .padding(.trailing, 10)
+                    ForEach($clienteInput.medidas) { $medida in
+                        HStack {
+                            VStack(spacing: 5) {
+                                HStack {
+                                    // TextField para Descricao
+                                    TextField("Descrição", text: $medida.descricao) // Vincula diretamente ao estado da medida
                                     
-                                    TextField("Valor", value: $medida.valor, formatter: numberFormatter)
-                                        .frame(width: 45)
-                                        .keyboardType(.decimalPad)
+                                    Spacer()
                                     
+                                    HStack(spacing: 0) {
+                                        // TextField para Valor (número)
+                                        Rectangle()
+                                            .fill(Color("cinzaEscuro"))
+                                            .frame(width: 1)
+                                            .padding(.trailing, 10)
+                                        
+                                        TextField("Valor", value: $medida.valor, formatter: numberFormatter)
+                                            .frame(width: 45)
+                                            .keyboardType(.decimalPad)
+                                        
+                                        
+                                        
+                                        Text("cm").padding(EdgeInsets(top: 0, leading: 3, bottom: 0, trailing: 3))
+                                        
+                                    }
                                     
-                                    
-                                    Text("cm").padding(EdgeInsets(top: 0, leading: 3, bottom: 0, trailing: 3))
                                     
                                 }
+                                Rectangle()
+                                    .fill(Color("cinzaEscuro"))
+                                    .frame(height: 1)
                             }
-                            Rectangle()
-                                .fill(Color("cinzaEscuro"))
-                                .frame(height: 1)
+                            Button(action: {
+                                var idMedida = medida.id
+                                if let index = clienteInput.medidas.firstIndex(where: { $0.id == idMedida }) {
+                                    clienteInput.medidas.remove(at: index)
+                                    clientesViewModel.deletarMedida(id: idMedida)
+                                }
+                            },
+                                   label: {
+                                Image(systemName: "minus.circle")
+                                    .foregroundStyle(Color(.red))
+                            })
                         }
                         
                         .padding(.bottom, 10)
                     }
+                    
                     
                     Button(action: {
                         // Adiciona uma nova medida no estado local
@@ -175,22 +187,21 @@ struct CadastrarEditarClienteView: View {
             .task {
                 if idDoCliente != nil {
                     clienteInput = clientesViewModel.buscarClientePorId(idDoCliente: idDoCliente!)
-//                    clientesViewModel.buscarClientePorId(idDoCliente: idDoCliente!)
-//                    if let foto = clientesViewModel.cliente.foto {
-//                        imagem = UIImage(data: foto)
-//                    }
-//
+                    //                    clientesViewModel.buscarClientePorId(idDoCliente: idDoCliente!)
+                    //                    if let foto = clientesViewModel.cliente.foto {
+                    //                        imagem = UIImage(data: foto)
+                    //                    }
+                    //
                     
-                    print(clienteInput.medidas)
                     
                     if let imageData =  clienteInput.foto {
                         imagem =  UIImage(data: imageData)
-
+                        
                     }
                 }
-//                else {
-//                    clientesViewModel.cliente = Cliente()
-//                }
+                //                else {
+                //                    clientesViewModel.cliente = Cliente()
+                //                }
             }
             
             .toolbar {
@@ -200,13 +211,13 @@ struct CadastrarEditarClienteView: View {
                             clienteInput.foto = imageData
                         }
                         
-//                        clienteInput.medidas = medidas
+                        //                        clienteInput.medidas = medidas
                         clientesViewModel.cliente.medidas = clienteInput.medidas
-                      
-//                        print("Salvando")
+                        
+                        //                        print("Salvando")
                         print("por aquii")
                         print(clienteInput.medidas)
-//                        print(clientesViewModel.cliente.medidas)
+                        //                        print(clientesViewModel.cliente.medidas)
                         clientesViewModel.cliente = clienteInput
                         print("PO AQUUUUIII")
                         print(clientesViewModel.cliente.medidas)
@@ -215,11 +226,11 @@ struct CadastrarEditarClienteView: View {
                         } else {
                             clientesViewModel.adicionarClienteAoBanco()
                             print("Adicionando ao banco")
-
+                            
                         }
                         
                         
-                        clientesViewModel.buscarClientesNoBanco()
+                        clientesViewModel.buscarTodosClientes()
                         presentationMode.wrappedValue.dismiss()
                     }) {
                         Text("Salvar")

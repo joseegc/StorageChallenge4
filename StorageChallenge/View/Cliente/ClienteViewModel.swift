@@ -12,7 +12,7 @@ import SwiftUI
 
 class ClienteViewModel: ObservableObject {
     @Published var clientes: [Cliente] = []
-
+    
     @Published var cliente = Cliente(id: UUID(),nome: "Antonio", telefone: "(11) 98078-9146", pedidos: [Pedido(titulo: "Vestido", statusDaEntrega: "Completo", observacoes: "Braco gigantesco", dataDeEntrega: Date(), cliente: Cliente(nome: "Antonio"))], medidas:[])
     
     init(){
@@ -44,11 +44,11 @@ class ClienteViewModel: ObservableObject {
         }
         buscarTodosClientes()
     }
-
+    
     func buscarTodosClientes() {
         
         do {
-                self.clientes = try CoreDataModel.shared.buscarTodosClientes()
+            self.clientes = try CoreDataModel.shared.buscarTodosClientes()
             
         } catch {
             print("erro ao buscar")
@@ -88,11 +88,29 @@ class ClienteViewModel: ObservableObject {
         return cliente
     }
     
+    func buscarClientePorNome(nome: String) {
+        do {
+            self.clientes = try CoreDataModel.shared.buscarClientesPorNome(nome: nome)
+            
+        } catch {
+            print("erro ao buscar")
+        }
+    }
+    
     func deletarCliente(idDoCliente: UUID) {
         print("deletando cliente de id \(idDoCliente)")
         CoreDataModel.shared.deletarCliente(idDoCliente: idDoCliente)
         buscarTodosClientes()
     }
+    
+    func deletarMedida(id: UUID) {
+        do {
+            print("fala")
+           try CoreDataModel.shared.deletarMedida(id: id)
+            
+        } catch {
+            print("erro ao deletar medida")
+        }    }
     
     func deletarTodos() {
         self.clientes.removeAll()

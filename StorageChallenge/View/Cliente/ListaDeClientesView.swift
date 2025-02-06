@@ -9,11 +9,13 @@ import SwiftUI
 
 struct ListaDeClientesView: View {
     @EnvironmentObject var viewModel: ClienteViewModel
+    @State var nomeBuscado = ""
+    @State var mensagemDeErro = "Não há nenhum cliente cadastrado"
     
     var body: some View {
         VStack(spacing: 20){
             if viewModel.clientes.isEmpty {
-                Text("Não há nenhum cliente cadastrado")
+                Text(mensagemDeErro)
             } else{
                 ForEach(viewModel.clientes){ cliente in
                     NavigationLink(destination: PerfilDoClienteView(cliente: cliente)){
@@ -47,7 +49,7 @@ struct ListaDeClientesView: View {
                             .cornerRadius(8).foregroundColor(Color.accentColor)
                             .contextMenu {
                                 Button("Deletar Cliente"){
-                                    
+                                    // Lógica de deletar cliente
                                 }
                             }
                         
@@ -57,6 +59,7 @@ struct ListaDeClientesView: View {
             }
         }.padding(20)
             .navigationTitle("Clientes")
+            .searchable(text: $nomeBuscado, prompt: "Buscar cliente...")
             .background(Color(.corDeFundo))
             .edgesIgnoringSafeArea(.bottom)
             .toolbar {
@@ -70,7 +73,23 @@ struct ListaDeClientesView: View {
             .onAppear{
                 viewModel.buscarTodosClientes()
             }
+            .onChange(of: nomeBuscado) { novoNome in
+                if novoNome.isEmpty {
+                    viewModel.buscarTodosClientes()
+                    
+                    if viewModel.clientes.isEmpty {
+                        mensagemDeErro = "Não há nenhum cliente cadastrado"
+                    }
+                } else {
+                    viewModel.buscarClientePorNome(nome: novoNome)
+                    
+                    if viewModel.clientes.isEmpty {
+                        mensagemDeErro = "Nenhum cliente encontrado"
+                    }
+                }
+            }
     }
+    
 }
 
 

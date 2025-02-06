@@ -335,6 +335,45 @@ class CoreDataModel: ObservableObject {
         return nil
     }
     
+    func buscarClientesPorNome(nome: String) -> [Cliente] {
+        let predicate = NSPredicate(format: "nome CONTAINS[cd] %@", nome)
+        
+        let fetchRequest: NSFetchRequest<ClienteEntity> = ClienteEntity.fetchRequest()
+        fetchRequest.predicate = predicate
+        
+        do {
+            let resposta = try container.viewContext.fetch(fetchRequest)
+            
+            var clientes: [Cliente] = []
+            if !resposta.isEmpty {
+                for clienteBD in resposta{
+                    var cliente = Cliente(
+                        id: clienteBD.id!,
+                        nome: clienteBD.nome!,
+                        telefone: clienteBD.telefone,
+                        foto: clienteBD.foto
+                    )
+                    if clienteBD.medidas != nil{
+                        let medidasDoCliente = try buscarTodasMedidasDoCliente(cliente: clienteBD)
+                        cliente.medidas = medidasDoCliente
+                    }
+                    
+//                    if clienteBD.pedidos != nil{
+//                        let pedidosDoCliente = try buscarTodosPedidosDoCliente(idDoCliente: clienteBD.id!)
+//                        cliente.pedidos = pedidosDoCliente
+//                    }
+                    clientes.append(cliente)
+                }
+            }
+            return clientes
+            
+            
+        } catch {
+            print("Erro ao buscar clientes: \(error)")
+            return []
+        }
+    }
+    
     
     func deletarCliente(idDoCliente: UUID) {
         let fetchRequest: NSFetchRequest<ClienteEntity> = ClienteEntity.fetchRequest()
@@ -350,6 +389,28 @@ class CoreDataModel: ObservableObject {
             }
         } catch {
             print("Erro ao buscar cliente no Core Data: \(error)")
+        }
+    }
+    
+    func deletarMedida(id: UUID) throws {
+        let fetchRequest: NSFetchRequest<MedidaEntity> = MedidaEntity.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", id.uuidString)
+        
+        do {
+            let resposta = try container.viewContext.fetch(fetchRequest)
+            
+            if resposta.isEmpty {
+                print("tem medida aqui nao mano")
+
+                return
+            }
+            
+            if let medidaADeletar = resposta.first {
+                container.viewContext.delete(medidaADeletar)
+                salvar()
+            }
+        } catch {
+            print("Erro ao buscar medida no Core Data: \(error)")
         }
     }
     
