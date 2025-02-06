@@ -22,7 +22,7 @@ struct TabBarView: View {
             
             // Clientes
             NavigationStack{
-                ListaDeClientes()
+                ListaDeClientesView()
             }.tabItem {
                     Label("Clientes", systemImage: "person.3.fill")
                 }

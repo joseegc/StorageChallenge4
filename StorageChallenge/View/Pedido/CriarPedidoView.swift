@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CriarPedido: View {
+struct CriarPedidoView: View {
     @ObservedObject var pedidoVM = PedidoViewModel()
     @State var pedido: Pedido? = nil
     @State var cliente: Cliente
@@ -46,7 +46,7 @@ struct CriarPedido: View {
 }
 
 #Preview {
-    CriarPedido(
+    CriarPedidoView(
         cliente: pedidosTeste[0].cliente
     )
 }

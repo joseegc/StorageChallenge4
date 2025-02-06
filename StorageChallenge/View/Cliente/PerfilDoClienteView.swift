@@ -11,8 +11,6 @@ struct PerfilDoClienteView: View {
 //    let cliente: ClienteEntity
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.colorScheme) var colorScheme
-
-
     @EnvironmentObject var clientesViewModel: ClienteViewModel
     
     @State var cliente: Cliente

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ListaDeClientes: View {
+struct ListaDeClientesView: View {
     @EnvironmentObject var viewModel: ClienteViewModel
     
     var body: some View {
@@ -76,7 +76,7 @@ struct ListaDeClientes: View {
 
 #Preview {
     NavigationStack{
-        ListaDeClientes()
+        ListaDeClientesView()
             .environmentObject(ClienteViewModel())
     }
     

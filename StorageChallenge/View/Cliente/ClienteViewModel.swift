@@ -11,7 +11,6 @@ import SwiftUI
 
 
 class ClienteViewModel: ObservableObject {
-    @Published var clientesSalvos: [ClienteEntity] = []
     @Published var clientes: [Cliente] = []
 
     @Published var cliente = Cliente(id: UUID(),nome: "Antonio", telefone: "(11) 98078-9146", pedidos: [Pedido(titulo: "Vestido", statusDaEntrega: "Completo", observacoes: "Braco gigantesco", dataDeEntrega: Date(), cliente: Cliente(nome: "Antonio"))], medidas:[])
@@ -23,7 +22,7 @@ class ClienteViewModel: ObservableObject {
         } catch {
             print("erro ao salvar")
         }
-        buscarClientesNoBanco()
+        buscarTodosClientes()
     }
     
     
@@ -34,7 +33,6 @@ class ClienteViewModel: ObservableObject {
         } catch {
             print("erro ao salvar")
         }
-        buscarClientesNoBanco()
         buscarTodosClientes()
     }
     
@@ -44,22 +42,9 @@ class ClienteViewModel: ObservableObject {
         } catch {
             print("erro ao salvar")
         }
-        buscarClientesNoBanco()
         buscarTodosClientes()
     }
-    
-    //    func atualizarNoBanco(entidade: ClienteEntity) {
-    //        self.cliente.nome += "!"
-    //        CoreDataModel.shared.editarCliente(cliente: self.cliente, entidade: entidade)
-    //    }
-    //
-    func buscarClientesNoBanco() {
-        //        self.clientesSalvos = CoreDataModel.shared.buscarClientes()
-        let novosClientes = CoreDataModel.shared.buscarClientes()
-        self.clientesSalvos = novosClientes  //
-        
-    }
-    
+
     func buscarTodosClientes() {
         
         do {
@@ -106,10 +91,10 @@ class ClienteViewModel: ObservableObject {
     func deletarCliente(idDoCliente: UUID) {
         print("deletando cliente de id \(idDoCliente)")
         CoreDataModel.shared.deletarCliente(idDoCliente: idDoCliente)
-        buscarClientesNoBanco()
+        buscarTodosClientes()
     }
     
     func deletarTodos() {
-        self.clientesSalvos.removeAll()
+        self.clientes.removeAll()
     }
 }

@@ -15,7 +15,7 @@ struct StorageChallengeApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationStack{
-                ListaDeClientes()
+                ListaDeClientesView()
           }
             .environmentObject(clienteViewModel)
 
