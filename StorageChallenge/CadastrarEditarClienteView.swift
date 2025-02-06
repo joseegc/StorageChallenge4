@@ -8,17 +8,8 @@
 import SwiftUI
 import PhotosUI
 
-//class Medida {
-//    @State var descricao: String
-//   @State  var valor: Float
-//
-//    init() {
-//        descricao = ""
-//        valor = 0
-//    }
-//}
 struct CadastrarEditarClienteView: View {
-    @EnvironmentObject var clientesViewModel: ClienteViewModel
+    @EnvironmentObject var clientesViewModel: ClienteViewModel2
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.colorScheme) var colorScheme
 
@@ -174,7 +165,8 @@ struct CadastrarEditarClienteView: View {
             .navigationBarTitleDisplayMode(.inline)
             .task {
                 if idDoCliente != nil {
-                    clienteInput = clientesViewModel.buscarClientePorId(idDoCliente: idDoCliente!)
+                    clientesViewModel.buscarClientePorId(id: idDoCliente!)
+                    clienteInput = clientesViewModel.cliente
 //                    clientesViewModel.buscarClientePorId(idDoCliente: idDoCliente!)
 //                    if let foto = clientesViewModel.cliente.foto {
 //                        imagem = UIImage(data: foto)
@@ -212,13 +204,13 @@ struct CadastrarEditarClienteView: View {
                         if idDoCliente != nil {
                             clientesViewModel.editarCliente()
                         } else {
-                            clientesViewModel.adicionarClienteAoBanco()
+//                            clientesViewModel.salvarCliente()
                             print("Adicionando ao banco")
 
                         }
                         
                         
-                        clientesViewModel.buscarClientesNoBanco()
+//                        clientesViewModel.buscarClientesNoBanco()
                         presentationMode.wrappedValue.dismiss()
                     }) {
                         Text(idDoCliente != nil ? "Editar" : "Salvar")

@@ -13,24 +13,23 @@ var pedidosTeste = [Pedido(titulo: "titulo 1", statusDaEntrega: "Pendente", data
 
 
 class PedidoViewModel: ObservableObject{
-    @Published var pedidos: [Pedido] = [] // Lista de pedidos
-    @Published var pedidoSelecionado: Pedido? // Pedido para visualização ou edição
-    @Published var descricao: String = "" // Descrição para cadastro ou edição
-    
-    @Published var pedido = Pedido()
-
+    @Published var pedidos: [Pedido] = pedidosTeste
+    @Published var pedido: Pedido?
 
     init() {
         buscarTodosOsPedidos()
+    }
+    
+    func buscarTodosOsPedidos() {
+        
+        self.pedidos = pedidosTeste
     }
     
     func buscarPedidoPorId(id: UUID) {
 //        self.pedido = CoreDataModel.shared.buscarPedidoPorId(id: id)
     }
     
-    func buscarTodosOsPedidos() {
-        self.pedidos = pedidosTeste
-    }
+    
     
     func buscarPedidosDoCliente(cliente: Cliente) {
         self.pedidos = []
@@ -41,9 +40,6 @@ class PedidoViewModel: ObservableObject{
         }
     }
     
-    func editarPedido(pedido: Pedido) {
-        self.pedidoSelecionado = pedido
-    }
     
     func deletarPedido(id: UUID) {
         CoreDataModel.shared.deletarPedido(id: id)

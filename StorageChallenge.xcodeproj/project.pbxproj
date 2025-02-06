@@ -15,8 +15,10 @@
 		8B504FAD2D5135AE00019D23 /* CoreDataImplementacao.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B504FAC2D5135AE00019D23 /* CoreDataImplementacao.swift */; };
 		8B504FAF2D5135C300019D23 /* SwiftDataImplementacao.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B504FAE2D5135C300019D23 /* SwiftDataImplementacao.swift */; };
 		8B6633092D53D58B00A6E5CC /* ListaDeClientes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6633082D53D58B00A6E5CC /* ListaDeClientes.swift */; };
+		8B688E902D55449300D51BDF /* ClienteViewModel2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B688E8F2D55449200D51BDF /* ClienteViewModel2.swift */; };
+		8B688E942D554EC700D51BDF /* CadastrarEditarClienteView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B688E932D554EC700D51BDF /* CadastrarEditarClienteView2.swift */; };
 		8B73953D2D4D46A000FAC6D2 /* TabbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B73953C2D4D46A000FAC6D2 /* TabbarView.swift */; };
-		8B73953F2D4D4A6300FAC6D2 /* ListarPedidosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B73953E2D4D4A6300FAC6D2 /* ListarPedidosView.swift */; };
+		8B73953F2D4D4A6300FAC6D2 /* ListaDePedidosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B73953E2D4D4A6300FAC6D2 /* ListaDePedidosView.swift */; };
 		8B7395412D4D529F00FAC6D2 /* PedidoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B7395402D4D529F00FAC6D2 /* PedidoViewModel.swift */; };
 		8B7395432D4D584400FAC6D2 /* CriarPedido.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B7395422D4D584400FAC6D2 /* CriarPedido.swift */; };
 		9F58B1B62D4D4977009ABAB7 /* PerfilDoClienteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F58B1B52D4D4977009ABAB7 /* PerfilDoClienteView.swift */; };
@@ -28,7 +30,6 @@
 		9F5E214A2D4BFB1500B2F7F2 /* CoreDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5E21492D4BFB1500B2F7F2 /* CoreDataModel.swift */; };
 		9F5E214C2D4BFCA400B2F7F2 /* PedidosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5E214B2D4BFCA400B2F7F2 /* PedidosView.swift */; };
 		9F60AE8F2D52B46A00F09776 /* SelecionarClienteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F60AE8E2D52B46A00F09776 /* SelecionarClienteView.swift */; };
-		9F8C24872D4C0DBD0046FB2E /* ListarClientesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8C24862D4C0DBD0046FB2E /* ListarClientesView.swift */; };
 		9F8C24892D4C10090046FB2E /* ClienteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8C24882D4C10090046FB2E /* ClienteViewModel.swift */; };
 		9F8C248B2D4C10410046FB2E /* Cliente.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8C248A2D4C10410046FB2E /* Cliente.swift */; };
 		9FCD73A62D52AF1B00A5FC53 /* CadastrarEditarPedidoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FCD73A52D52AF1B00A5FC53 /* CadastrarEditarPedidoView.swift */; };
@@ -43,8 +44,10 @@
 		8B504FAC2D5135AE00019D23 /* CoreDataImplementacao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataImplementacao.swift; sourceTree = "<group>"; };
 		8B504FAE2D5135C300019D23 /* SwiftDataImplementacao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDataImplementacao.swift; sourceTree = "<group>"; };
 		8B6633082D53D58B00A6E5CC /* ListaDeClientes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListaDeClientes.swift; sourceTree = "<group>"; };
+		8B688E8F2D55449200D51BDF /* ClienteViewModel2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClienteViewModel2.swift; sourceTree = "<group>"; };
+		8B688E932D554EC700D51BDF /* CadastrarEditarClienteView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CadastrarEditarClienteView2.swift; sourceTree = "<group>"; };
 		8B73953C2D4D46A000FAC6D2 /* TabbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarView.swift; sourceTree = "<group>"; };
-		8B73953E2D4D4A6300FAC6D2 /* ListarPedidosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListarPedidosView.swift; sourceTree = "<group>"; };
+		8B73953E2D4D4A6300FAC6D2 /* ListaDePedidosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListaDePedidosView.swift; sourceTree = "<group>"; };
 		8B7395402D4D529F00FAC6D2 /* PedidoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PedidoViewModel.swift; sourceTree = "<group>"; };
 		8B7395422D4D584400FAC6D2 /* CriarPedido.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CriarPedido.swift; sourceTree = "<group>"; };
 		9F58B1B52D4D4977009ABAB7 /* PerfilDoClienteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerfilDoClienteView.swift; sourceTree = "<group>"; };
@@ -58,7 +61,6 @@
 		9F5E21492D4BFB1500B2F7F2 /* CoreDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataModel.swift; sourceTree = "<group>"; };
 		9F5E214B2D4BFCA400B2F7F2 /* PedidosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PedidosView.swift; sourceTree = "<group>"; };
 		9F60AE8E2D52B46A00F09776 /* SelecionarClienteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelecionarClienteView.swift; sourceTree = "<group>"; };
-		9F8C24862D4C0DBD0046FB2E /* ListarClientesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListarClientesView.swift; sourceTree = "<group>"; };
 		9F8C24882D4C10090046FB2E /* ClienteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClienteViewModel.swift; sourceTree = "<group>"; };
 		9F8C248A2D4C10410046FB2E /* Cliente.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cliente.swift; sourceTree = "<group>"; };
 		9FCD73A52D52AF1B00A5FC53 /* CadastrarEditarPedidoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CadastrarEditarPedidoView.swift; sourceTree = "<group>"; };
@@ -99,20 +101,21 @@
 				9F5E214B2D4BFCA400B2F7F2 /* PedidosView.swift */,
 				9F5E21492D4BFB1500B2F7F2 /* CoreDataModel.swift */,
 				9F8C24882D4C10090046FB2E /* ClienteViewModel.swift */,
+				8B688E8F2D55449200D51BDF /* ClienteViewModel2.swift */,
 				9F8C248A2D4C10410046FB2E /* Cliente.swift */,
 				547451E22D4D447B00F94D3E /* Foto.swift */,
 				547451E42D4D44F400F94D3E /* Medida.swift */,
 				547451E02D4D41A400F94D3E /* Pedido.swift */,
 				547451E62D4D453800F94D3E /* Pagamento.swift */,
 				8B73953C2D4D46A000FAC6D2 /* TabbarView.swift */,
-				8B73953E2D4D4A6300FAC6D2 /* ListarPedidosView.swift */,
+				8B73953E2D4D4A6300FAC6D2 /* ListaDePedidosView.swift */,
 				9FCD73A52D52AF1B00A5FC53 /* CadastrarEditarPedidoView.swift */,
 				9F60AE8E2D52B46A00F09776 /* SelecionarClienteView.swift */,
 				8B6633082D53D58B00A6E5CC /* ListaDeClientes.swift */,
 				8B7395422D4D584400FAC6D2 /* CriarPedido.swift */,
 				8B7395402D4D529F00FAC6D2 /* PedidoViewModel.swift */,
-				9F8C24862D4C0DBD0046FB2E /* ListarClientesView.swift */,
 				9F58B1B72D4D4B73009ABAB7 /* CadastrarEditarClienteView.swift */,
+				8B688E932D554EC700D51BDF /* CadastrarEditarClienteView2.swift */,
 				9F58B1B52D4D4977009ABAB7 /* PerfilDoClienteView.swift */,
 				9F5E213A2D4BF79E00B2F7F2 /* Assets.xcassets */,
 				9F5E213C2D4BF79E00B2F7F2 /* StorageChallenge.entitlements */,
@@ -212,6 +215,7 @@
 			files = (
 				8B6633092D53D58B00A6E5CC /* ListaDeClientes.swift in Sources */,
 				9F5E214A2D4BFB1500B2F7F2 /* CoreDataModel.swift in Sources */,
+				8B688E902D55449300D51BDF /* ClienteViewModel2.swift in Sources */,
 				8B504FAF2D5135C300019D23 /* SwiftDataImplementacao.swift in Sources */,
 				8B7395412D4D529F00FAC6D2 /* PedidoViewModel.swift in Sources */,
 				9F8C24892D4C10090046FB2E /* ClienteViewModel.swift in Sources */,
@@ -227,14 +231,14 @@
 				9F58B1B82D4D4B73009ABAB7 /* CadastrarEditarClienteView.swift in Sources */,
 				547451E52D4D44F400F94D3E /* Medida.swift in Sources */,
 				8B504FAD2D5135AE00019D23 /* CoreDataImplementacao.swift in Sources */,
+				8B688E942D554EC700D51BDF /* CadastrarEditarClienteView2.swift in Sources */,
 				8B7395432D4D584400FAC6D2 /* CriarPedido.swift in Sources */,
-				9F8C24872D4C0DBD0046FB2E /* ListarClientesView.swift in Sources */,
 				9F5E214C2D4BFCA400B2F7F2 /* PedidosView.swift in Sources */,
 				8B73953D2D4D46A000FAC6D2 /* TabbarView.swift in Sources */,
-				8B73953F2D4D4A6300FAC6D2 /* ListarPedidosView.swift in Sources */,
+				8B73953F2D4D4A6300FAC6D2 /* ListaDePedidosView.swift in Sources */,
 				8B73953D2D4D46A000FAC6D2 /* TabbarView.swift in Sources */,
 				8B504FAB2D51355D00019D23 /* BancoDeDados.swift in Sources */,
-				8B73953F2D4D4A6300FAC6D2 /* ListarPedidosView.swift in Sources */,
+				8B73953F2D4D4A6300FAC6D2 /* ListaDePedidosView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,7 +7,9 @@
 
 import SwiftUI
 
-struct ListarPedidosView: View {
+
+
+struct ListaDePedidosView: View {
     @EnvironmentObject var pedidoViewModel: PedidoViewModel
     
     var body: some View {

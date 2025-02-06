@@ -8,6 +8,7 @@
 import CoreData
 
 class CoreDataImplementacao: BancoDeDados {
+
     let container: NSPersistentContainer
     
     init() {
@@ -17,6 +18,26 @@ class CoreDataImplementacao: BancoDeDados {
                 print("Erro ao buscar o container \(error)")
             }
         }
+    }
+    
+    func buscarClientePorId(idDoCliente: UUID) throws -> Cliente {
+        let fetchRequest: NSFetchRequest<ClienteEntity> = ClienteEntity.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", idDoCliente.uuidString)
+        var cliente: Cliente = Cliente()
+        do {
+            let retorno = try container.viewContext.fetch(fetchRequest)
+            
+            if let clienteBD = retorno.first {
+                cliente = Cliente(id: clienteBD.id!, nome: clienteBD.nome!, telefone: clienteBD.telefone!)
+                if clienteBD.pedidos != nil {
+                    let pedidos = try buscarTodosPedidos(idDoCliente: clienteBD.id!)
+                    cliente.pedidos = pedidos
+                }
+            }
+        } catch {
+            print("Erro ao buscar cliente por id no Core Data: \(error)")
+        }
+        return cliente
     }
     
     func salvarCliente(cliente: Cliente) throws {
@@ -107,9 +128,10 @@ class CoreDataImplementacao: BancoDeDados {
     
     func buscarTodosClientes() throws -> [Cliente] {
         let requisicao = NSFetchRequest<ClienteEntity>(entityName: "ClienteEntity")
+        var clientes: [Cliente] = []
         do {
             let resposta = try container.viewContext.fetch(requisicao)
-            var clientes: [Cliente] = []
+            
             if !resposta.isEmpty {
                 for clienteBD in resposta{
                     var cliente = Cliente(
@@ -119,60 +141,265 @@ class CoreDataImplementacao: BancoDeDados {
                         foto: clienteBD.foto
                     )
                     if clienteBD.medidas != nil{
-                        let medidasDoCliente = try buscarTodasMedidasDoCliente(cliente: clienteBD)
-                        cliente.medidas = medidasDoCliente
+                        let fetchRequestMedida: NSFetchRequest<MedidaEntity> = MedidaEntity.fetchRequest()
+                        fetchRequestMedida.predicate = NSPredicate(format: "cliente == %@", clienteBD)
+                        
+                        let retornoMedidas = try container.viewContext.fetch(fetchRequestMedida)
+                        if (!retornoMedidas.isEmpty){
+                            for medidaBD in retornoMedidas{
+                                let medida = Medida(id: medidaBD.id!, descricao: medidaBD.descricao!, valor: medidaBD.valor)
+                                cliente.medidas.append(medida)
+                            }
+                        }
                     }
                     
-//                    if clienteBD.pedidos != nil{
-//                        let pedidosDoCliente = try buscarTodosPedidosDoCliente(idDoCliente: clienteBD.id!)
-//                        cliente.pedidos = pedidosDoCliente
-//                    }
-//                    clientes.append(cliente)
+                    if clienteBD.pedidos != nil{
+                        let pedidosDoCliente = try buscarTodosPedidos(idDoCliente: clienteBD.id!)
+                        cliente.pedidos = pedidosDoCliente
+                    }
+                    clientes.append(cliente)
                 }
+                
             }
-            return clientes
         } catch let error {
             print("erro ao buscar clientes \(error)")
         }
-        return []
-    }
-    
-    func buscarTodasMedidasDoCliente(cliente: ClienteEntity) throws -> [Medida] {
-        let fetchRequest: NSFetchRequest<MedidaEntity> = MedidaEntity.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "cliente == %@", cliente)
-        do{
-            let retorno = try container.viewContext.fetch(fetchRequest)
-            var medidas: [Medida] = []
-            
-            if (!retorno.isEmpty){
-                for medidaBD in retorno{
-                    let medida = Medida(id: medidaBD.id!, descricao: medidaBD.descricao!, valor: medidaBD.valor)
-                    medidas.append(medida)
-                }
-            }
-            return medidas
-        } catch let error {
-            print("erro ao buscar medidas do cliente \(error)")
+        for cliente in clientes {
+            print(cliente.id)
         }
-        return []
+        return clientes
     }
     
     func deletarCliente(id: UUID) throws {
+        
+        print("chamou deletar no core data \(id)")
         let fetchRequest: NSFetchRequest<ClienteEntity> = ClienteEntity.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id == %@", id.uuidString)
         
         do {
-            let clientesExistentes = try container.viewContext.fetch(fetchRequest)
-            
-            if let clienteADeletar = clientesExistentes.first {
+            let retorno = try container.viewContext.fetch(fetchRequest)
+            print("retornou essa quantidade de clientes \(retorno.count)")
+            if let clienteADeletar = retorno.first {
                 // Se o cliente já existe, chama a função editarCliente
+                
                 container.viewContext.delete(clienteADeletar)
                 try container.viewContext.save()
             }
         } catch {
-            print("Erro ao buscar cliente no Core Data: \(error)")
+            print("Erro ao deletar cliente no Core Data: \(error)")
         }
     }
+    
+    func deletarMedida(id: UUID) throws {
+        let fetchRequest: NSFetchRequest<MedidaEntity> = MedidaEntity.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", id.uuidString)
+        
+        do {
+            let retorno = try container.viewContext.fetch(fetchRequest)
+            
+            if let medidaADeletar = retorno.first {
+                // Se o cliente já existe, chama a função editarCliente
+                container.viewContext.delete(medidaADeletar)
+                try container.viewContext.save()
+            }
+        } catch {
+            print("Erro ao deletar medida no Core Data: \(error)")
+        }
+    }
+    
+    func buscarTodosPedidos(idDoCliente: UUID?) throws -> [Pedido] {
+        let requisicao = NSFetchRequest<PedidoEntity>(entityName: "PedidoEntity")
+        
+        if idDoCliente != nil {
+            let fetchRequest: NSFetchRequest<ClienteEntity> = ClienteEntity.fetchRequest()
+            fetchRequest.predicate = NSPredicate(format: "id == %@", idDoCliente!.uuidString)
+            let retorno = try container.viewContext.fetch(fetchRequest)
+            let cliente = retorno.first
+            
+            requisicao.predicate = NSPredicate(format: "cliente == %@", cliente!)
+        }
+        
+        var pedidos: [Pedido] = []
+        do {
+            let resposta = try container.viewContext.fetch(requisicao)
+            
+            if !resposta.isEmpty {
+                for pedidoBD in resposta{
+                    var pedido = Pedido(
+                        id: pedidoBD.id!,
+                        titulo: pedidoBD.titulo!,
+                        statusDaEntrega: pedidoBD.statusDeEntrega!,
+                        observacoes: pedidoBD.observacoes,
+                        dataDeEntrega: pedidoBD.dataDeEntrega!
+                    )
+                    if pedidoBD.referencias != nil {
+                        let fetchRequestReferencia: NSFetchRequest<ReferenciaEntity> = ReferenciaEntity.fetchRequest()
+                        fetchRequestReferencia.predicate = NSPredicate(format: "pedido == %@", pedidoBD)
+                        
+                        let retornoReferencia = try container.viewContext.fetch(fetchRequestReferencia)
+                        
+                        if retornoReferencia.isEmpty{
+                            for referencia in retornoReferencia{
+                                let referencia = Foto(imagem: referencia.imagem!)
+                                pedido.referencias?.append(referencia)
+                            }
+                        }
+                        
+                    }
+                }
+            }
+        } catch let error {
+            print("erro ao buscar pedidos \(error)")
+        }
+        return pedidos
+    }
+    
+    func buscarPedidoPorId(idDoPedido: UUID) throws -> Pedido {
+        let fetchRequest: NSFetchRequest<PedidoEntity> = PedidoEntity.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", idDoPedido.uuidString)
+        var pedido: Pedido = Pedido()
+        do {
+            let retorno = try container.viewContext.fetch(fetchRequest)
+            
+            if let pedidoBD = retorno.first {
+                pedido = Pedido(id: pedidoBD.id!,
+                                    titulo: pedidoBD.titulo!,
+                                    statusDaEntrega: pedidoBD.statusDeEntrega!,
+                                    observacoes: pedidoBD.observacoes,
+                                    dataDeEntrega: pedidoBD.dataDeEntrega!
+                                    )
+                
+                if pedidoBD.referencias != nil {
+                    let fetchRequestReferencia: NSFetchRequest<ReferenciaEntity> = ReferenciaEntity.fetchRequest()
+                    fetchRequestReferencia.predicate = NSPredicate(format: "pedido == %@", pedidoBD)
+                    
+                    let retornoReferencia = try container.viewContext.fetch(fetchRequestReferencia)
+                    
+                    if retornoReferencia.isEmpty{
+                        for referencia in retornoReferencia{
+                            let referencia = Foto(imagem: referencia.imagem!)
+                            pedido.referencias?.append(referencia)
+                        }
+                    }
+                    
+                }
+                return pedido
+            }
+        } catch {
+            print("Erro ao buscar cliente por id no Core Data: \(error)")
+        }
+        return pedido
+    }
+    
+    func salvarPedido(pedido: Pedido, cliente: Cliente) throws{
+        let novoPedido = PedidoEntity(context: container.viewContext)
+        novoPedido.id = pedido.id
+        novoPedido.titulo = pedido.titulo
+        novoPedido.dataDeEntrega = pedido.dataDeEntrega
+        novoPedido.statusDeEntrega = pedido.statusDaEntrega
+        novoPedido.observacoes = pedido.observacoes
+        
+        let fetchRequest: NSFetchRequest<ClienteEntity> = ClienteEntity.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", cliente.id.uuidString)
+        
+        do{
+            let retorno = try container.viewContext.fetch(fetchRequest)
+            let clienteBD = retorno.first
+            novoPedido.cliente = clienteBD
+            
+            try container.viewContext.save()
+        } catch{
+            print("Erro ao salvar medida no Core Data: \(error)")
+        }
+    }
+    
+    func editarPedido(pedido: Pedido) throws{
+        let fetchRequest: NSFetchRequest<PedidoEntity> = PedidoEntity.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", pedido.id.uuidString)
+        
+        do {
+            let retorno = try container.viewContext.fetch(fetchRequest)
+            
+            var pedidoBD = retorno.first
+            if pedidoBD?.titulo != pedido.titulo {
+                pedidoBD?.titulo = pedido.titulo
+            }
+            
+            if pedidoBD?.dataDeEntrega != pedido.dataDeEntrega {
+                pedidoBD?.dataDeEntrega = pedido.dataDeEntrega
+            }
+            
+            if pedidoBD?.statusDeEntrega != pedido.statusDaEntrega {
+                pedidoBD?.dataDeEntrega = pedido.dataDeEntrega
+            }
+            
+            if pedidoBD?.observacoes != pedido.observacoes {
+                pedidoBD?.observacoes = pedido.observacoes
+            }
+            
+            try container.viewContext.save()
+            
+        } catch {
+            print("Erro ao editar cliente no Core Data: \(error)")
+        }
+        
+    }
+    
+    func deletarPedido(id: UUID) throws {
+        let fetchRequest: NSFetchRequest<PedidoEntity> = PedidoEntity.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", id.uuidString)
+        
+        do {
+            let retorno = try container.viewContext.fetch(fetchRequest)
+            
+            if let pedidoADeletar = retorno.first {
+                // Se o cliente já existe, chama a função editarCliente
+                container.viewContext.delete(pedidoADeletar)
+                try container.viewContext.save()
+            }
+        } catch {
+            print("Erro ao deletar pedido no Core Data: \(error)")
+        }
+    }
+    
+    func salvarReferencia(imagem: Data, pedido: Pedido) throws{
+        let novaReferencia = ReferenciaEntity(context: container.viewContext)
+        novaReferencia.imagem = imagem
+        
+        let fetchRequest: NSFetchRequest<PedidoEntity> = PedidoEntity.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", pedido.id.uuidString)
+        
+        do{
+            let retorno = try container.viewContext.fetch(fetchRequest)
+            let pedidoBD = retorno.first
+            novaReferencia.pedido = pedidoBD
+            
+            try container.viewContext.save()
+        } catch{
+            print("Erro ao salvar referencia no Core Data: \(error)")
+        }
+    }
+    
+    func deletarReferencia(id: UUID) throws {
+        let fetchRequest: NSFetchRequest<ReferenciaEntity> = ReferenciaEntity.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", id.uuidString)
+        
+        do {
+            let retorno = try container.viewContext.fetch(fetchRequest)
+            
+            if let referenciaADeletar = retorno.first {
+                // Se o cliente já existe, chama a função editarCliente
+                container.viewContext.delete(referenciaADeletar)
+                try container.viewContext.save()
+            }
+        } catch {
+            print("Erro ao deletar referencia no Core Data: \(error)")
+        }
+    }
+    
+    
+    
+    
     
 //    func deletarMedida(id: UUID) throws {
 //        
@@ -198,27 +425,7 @@ class CoreDataImplementacao: BancoDeDados {
     
     
     
-//    func salvarPedido(pedido: Pedido, cliente: Cliente) throws{
-//        let novoPedido = PedidoEntity(context: container.viewContext)
-//        novoPedido.id = pedido.id
-//        novoPedido.titulo = pedido.titulo
-//        novoPedido.dataDeEntrega = pedido.dataDeEntrega
-//        novoPedido.statusDeEntrega = pedido.statusDaEntrega
-//        novoPedido.observacoes = pedido.observacoes
-//        
-//        let fetchRequest: NSFetchRequest<ClienteEntity> = ClienteEntity.fetchRequest()
-//        fetchRequest.predicate = NSPredicate(format: "id == %@", cliente.id.uuidString)
-//        
-//        do{
-//            let retorno = try container.viewContext.fetch(fetchRequest)
-//            let clienteBD = retorno.first
-//            novoPedido.cliente = clienteBD
-//            
-//            try container.viewContext.save()
-//        } catch{
-//            print("Erro ao salvar medida no Core Data: \(error)")
-//        }
-//    }
+    
     
 //    func salvarMedidaAoPedido(medida: Medida, pedido: Pedido) throws {
 //        let novaMedida = MedidaEntity(context: container.viewContext)
@@ -241,23 +448,7 @@ class CoreDataImplementacao: BancoDeDados {
 //    }
     
     
-//    func salvarReferencia(imagem: Data, pedido: Pedido) throws{
-//        let novaReferencia = ReferenciaEntity(context: container.viewContext)
-//        novaReferencia.imagem = imagem
-//        
-//        let fetchRequest: NSFetchRequest<PedidoEntity> = PedidoEntity.fetchRequest()
-//        fetchRequest.predicate = NSPredicate(format: "id == %@", pedido.id.uuidString)
-//        
-//        do{
-//            let retorno = try container.viewContext.fetch(fetchRequest)
-//            let pedidoBD = retorno.first
-//            novaReferencia.pedido = pedidoBD
-//            
-//            try container.viewContext.save()
-//        } catch{
-//            print("Erro ao salvar referencia no Core Data: \(error)")
-//        }
-//    }
+    
     
 //    func salvarInfoPagamento(dadosPagamento: (statusPagamento: String, valor: Double), pedido: Pedido) throws {
 //        let novaInfoDePagamento = PagamentoEntity(context: container.viewContext)
@@ -279,48 +470,7 @@ class CoreDataImplementacao: BancoDeDados {
 //    }
     
     
-//    func editarPedido(pedido: Pedido) throws{
-//        let fetchRequest: NSFetchRequest<PedidoEntity> = PedidoEntity.fetchRequest()
-//        fetchRequest.predicate = NSPredicate(format: "id == %@", pedido.id.uuidString)
-//        
-//        do {
-//            let retorno = try container.viewContext.fetch(fetchRequest)
-//            
-//            var pedidoBD = retorno.first
-//            if pedidoBD?.titulo != pedido.titulo {
-//                pedidoBD?.titulo = pedido.titulo
-//            }
-//            
-//            if pedidoBD?.dataDeEntrega != pedido.dataDeEntrega {
-//                pedidoBD?.dataDeEntrega = pedido.dataDeEntrega
-//            }
-//            
-//            if pedidoBD?.statusDeEntrega != pedido.statusDaEntrega {
-//                pedidoBD?.dataDeEntrega = pedido.dataDeEntrega
-//            }
-//            
-//            if pedidoBD?.observacoes != pedido.observacoes {
-//                pedidoBD?.observacoes = pedido.observacoes
-//            }
-//            
-//            if pedidoBD?.observacoes != pedido.observacoes {
-//                pedidoBD?.observacoes = pedido.observacoes
-//            }
-//            
-//            for medida in pedido.medidas{
-//                try editarMedidaDoPedido(medida: medida, pedido: pedido)
-//            }
-//            
-//            try editarInfoPagamento(pagamento: pedido.pagamento, pedidoBD: pedidoBD!)
-//            
-//            
-//            try container.viewContext.save()
-//            
-//        } catch {
-//            print("Erro ao editar cliente no Core Data: \(error)")
-//        }
-//        
-//    }
+    
     
     
     

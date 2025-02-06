@@ -8,12 +8,9 @@
 import SwiftUI
 
 struct PerfilDoClienteView: View {
-//    let cliente: ClienteEntity
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.colorScheme) var colorScheme
-
-
-    @EnvironmentObject var clientesViewModel: ClienteViewModel
+    @EnvironmentObject var viewModel: ClienteViewModel2
     
     @State var cliente: Cliente
     
@@ -33,7 +30,6 @@ struct PerfilDoClienteView: View {
                     
                     //MARK: COMPONENTE DE CARD DE MEDIDAS
                     HStack(spacing: 0) {
-                        
                         VStack
                         {
                             Image("silhueta")
@@ -41,14 +37,11 @@ struct PerfilDoClienteView: View {
                         }
                         .padding(.horizontal, 20)
                         
-                        
-                        
-                        
                         VStack {
                             if cliente.medidas.isEmpty {
                                 VStack {
                                     Spacer()
-                                    Text("Sem medidas cadastradas")
+                                    Text("Sem medidas cadastradas \(cliente.id)")
                                         .foregroundStyle(Color.pretoFix)
                                     
                                     Spacer()
@@ -56,7 +49,6 @@ struct PerfilDoClienteView: View {
                             }else {
                                     ScrollView {
                                         
-                                       
                                             ForEach(cliente.medidas) { medida in
                                                 VStack(spacing: 0) {
                                                     HStack {
@@ -68,7 +60,6 @@ struct PerfilDoClienteView: View {
                                                             .font(.callout)
                                                             .fontWeight(.thin)
                                                         
-                                                        
                                                         Spacer()
                                                         Text("\(String(format: "%.1f", medida.valor)) cm")
                                                             .fontWeight(.thin)
@@ -79,8 +70,6 @@ struct PerfilDoClienteView: View {
                                                 }
                                                 .foregroundStyle(Color(.pretoFix))
                                                 
-                                                
-                                            
                                         }
                                         
                                     }
@@ -97,43 +86,8 @@ struct PerfilDoClienteView: View {
                     .clipShape(.rect(cornerRadius: 20))
                     
                 }
-                
-                
-                //MARK: PEDIDOS E LISTA
-//                VStack(spacing: 14) {
-//                    HStack {
-//                        Text("Pedidos")
-//                            .font(.title2)
-//                            .bold()
-//                        Spacer()
-//                    }
-//                    
-//                    //MARK: LISTA DE PEDIDOS
-//                    ForEach(cliente.pedidos) { pedido in
-//                        VStack(spacing: 0) {
-//                            HStack {
-//                                Text("\(pedido.titulo)")
-//                                
-//                                
-//                                Spacer()
-//                                Image(systemName: "chevron.right")
-//                            }
-//                            .padding(36)
-//                            
-//                        }.frame(maxWidth: .infinity)
-//                            .frame(height: 93)
-//                            .background(Color(.amarelo))
-//                            .clipShape(.rect(cornerRadius: 16))
-//                            .foregroundStyle(Color(.pretoFix))
-//
-//                        
-//                    }
-//                }
-              
                 Spacer()
             }
-           
-        
             .padding(.horizontal, 24)
             .padding(.top, 50)
             .navigationTitle(cliente.nome)
@@ -145,9 +99,10 @@ struct PerfilDoClienteView: View {
                                 title: Text("Excluir Cliente"),
                                 message: Text("Tem certeza de que deseja excluir este cliente? Esta ação não pode ser desfeita."),
                                 primaryButton: .destructive(Text("Excluir")) {
-                                    clientesViewModel.deletarCliente(idDoCliente: cliente.id)
+                                    print("chamou deletar")
+                                    viewModel.deletarCliente(idDoCliente: cliente.id)
+                                    
                                     presentationMode.wrappedValue.dismiss()
-
                                 },
                                 secondaryButton: .cancel()
                             )
@@ -158,52 +113,23 @@ struct PerfilDoClienteView: View {
                     NavigationLink(destination: CadastrarEditarClienteView(idDoCliente: cliente.id)) {
                         Image(systemName: "pencil.circle.fill")
                     }
-                    
                 }
-                
-            
                 ToolbarItem {
-                    
-                    
                     Button {
                         mostrarAlertaDeExcluir.toggle()
                     } 
                 label: {
                         Image(systemName: "trash.circle.fill")
                         .padding(.leading, -5)
-
                     }
-                    
-
-                    
                 }
             }
-        .onAppear {
-            
-            //            if idDoCliente != nil {
-            //                clientesViewModel.buscarClientePorId(idDoCliente: idDoCliente!)
-            //                print("buscou o cliente")
-            //                print(clientesViewModel.cliente)
-            //            }
-            //            print(clientesViewModel.cliente.nome)
-            //
-            cliente = clientesViewModel.buscarClientePorId(idDoCliente: cliente.id)
-           
-          
-            
-        }
-                
-
-    
-       
-        
-       
     }
     
 }
 
-//#Preview {
-//    NavigationStack {
-//        PerfilDoClienteView( idDoCliente: nil).environmentObject(ClienteViewModel())
-//    }
-//}
+#Preview {
+    NavigationStack {
+        PerfilDoClienteView(cliente: Cliente(nome: "Teste"))
+    }
+}

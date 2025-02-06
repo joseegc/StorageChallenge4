@@ -15,7 +15,7 @@ struct TabBarView: View {
         TabView {
             // Pedidos
             NavigationStack{
-                ListarPedidosView()
+                ListaDePedidosView()
             }.tabItem {
                 Label("Pedidos", systemImage: "calendar")
                 }

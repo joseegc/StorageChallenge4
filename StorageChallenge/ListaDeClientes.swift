@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct ListaDeClientes: View {
-    @EnvironmentObject var viewModel: ClienteViewModel
-    
+    @EnvironmentObject var viewModel: ClienteViewModel2
+
     var body: some View {
         VStack(spacing: 20){
             if viewModel.clientes.isEmpty {
@@ -50,7 +50,6 @@ struct ListaDeClientes: View {
                                     
                                 }
                             }
-                        
                     }
                 }
                 Spacer()
@@ -66,7 +65,7 @@ struct ListaDeClientes: View {
                 }
             }
             .onAppear{
-                viewModel.buscarTodosClientes()
+                viewModel.carregarClientes()
             }
     }
 }
@@ -75,7 +74,5 @@ struct ListaDeClientes: View {
 #Preview {
     NavigationStack{
         ListaDeClientes()
-            .environmentObject(ClienteViewModel())
     }
-    
 }
