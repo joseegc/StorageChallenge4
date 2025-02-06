@@ -52,44 +52,35 @@ struct PerfilDoClienteView: View {
                                 Spacer()
                             }
                         }else {
-                            VStack {
-                                ScrollView {
-                                    VStack {
-                                        ForEach(cliente.medidas)  { medida in
-                                            VStack(spacing: 0) {
-                                                HStack {
-                                                    Text("\(medida.descricao)")
-                                                        .frame(width: 100, alignment: .leading)  // Define uma largura fixa e alinha o texto à esquerda
-                                                        .lineLimit(1)       // Limita a uma linha
-                                                        .truncationMode(.tail) // Adiciona reticências no final do texto
-                                                        .multilineTextAlignment(.leading)  // Alinha o texto à esquerda
-                                                        .font(.callout)
-                                                        .fontWeight(.thin)
-                                                    
-                                                    
-                                                    Spacer()
-                                                    Text("\(String(format: "%.1f", medida.valor)) cm")
-                                                        .fontWeight(.thin)
-                                                    
-                                                }
-                                                Divider()
-                                                    .padding(.vertical, 12)
-                                            }
-                                            .foregroundStyle(Color(.pretoFix))
+                            ScrollView {
+                                ForEach(cliente.medidas) { medida in
+                                    VStack(spacing: 0) {
+                                        HStack {
+                                            Text("\(medida.descricao)")
+                                                .frame(width: 100, alignment: .leading)
+                                                .lineLimit(1)
+                                                .truncationMode(.tail)
+                                                .multilineTextAlignment(.leading)
+                                                .font(.callout)
+                                                .fontWeight(.thin)
                                             
                                             
+                                            Spacer()
+                                            Text("\(String(format: "%.1f", medida.valor)) cm")
+                                                .fontWeight(.thin)
                                             
                                         }
- 
+                                        Divider()
+                                            .padding(.vertical, 12)
                                     }
-                                    .padding(24)
-                                    
-                                    
+                                    .foregroundStyle(Color(.pretoFix))
                                 }
                                 .frame(maxWidth: .infinity)
                                 
                                 //                                    .scrollIndicators(.visible) // Garante que a barra de rolagem seja visível
                             }
+                            .padding(24)
+                            .scrollIndicators(.visible)
                         }
                         
                     }.frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -167,30 +158,17 @@ struct PerfilDoClienteView: View {
             
             
             ToolbarItem {
-                
-                
-                Button {
+                Button() {
                     mostrarAlertaDeExcluir.toggle()
                 }
-            label: {
-                Image(systemName: "trash.fill")
-                    .padding(.leading, -5)
-                
-            }
-                
-                
-                
+                label: {
+                    Image(systemName: "trash.fill")
+                        .padding(.leading, -5)
+                    
+                }
             }
         }
         .onAppear {
-            
-            //            if idDoCliente != nil {
-            //                clientesViewModel.buscarClientePorId(idDoCliente: idDoCliente!)
-            //                print("buscou o cliente")
-            //                print(clientesViewModel.cliente)
-            //            }
-            //            print(clientesViewModel.cliente.nome)
-            //
             cliente = clientesViewModel.buscarClientePorId(idDoCliente: cliente.id)
             
             
@@ -203,7 +181,6 @@ struct PerfilDoClienteView: View {
         
         
     }
-    
 }
 
 //#Preview {

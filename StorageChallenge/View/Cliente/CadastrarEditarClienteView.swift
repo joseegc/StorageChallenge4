@@ -8,15 +8,6 @@
 import SwiftUI
 import PhotosUI
 
-//class Medida {
-//    @State var descricao: String
-//   @State  var valor: Float
-//
-//    init() {
-//        descricao = ""
-//        valor = 0
-//    }
-//}
 struct CadastrarEditarClienteView: View {
     @EnvironmentObject var clientesViewModel: ClienteViewModel
     @Environment(\.presentationMode) var presentationMode
@@ -158,7 +149,6 @@ struct CadastrarEditarClienteView: View {
                     
                     
                     Button(action: {
-                        // Adiciona uma nova medida no estado local
                         clienteInput.medidas.append(Medida())
                     }) {
                         HStack(spacing: 4) {
@@ -214,12 +204,8 @@ struct CadastrarEditarClienteView: View {
                         //                        clienteInput.medidas = medidas
                         clientesViewModel.cliente.medidas = clienteInput.medidas
                         
-                        //                        print("Salvando")
-                        print("por aquii")
-                        print(clienteInput.medidas)
-                        //                        print(clientesViewModel.cliente.medidas)
+                        
                         clientesViewModel.cliente = clienteInput
-                        print("PO AQUUUUIII")
                         print(clientesViewModel.cliente.medidas)
                         if idDoCliente != nil {
                             clientesViewModel.editarCliente()

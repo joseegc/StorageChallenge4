@@ -16,11 +16,6 @@ struct ListarPedidosView: View {
                 VStack {
                    
                     ForEach(pedidoViewModel.pedidos) { pedido in
-//                        
-//                        NavigationLink(destination: PerfilDoClienteView(idDoCliente: cliente.id)) {
-//                            Text(cliente.nome ?? "Sem nome")
-//                               
-//                        }
                         
                         Text(pedido.titulo)
                         
