@@ -10,10 +10,8 @@ import CoreData
 
 class CoreDataModel: ObservableObject {
     let container: NSPersistentContainer
-    //    @Published var clientesSalvos: [ClienteEntity] = []
     
     static let shared = CoreDataModel()
-    
     
     init() {
         container = NSPersistentContainer(name: "AppContainer")
@@ -27,8 +25,6 @@ class CoreDataModel: ObservableObject {
     // MARK: FETCH
     func buscarClientes() -> [ClienteEntity] {
         let requisicao = NSFetchRequest<ClienteEntity>(entityName: "ClienteEntity")
-        
-        // faz a busca no container e alimenta a array de pedidosSalvos
         do {
             let resposta = try container.viewContext.fetch(requisicao)
             
@@ -48,52 +44,14 @@ class CoreDataModel: ObservableObject {
         salvar()
     }
     
-    
-    // MARK: Tentando fazer os genericos
-    func adicionar<Objeto>(objeto: Objeto) {
-        let contexto = container.viewContext
-        var entidade : NSManagedObject?
-        
-        if objeto is Cliente {
-            entidade = ClienteEntity(context: contexto)
-            
-        }
-        
-        // Usando Reflection para obter as propriedades do objeto e seus valores
-        let mirror = Mirror(reflecting: objeto)
-        
-        if let entidade = entidade {
-            // Iterando sobre as propriedades do objeto
-            for (nomePropriedade, valorPropriedade) in mirror.children {
-                guard let nomePropriedade = nomePropriedade else { continue }
-                entidade.setValue(valorPropriedade, forKey: nomePropriedade)
-            }
-            
-            salvar()
-        }
-    }
-    
     func atualizarCliente(cliente: Cliente, clienteEntity: ClienteEntity) {
         clienteEntity.id = cliente.id
         clienteEntity.nome = cliente.nome
         clienteEntity.telefone = cliente.telefone
-        
-        //Vai usar em medidas mesma ideia
-        
-        //        if clienteEntity.foto == nil {
-        //            clienteEntity.foto = FotoEntity(context: CoreDataModel.shared.container.viewContext)
-        //        }
-        //        
-        //        if let clienteFoto = cliente.foto {
-        //            clienteEntity.foto?.imagem = clienteFoto.imagem
-        //            clienteEntity.foto?.cliente = clienteEntity
-        //        }
-        
         clienteEntity.foto = cliente.foto
         
-        
         if cliente.medidas != nil {
-            for medida in cliente.medidas ?? [] {
+            for medida in cliente.medidas{
                 
                 
                 var medidaEntity = verificarSeMedidaExiste(medida: medida)
@@ -119,7 +77,6 @@ class CoreDataModel: ObservableObject {
     
     
     func verificarSeMedidaExiste(medida: Medida) -> MedidaEntity? {
-        // Buscar cliente existente no Core Data pelo ID (convertendo UUID para String)
         let fetchRequest: NSFetchRequest<MedidaEntity> = MedidaEntity.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id == %@", medida.id.uuidString)
         
@@ -127,10 +84,8 @@ class CoreDataModel: ObservableObject {
             let medidasExistentes = try container.viewContext.fetch(fetchRequest)
             
             if let medidaExistente = medidasExistentes.first {
-                print("A MEDIDA EXISTE")
                 return medidaExistente
             } else {
-                print("A MEDIDA NAO EXISTE")
                 return nil
             }
         } catch {
@@ -141,7 +96,6 @@ class CoreDataModel: ObservableObject {
     
     
     func adicionarCliente(cliente: Cliente) {
-        // Buscar cliente existente no Core Data pelo ID (convertendo UUID para String)
         let fetchRequest: NSFetchRequest<ClienteEntity> = ClienteEntity.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id == %@", cliente.id.uuidString)
         
@@ -149,13 +103,11 @@ class CoreDataModel: ObservableObject {
             let clientesExistentes = try container.viewContext.fetch(fetchRequest)
             
             if let clienteExistente = clientesExistentes.first {
-                // Se o cliente já existe, chama a função editarCliente
                 atualizarCliente(cliente: cliente, clienteEntity: clienteExistente)
                 print("ENTIDADE")
                 print(clienteExistente)
                 salvar()
             } else {
-                // Caso contrário, adiciona um novo cliente
                 let novoClienteEntity = ClienteEntity(context: container.viewContext)
                 atualizarCliente(cliente: cliente, clienteEntity: novoClienteEntity)
                 salvar()
@@ -172,7 +124,7 @@ class CoreDataModel: ObservableObject {
         novoCliente.telefone = cliente.telefone
         novoCliente.foto = cliente.foto
         try container.viewContext.save()
-
+        
         for medida in cliente.medidas  {
             try salvarMedidaAoCliente(medida: medida, cliente: cliente)
             print("salvou a medida \(medida.descricao)")
@@ -192,17 +144,17 @@ class CoreDataModel: ObservableObject {
         fetchRequest.predicate = NSPredicate(format: "id == %@", cliente.id.uuidString)
         
         do {
-               let retorno = try container.viewContext.fetch(fetchRequest)
-               if let clienteBD = retorno.first {
-                   novaMedida.cliente = clienteBD
-                   print("Associação da medida \(medida.id) com o cliente \(cliente.id) feita com sucesso.")
-               } else {
-                   print("Cliente não encontrado no Core Data para associar a medida.")
-               }
-               try container.viewContext.save()
-           } catch {
-               print("Erro ao salvar medida do cliente no Core Data: \(error)")
-           }
+            let retorno = try container.viewContext.fetch(fetchRequest)
+            if let clienteBD = retorno.first {
+                novaMedida.cliente = clienteBD
+                print("Associação da medida \(medida.id) com o cliente \(cliente.id) feita com sucesso.")
+            } else {
+                print("Cliente não encontrado no Core Data para associar a medida.")
+            }
+            try container.viewContext.save()
+        } catch {
+            print("Erro ao salvar medida do cliente no Core Data: \(error)")
+        }
     }
     
     func editarCliente(cliente: Cliente) throws{
@@ -277,10 +229,10 @@ class CoreDataModel: ObservableObject {
                         cliente.medidas = medidasDoCliente
                     }
                     
-//                    if clienteBD.pedidos != nil{
-//                        let pedidosDoCliente = try buscarTodosPedidosDoCliente(idDoCliente: clienteBD.id!)
-//                        cliente.pedidos = pedidosDoCliente
-//                    }
+                    //                    if clienteBD.pedidos != nil{
+                    //                        let pedidosDoCliente = try buscarTodosPedidosDoCliente(idDoCliente: clienteBD.id!)
+                    //                        cliente.pedidos = pedidosDoCliente
+                    //                    }
                     clientes.append(cliente)
                 }
             }
@@ -310,12 +262,11 @@ class CoreDataModel: ObservableObject {
         }
         return []
     }
-
+    
     
     
     
     func buscarClientePorId(idDoCliente: UUID) -> ClienteEntity? {
-        // Buscar cliente existente no Core Data pelo ID (convertendo UUID para String)
         let fetchRequest: NSFetchRequest<ClienteEntity> = ClienteEntity.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id == %@", idDoCliente.uuidString)
         
@@ -344,7 +295,6 @@ class CoreDataModel: ObservableObject {
             let clientesExistentes = try container.viewContext.fetch(fetchRequest)
             
             if let clienteADeletar = clientesExistentes.first {
-                // Se o cliente já existe, chama a função editarCliente
                 container.viewContext.delete(clienteADeletar)
                 salvar()
             }
@@ -361,7 +311,6 @@ class CoreDataModel: ObservableObject {
             let pedidosExistentes = try container.viewContext.fetch(fetchRequest)
             
             if let pedidoADeletar = pedidosExistentes.first {
-                // Se o cliente já existe, chama a função editarCliente
                 container.viewContext.delete(pedidoADeletar)
                 salvar()
             }
@@ -370,20 +319,6 @@ class CoreDataModel: ObservableObject {
         }
     }
     
-    
-    func atualizar<Objeto>(entidade: NSManagedObject, objeto: Objeto) {
-        let mirror = Mirror(reflecting: objeto)
-        
-        // Iterando sobre as propriedades do objeto
-        for (nomePropriedade, valorPropriedade) in mirror.children {
-            guard let nomePropriedade = nomePropriedade else { continue }
-            entidade.setValue(valorPropriedade, forKey: nomePropriedade)
-        }
-        
-        
-        salvar()
-        
-    }
     
     func salvar() {
         do {

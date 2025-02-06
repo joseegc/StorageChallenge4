@@ -45,12 +45,6 @@ struct ListaDeClientesView: View {
                         }.padding(20)
                             .background(.amarelo)
                             .cornerRadius(8).foregroundColor(Color.accentColor)
-                            .contextMenu {
-                                Button("Deletar Cliente"){
-                                    
-                                }
-                            }
-                        
                     }
                 }
                 Spacer()

@@ -13,5 +13,5 @@ struct Foto {
     init(imagem: Data) {
         self.imagem = imagem
     }
-
+    
 }

@@ -25,8 +25,8 @@ protocol BancoDeDados {
     func buscarTodosClientes() throws -> [Cliente]
     func buscarTodosPedidosDoCliente(idDoCliente: UUID) throws -> [Pedido]
     func buscarTodosPedidos() throws -> [Pedido]
-//    func buscarTodasMedidasDoCliente(idDoCliente: UUID) throws -> [Medida]
-//    func buscarTodasMedidasDoPedido(idDoPedido: UUID) throws -> [Medida]
+    //    func buscarTodasMedidasDoCliente(idDoCliente: UUID) throws -> [Medida]
+    //    func buscarTodasMedidasDoPedido(idDoPedido: UUID) throws -> [Medida]
     func buscarTodasReferencias(idDoPedido: UUID) throws -> [Foto?]
     
     func buscarPorIdClientes(id: UUID) throws -> Cliente?
@@ -36,5 +36,4 @@ protocol BancoDeDados {
     func deletarPedido(id: UUID) throws
     func deletarMedida(id: UUID) throws
     func deletarReferencia(id: UUID) throws
-
 }
