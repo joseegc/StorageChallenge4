@@ -18,6 +18,7 @@ struct StorageChallengeApp: App {
                 ListaDeClientesView()
             }
             .environmentObject(clienteViewModel)
+            
             //                .environmentObject(pedidoViewModel)
         }
     }

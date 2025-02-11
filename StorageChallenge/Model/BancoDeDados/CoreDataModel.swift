@@ -147,6 +147,7 @@ class CoreDataModel: ObservableObject {
             let retorno = try container.viewContext.fetch(fetchRequest)
             if let clienteBD = retorno.first {
                 novaMedida.cliente = clienteBD
+
                 print("Associação da medida \(medida.id) com o cliente \(cliente.id) feita com sucesso.")
             } else {
                 print("Cliente não encontrado no Core Data para associar a medida.")

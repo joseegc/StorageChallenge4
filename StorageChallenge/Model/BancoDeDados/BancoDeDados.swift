@@ -8,7 +8,7 @@
 import Foundation
 
 
-protocol BancoDeDados {
+protocol BancoDeDados : ObservableObject {
     func salvarCliente(cliente: Cliente) throws
     func salvarPedido(pedido: Pedido, cliente: Cliente) throws
     func salvarMedidaAoPedido(medida: Medida, pedido: Pedido) throws

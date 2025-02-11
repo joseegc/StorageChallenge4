@@ -1,21 +1,23 @@
 //
-//  Cliente.swift
+//  ClienteSwiftData.swift
 //  StorageChallenge
 //
 //  Created by EDSON DE OLIVEIRA CORREIA on 11/02/25.
 //
 
 import Foundation
+import SwiftData
 
-struct Cliente: Identifiable {
+@Model
+final class ClienteSwiftData {
     var id = UUID()
     var nome: String
     var telefone: String?
     var foto: Data?
-    var pedidos: [Pedido]
-    var medidas: [Medida]
+    var pedidos: [PedidoSwiftData]
+    var medidas: [MedidaSwiftData]
     
-    init(id: UUID = UUID(), nome: String = "", telefone: String? = nil, foto: Data? = nil , pedidos: [Pedido] = [], medidas: [Medida] = []) {
+    init(id: UUID = UUID(), nome: String = "", telefone: String? = nil, foto: Data? = nil , pedidos: [PedidoSwiftData] = [], medidas: [MedidaSwiftData] = []) {
         self.id = id
         self.nome = nome
         self.telefone = telefone

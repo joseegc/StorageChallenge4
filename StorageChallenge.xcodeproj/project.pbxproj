@@ -28,8 +28,12 @@
 		9F5E214A2D4BFB1500B2F7F2 /* CoreDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5E21492D4BFB1500B2F7F2 /* CoreDataModel.swift */; };
 		9F60AE8F2D52B46A00F09776 /* SelecionarClienteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F60AE8E2D52B46A00F09776 /* SelecionarClienteView.swift */; };
 		9F8C24892D4C10090046FB2E /* ClienteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8C24882D4C10090046FB2E /* ClienteViewModel.swift */; };
-		9F8C248B2D4C10410046FB2E /* Cliente.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8C248A2D4C10410046FB2E /* Cliente.swift */; };
 		9FCD73A62D52AF1B00A5FC53 /* CadastrarEditarPedidoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FCD73A52D52AF1B00A5FC53 /* CadastrarEditarPedidoView.swift */; };
+		BC3086652D5BEEB600F9D042 /* ClienteSwiftData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3086642D5BEEB600F9D042 /* ClienteSwiftData.swift */; };
+		BC3086672D5BEF9700F9D042 /* MedidaSwiftData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3086662D5BEF9700F9D042 /* MedidaSwiftData.swift */; };
+		BCB276D52D5BF16F001C13E5 /* Cliente.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB276D42D5BF16F001C13E5 /* Cliente.swift */; };
+		BCB276D72D5BF46B001C13E5 /* PedidoSwiftData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB276D62D5BF46B001C13E5 /* PedidoSwiftData.swift */; };
+		BCB276D92D5BF573001C13E5 /* FotoSwiftData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB276D82D5BF573001C13E5 /* FotoSwiftData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,8 +60,12 @@
 		9F5E21492D4BFB1500B2F7F2 /* CoreDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataModel.swift; sourceTree = "<group>"; };
 		9F60AE8E2D52B46A00F09776 /* SelecionarClienteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelecionarClienteView.swift; sourceTree = "<group>"; };
 		9F8C24882D4C10090046FB2E /* ClienteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClienteViewModel.swift; sourceTree = "<group>"; };
-		9F8C248A2D4C10410046FB2E /* Cliente.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cliente.swift; sourceTree = "<group>"; };
 		9FCD73A52D52AF1B00A5FC53 /* CadastrarEditarPedidoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CadastrarEditarPedidoView.swift; sourceTree = "<group>"; };
+		BC3086642D5BEEB600F9D042 /* ClienteSwiftData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClienteSwiftData.swift; sourceTree = "<group>"; };
+		BC3086662D5BEF9700F9D042 /* MedidaSwiftData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedidaSwiftData.swift; sourceTree = "<group>"; };
+		BCB276D42D5BF16F001C13E5 /* Cliente.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cliente.swift; sourceTree = "<group>"; };
+		BCB276D62D5BF46B001C13E5 /* PedidoSwiftData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PedidoSwiftData.swift; sourceTree = "<group>"; };
+		BCB276D82D5BF573001C13E5 /* FotoSwiftData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FotoSwiftData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,7 +165,11 @@
 			isa = PBXGroup;
 			children = (
 				54DC04EC2D552872004C4A53 /* BancoDeDados */,
-				9F8C248A2D4C10410046FB2E /* Cliente.swift */,
+				BC3086642D5BEEB600F9D042 /* ClienteSwiftData.swift */,
+				BCB276D62D5BF46B001C13E5 /* PedidoSwiftData.swift */,
+				BCB276D82D5BF573001C13E5 /* FotoSwiftData.swift */,
+				BC3086662D5BEF9700F9D042 /* MedidaSwiftData.swift */,
+				BCB276D42D5BF16F001C13E5 /* Cliente.swift */,
 				547451E22D4D447B00F94D3E /* Foto.swift */,
 				547451E42D4D44F400F94D3E /* Medida.swift */,
 				547451E02D4D41A400F94D3E /* Pedido.swift */,
@@ -238,16 +250,19 @@
 			files = (
 				8B6633092D53D58B00A6E5CC /* ListaDeClientesView.swift in Sources */,
 				9F5E214A2D4BFB1500B2F7F2 /* CoreDataModel.swift in Sources */,
+				BCB276D92D5BF573001C13E5 /* FotoSwiftData.swift in Sources */,
 				8B504FAF2D5135C300019D23 /* SwiftDataImplementacao.swift in Sources */,
 				8B7395412D4D529F00FAC6D2 /* PedidoViewModel.swift in Sources */,
+				BCB276D72D5BF46B001C13E5 /* PedidoSwiftData.swift in Sources */,
+				BCB276D52D5BF16F001C13E5 /* Cliente.swift in Sources */,
 				9F8C24892D4C10090046FB2E /* ClienteViewModel.swift in Sources */,
-				9F8C248B2D4C10410046FB2E /* Cliente.swift in Sources */,
 				9FCD73A62D52AF1B00A5FC53 /* CadastrarEditarPedidoView.swift in Sources */,
 				547451E32D4D447B00F94D3E /* Foto.swift in Sources */,
 				9F5E21322D4BF79D00B2F7F2 /* StorageChallengeApp.swift in Sources */,
 				9F58B1B62D4D4977009ABAB7 /* PerfilDoClienteView.swift in Sources */,
 				547451E12D4D41A400F94D3E /* Pedido.swift in Sources */,
 				547451E72D4D453800F94D3E /* Pagamento.swift in Sources */,
+				BC3086652D5BEEB600F9D042 /* ClienteSwiftData.swift in Sources */,
 				9F60AE8F2D52B46A00F09776 /* SelecionarClienteView.swift in Sources */,
 				9F5E21372D4BF79D00B2F7F2 /* AppContainer.xcdatamodeld in Sources */,
 				9F58B1B82D4D4B73009ABAB7 /* CadastrarEditarClienteView.swift in Sources */,
@@ -259,6 +274,7 @@
 				8B73953D2D4D46A000FAC6D2 /* TabBarView.swift in Sources */,
 				8B504FAB2D51355D00019D23 /* BancoDeDados.swift in Sources */,
 				8B73953F2D4D4A6300FAC6D2 /* ListarPedidosView.swift in Sources */,
+				BC3086672D5BEF9700F9D042 /* MedidaSwiftData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

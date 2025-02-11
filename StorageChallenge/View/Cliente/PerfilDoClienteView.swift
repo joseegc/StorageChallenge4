@@ -62,7 +62,7 @@ struct PerfilDoClienteView: View {
                                                 .truncationMode(.tail)
                                                 .multilineTextAlignment(.leading)
                                                 .font(.callout)
-                                                .fontWeight(.thin)
+                                                .fontWeight(.regular)
                                             
                                             
                                             Spacer()
