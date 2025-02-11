@@ -221,7 +221,7 @@ class CoreDataModel: ObservableObject {
                     var cliente = Cliente(
                         id: clienteBD.id!,
                         nome: clienteBD.nome!,
-                        telefone: clienteBD.telefone,
+                        telefone: clienteBD.telefone!,
                         foto: clienteBD.foto
                     )
                     if clienteBD.medidas != nil{
@@ -301,7 +301,7 @@ class CoreDataModel: ObservableObject {
                     var cliente = Cliente(
                         id: clienteBD.id!,
                         nome: clienteBD.nome!,
-                        telefone: clienteBD.telefone,
+                        telefone: clienteBD.telefone!,
                         foto: clienteBD.foto
                     )
                     if clienteBD.medidas != nil{

@@ -304,7 +304,7 @@ class CoreDataImplementacao: BancoDeDados {
                     var cliente = Cliente(
                         id: clienteBD.id!,
                         nome: clienteBD.nome!,
-                        telefone: clienteBD.telefone,
+                        telefone: clienteBD.telefone!,
                         foto: clienteBD.foto
                     )
                     if clienteBD.medidas != nil{
@@ -407,7 +407,7 @@ class CoreDataImplementacao: BancoDeDados {
                 let cliente = Cliente(
                     id: retorno.id!,
                     nome: retorno.nome!,
-                    telefone: retorno.telefone,
+                    telefone: retorno.telefone!,
                     foto: retorno.foto
                 )
             } else {

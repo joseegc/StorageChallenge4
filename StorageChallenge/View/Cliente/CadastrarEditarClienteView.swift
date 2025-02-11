@@ -37,6 +37,32 @@ struct CadastrarEditarClienteView: View {
         return formatter
     }()
     
+    func formatPhoneNumber(_ phone: Binding<String>) -> Binding<String> {
+        return Binding<String>(
+            get: {
+                // Pega o valor atual e formata
+                let digits = phone.wrappedValue.filter { "0123456789".contains($0) }
+                if digits.isEmpty {
+                    return ""
+                } else if digits.count >= 2 {
+                    return "(\(digits))"
+                } else if digits.count >= 10 {
+                    let area = digits.prefix(2)
+                    let firstPart = digits.dropFirst(2).prefix(4)
+                    let secondPart = digits.dropFirst(6).prefix(4)
+                    return "(\(area)) \(firstPart)-\(secondPart)"
+                } else {
+                    return digits
+                }
+            },
+            set: { newValue in
+                // Aqui você pode atualizar o valor sem formatação se desejar;
+                // Neste exemplo, simplesmente atualizamos o valor original
+                phone.wrappedValue = newValue
+            }
+        )
+    }
+    
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 30) {
@@ -79,11 +105,11 @@ struct CadastrarEditarClienteView: View {
                 }.padding(.horizontal)
                 
                 VStack(alignment: .leading, spacing: 5) {
-                    TextField("Telefone", text: Binding(
-                        get: { clienteInput.telefone ?? "" },
-                        set: { clienteInput.telefone = $0 }
-                    ))
-                    .keyboardType(.decimalPad)
+                    
+                    TextField("Telefone", text: formatPhoneNumber($clienteInput.telefone)
+                    )
+                        
+                    .keyboardType(.numberPad)
                     Rectangle().fill(Color("cinzaEscuro")).frame(height: 1)
                 }.padding(.horizontal)
                 
@@ -96,7 +122,11 @@ struct CadastrarEditarClienteView: View {
                     }
                     
                     
-                    
+//                    HStack {
+//                        Text("Descrição")
+//                        Spacer()
+//                        Text("Medida").padding(.trailing, 55)
+//                    }
                     
                     // Exibe as medidas
                     ForEach($clienteInput.medidas) { $medida in
@@ -104,7 +134,7 @@ struct CadastrarEditarClienteView: View {
                             VStack(spacing: 5) {
                                 HStack {
                                     // TextField para Descricao
-                                    TextField("Descrição", text: $medida.descricao) // Vincula diretamente ao estado da medida
+                                    TextField("Exemplo: Busto", text: $medida.descricao) // Vincula diretamente ao estado da medida
                                     
                                     Spacer()
                                     

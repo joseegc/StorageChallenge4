@@ -37,10 +37,8 @@ struct ListaDeClientesView: View {
                             VStack(alignment: .leading){
                                 Text(cliente.nome)
                                     .font(.title2)
-                                
-                                if let telefone = cliente.telefone {
-                                    Text(telefone).font(.title3)
-                                }
+                                    Text(cliente.telefone).font(.title3)
+        
                             }
                             Spacer()
                             Image(systemName: "chevron.forward")
