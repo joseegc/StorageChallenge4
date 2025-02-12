@@ -20,6 +20,7 @@ struct CadastrarEditarClienteView: View {
     var idDoCliente: UUID?
     
     @State var medidas :[Medida] = []
+    @State var telefoneValido: Bool = true
     
     
     var fotoExibida: Image {
@@ -37,30 +38,35 @@ struct CadastrarEditarClienteView: View {
         return formatter
     }()
     
-    func formatPhoneNumber(_ phone: Binding<String>) -> Binding<String> {
-        return Binding<String>(
-            get: {
-                // Pega o valor atual e formata
-                let digits = phone.wrappedValue.filter { "0123456789".contains($0) }
-                if digits.isEmpty {
-                    return ""
-                } else if digits.count >= 2 {
-                    return "(\(digits))"
-                } else if digits.count >= 10 {
-                    let area = digits.prefix(2)
-                    let firstPart = digits.dropFirst(2).prefix(4)
-                    let secondPart = digits.dropFirst(6).prefix(4)
-                    return "(\(area)) \(firstPart)-\(secondPart)"
-                } else {
-                    return digits
-                }
-            },
-            set: { newValue in
-                // Aqui você pode atualizar o valor sem formatação se desejar;
-                // Neste exemplo, simplesmente atualizamos o valor original
-                phone.wrappedValue = newValue
-            }
-        )
+    func formatPhoneNumber(_ number: String) -> String {
+        let digits = number.filter { "0123456789".contains($0) }
+        
+        if digits.isEmpty {
+            return ""
+        }
+        
+        if digits.count >= 11 {
+            let area = digits.prefix(2)
+            let firstPart = digits.dropFirst(2).prefix(5)
+            let secondPart = digits.dropFirst(7).prefix(4)
+            return "(\(area)) \(firstPart)-\(secondPart)"
+        }
+        else if digits.count == 10 {
+            let area = digits.prefix(2)
+            let firstPart = digits.dropFirst(2).prefix(4)
+            let secondPart = digits.dropFirst(6).prefix(4)
+            return "(\(area)) \(firstPart)-\(secondPart)"
+        }
+        else {
+            return digits
+        }
+    }
+    
+    func isValidPhoneNumber(_ phone: String) -> Bool {
+        let pattern = #"^\(\d{2}\)\s?\d{4,5}-\d{4}$"#
+        let predicate = NSPredicate(format: "SELF MATCHES %@", pattern)
+        telefoneValido = predicate.evaluate(with: phone)
+        return predicate.evaluate(with: phone)
     }
     
     var body: some View {
@@ -106,11 +112,22 @@ struct CadastrarEditarClienteView: View {
                 
                 VStack(alignment: .leading, spacing: 5) {
                     
-                    TextField("Telefone", text: formatPhoneNumber($clienteInput.telefone)
-                    )
+                    TextField("Telefone", text: $clienteInput.telefone
+                    ).onChange(of: clienteInput.telefone) { newValue in
+                        let formatted = formatPhoneNumber(newValue)
+                        if formatted != newValue {
+                            clienteInput.telefone = formatted
+                        }
+                        if formatted.count >= 10 {
+                            telefoneValido = true
+                        }
+                    }
                         
                     .keyboardType(.numberPad)
                     Rectangle().fill(Color("cinzaEscuro")).frame(height: 1)
+                    if (!telefoneValido) {
+                        Text("Telefone Inválido").bold().foregroundStyle(Color(.red))
+                    }
                 }.padding(.horizontal)
                 
                 
@@ -227,27 +244,30 @@ struct CadastrarEditarClienteView: View {
             .toolbar {
                 ToolbarItem {
                     Button(action: {
-                        if let imageData = self.imagem?.pngData() {
-                            clienteInput.foto = imageData
-                        }
-                        
-                        //                        clienteInput.medidas = medidas
-                        clientesViewModel.cliente.medidas = clienteInput.medidas
-                        
-                        
-                        clientesViewModel.cliente = clienteInput
-                        print(clientesViewModel.cliente.medidas)
-                        if idDoCliente != nil {
-                            clientesViewModel.editarCliente()
-                        } else {
-                            clientesViewModel.adicionarClienteAoBanco()
-                            print("Adicionando ao banco")
+                        if isValidPhoneNumber(clienteInput.telefone) {
+                            if let imageData = self.imagem?.pngData() {
+                                clienteInput.foto = imageData
+                            }
                             
+                            //                        clienteInput.medidas = medidas
+                            clientesViewModel.cliente.medidas = clienteInput.medidas
+                            
+                            
+                            clientesViewModel.cliente = clienteInput
+                            print(clientesViewModel.cliente.medidas)
+                            if idDoCliente != nil {
+                                clientesViewModel.editarCliente()
+                            } else {
+                                clientesViewModel.adicionarClienteAoBanco()
+                                print("Adicionando ao banco")
+                                
+                            }
+                            
+                            
+                            
+                            clientesViewModel.buscarTodosClientes()
+                            presentationMode.wrappedValue.dismiss()
                         }
-                        
-                        
-                        clientesViewModel.buscarTodosClientes()
-                        presentationMode.wrappedValue.dismiss()
                     }) {
                         Text("Salvar")
                     }
