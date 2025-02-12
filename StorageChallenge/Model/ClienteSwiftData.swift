@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 @Model
-final class ClienteSwiftData {
+class ClienteSwiftData {
     var id = UUID()
     var nome: String
     var telefone: String?

@@ -5,16 +5,17 @@ import SwiftUI
 
 
 class SwiftDataViewModel: ObservableObject {
+    private let bancoDeDados : SwiftDataModel
+    
     @Published var clientes: [Cliente] = []
     
     @Published var cliente = Cliente(id: UUID(),nome: "Antonio", telefone: "(11) 98078-9146", pedidos: [Pedido(titulo: "Vestido", statusDaEntrega: "Completo", observacoes: "Braco gigantesco", dataDeEntrega: Date(), cliente: Cliente(nome: "Antonio"))], medidas:[])
     
-    init(){
+    init(bancoDeDados: SwiftDataModel) {
+        self.bancoDeDados = bancoDeDados
         
-      
-        buscarTodosClientes()
+//        buscarTodosClientes()
     }
-    
     
 //    func adicionarClienteAoBanco() {
 //        print(self.cliente)
@@ -35,10 +36,10 @@ class SwiftDataViewModel: ObservableObject {
 //        buscarTodosClientes()
 //    }
     
-    func buscarTodosClientes() {
-        
-//        self.clientes =
-    }
+//    func buscarTodosClientes() {
+//        self.clientes = bancoDeDados.buscarTodosClientes()
+////        self.clientes =
+//    }
 //    func buscarClientePorId(idDoCliente: UUID) -> Cliente {
 //        var cliente = Cliente()
 //        if let clienteBuscado = CoreDataModel.shared.buscarClientePorId(idDoCliente: idDoCliente) {

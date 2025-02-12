@@ -29,6 +29,7 @@
 		9F60AE8F2D52B46A00F09776 /* SelecionarClienteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F60AE8E2D52B46A00F09776 /* SelecionarClienteView.swift */; };
 		9F8C24892D4C10090046FB2E /* ClienteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8C24882D4C10090046FB2E /* ClienteViewModel.swift */; };
 		9FCD73A62D52AF1B00A5FC53 /* CadastrarEditarPedidoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FCD73A52D52AF1B00A5FC53 /* CadastrarEditarPedidoView.swift */; };
+		BC1ECE302D5CF5F30070C289 /* SwiftDataTeste2View.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC1ECE2F2D5CF5F30070C289 /* SwiftDataTeste2View.swift */; };
 		BC2AE8482D5CE2450087D4C7 /* SwiftDataTesteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2AE8472D5CE2450087D4C7 /* SwiftDataTesteView.swift */; };
 		BC2AE84A2D5CE26B0087D4C7 /* SwiftDataViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2AE8492D5CE26B0087D4C7 /* SwiftDataViewModel.swift */; };
 		BC3086652D5BEEB600F9D042 /* ClienteSwiftData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3086642D5BEEB600F9D042 /* ClienteSwiftData.swift */; };
@@ -63,6 +64,7 @@
 		9F60AE8E2D52B46A00F09776 /* SelecionarClienteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelecionarClienteView.swift; sourceTree = "<group>"; };
 		9F8C24882D4C10090046FB2E /* ClienteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClienteViewModel.swift; sourceTree = "<group>"; };
 		9FCD73A52D52AF1B00A5FC53 /* CadastrarEditarPedidoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CadastrarEditarPedidoView.swift; sourceTree = "<group>"; };
+		BC1ECE2F2D5CF5F30070C289 /* SwiftDataTeste2View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDataTeste2View.swift; sourceTree = "<group>"; };
 		BC2AE8472D5CE2450087D4C7 /* SwiftDataTesteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDataTesteView.swift; sourceTree = "<group>"; };
 		BC2AE8492D5CE26B0087D4C7 /* SwiftDataViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDataViewModel.swift; sourceTree = "<group>"; };
 		BC3086642D5BEEB600F9D042 /* ClienteSwiftData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClienteSwiftData.swift; sourceTree = "<group>"; };
@@ -88,6 +90,7 @@
 			children = (
 				8B73953C2D4D46A000FAC6D2 /* TabBarView.swift */,
 				BC2AE8472D5CE2450087D4C7 /* SwiftDataTesteView.swift */,
+				BC1ECE2F2D5CF5F30070C289 /* SwiftDataTeste2View.swift */,
 				54DC04ED2D5528A0004C4A53 /* Pedido */,
 				54DC04EA2D552704004C4A53 /* Cliente */,
 			);
@@ -257,6 +260,7 @@
 				8B6633092D53D58B00A6E5CC /* ListaDeClientesView.swift in Sources */,
 				9F5E214A2D4BFB1500B2F7F2 /* CoreDataModel.swift in Sources */,
 				BCB276D92D5BF573001C13E5 /* FotoSwiftData.swift in Sources */,
+				BC1ECE302D5CF5F30070C289 /* SwiftDataTeste2View.swift in Sources */,
 				8B504FAF2D5135C300019D23 /* SwiftDataImplementacao.swift in Sources */,
 				8B7395412D4D529F00FAC6D2 /* PedidoViewModel.swift in Sources */,
 				BCB276D72D5BF46B001C13E5 /* PedidoSwiftData.swift in Sources */,
