@@ -11,7 +11,7 @@ struct PerfilDoClienteView: View {
     //    let cliente: ClienteEntity
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.colorScheme) var colorScheme
-    @EnvironmentObject var clientesViewModel: ClienteViewModel
+    @EnvironmentObject var clientesViewModel: ClienteViewModel2
     
     @State var cliente: Cliente
     
@@ -169,7 +169,7 @@ struct PerfilDoClienteView: View {
             }
         }
         .onAppear {
-            cliente = clientesViewModel.buscarClientePorId(idDoCliente: cliente.id)
+            cliente = clientesViewModel.buscarClientePorId(id: cliente.id)!
             
             
             

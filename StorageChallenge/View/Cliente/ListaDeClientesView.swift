@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ListaDeClientesView: View {
-    @EnvironmentObject var viewModel: ClienteViewModel
+    @EnvironmentObject var viewModel: ClienteViewModel2
     @State var nomeBuscado = ""
     @State var mensagemDeErro = "Não há nenhum cliente cadastrado"
     
@@ -79,7 +79,7 @@ struct ListaDeClientesView: View {
                         mensagemDeErro = "Não há nenhum cliente cadastrado"
                     }
                 } else {
-                    viewModel.buscarClientePorNome(nome: novoNome)
+                    viewModel.buscarClientesPorNome(nome: novoNome)
                     
                     if viewModel.clientes.isEmpty {
                         mensagemDeErro = "Nenhum cliente encontrado"
