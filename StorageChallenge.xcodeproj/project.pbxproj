@@ -29,6 +29,8 @@
 		9F60AE8F2D52B46A00F09776 /* SelecionarClienteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F60AE8E2D52B46A00F09776 /* SelecionarClienteView.swift */; };
 		9F8C24892D4C10090046FB2E /* ClienteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8C24882D4C10090046FB2E /* ClienteViewModel.swift */; };
 		9FCD73A62D52AF1B00A5FC53 /* CadastrarEditarPedidoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FCD73A52D52AF1B00A5FC53 /* CadastrarEditarPedidoView.swift */; };
+		BC2AE8482D5CE2450087D4C7 /* SwiftDataTesteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2AE8472D5CE2450087D4C7 /* SwiftDataTesteView.swift */; };
+		BC2AE84A2D5CE26B0087D4C7 /* SwiftDataViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2AE8492D5CE26B0087D4C7 /* SwiftDataViewModel.swift */; };
 		BC3086652D5BEEB600F9D042 /* ClienteSwiftData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3086642D5BEEB600F9D042 /* ClienteSwiftData.swift */; };
 		BC3086672D5BEF9700F9D042 /* MedidaSwiftData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3086662D5BEF9700F9D042 /* MedidaSwiftData.swift */; };
 		BCB276D52D5BF16F001C13E5 /* Cliente.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB276D42D5BF16F001C13E5 /* Cliente.swift */; };
@@ -61,6 +63,8 @@
 		9F60AE8E2D52B46A00F09776 /* SelecionarClienteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelecionarClienteView.swift; sourceTree = "<group>"; };
 		9F8C24882D4C10090046FB2E /* ClienteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClienteViewModel.swift; sourceTree = "<group>"; };
 		9FCD73A52D52AF1B00A5FC53 /* CadastrarEditarPedidoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CadastrarEditarPedidoView.swift; sourceTree = "<group>"; };
+		BC2AE8472D5CE2450087D4C7 /* SwiftDataTesteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDataTesteView.swift; sourceTree = "<group>"; };
+		BC2AE8492D5CE26B0087D4C7 /* SwiftDataViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDataViewModel.swift; sourceTree = "<group>"; };
 		BC3086642D5BEEB600F9D042 /* ClienteSwiftData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClienteSwiftData.swift; sourceTree = "<group>"; };
 		BC3086662D5BEF9700F9D042 /* MedidaSwiftData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedidaSwiftData.swift; sourceTree = "<group>"; };
 		BCB276D42D5BF16F001C13E5 /* Cliente.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cliente.swift; sourceTree = "<group>"; };
@@ -83,6 +87,7 @@
 			isa = PBXGroup;
 			children = (
 				8B73953C2D4D46A000FAC6D2 /* TabBarView.swift */,
+				BC2AE8472D5CE2450087D4C7 /* SwiftDataTesteView.swift */,
 				54DC04ED2D5528A0004C4A53 /* Pedido */,
 				54DC04EA2D552704004C4A53 /* Cliente */,
 			);
@@ -108,6 +113,7 @@
 				8B504FAA2D51355D00019D23 /* BancoDeDados.swift */,
 				8B504FAC2D5135AE00019D23 /* CoreDataImplementacao.swift */,
 				8B504FAE2D5135C300019D23 /* SwiftDataImplementacao.swift */,
+				BC2AE8492D5CE26B0087D4C7 /* SwiftDataViewModel.swift */,
 				9F5E21492D4BFB1500B2F7F2 /* CoreDataModel.swift */,
 			);
 			path = BancoDeDados;
@@ -262,8 +268,10 @@
 				9F58B1B62D4D4977009ABAB7 /* PerfilDoClienteView.swift in Sources */,
 				547451E12D4D41A400F94D3E /* Pedido.swift in Sources */,
 				547451E72D4D453800F94D3E /* Pagamento.swift in Sources */,
+				BC2AE8482D5CE2450087D4C7 /* SwiftDataTesteView.swift in Sources */,
 				BC3086652D5BEEB600F9D042 /* ClienteSwiftData.swift in Sources */,
 				9F60AE8F2D52B46A00F09776 /* SelecionarClienteView.swift in Sources */,
+				BC2AE84A2D5CE26B0087D4C7 /* SwiftDataViewModel.swift in Sources */,
 				9F5E21372D4BF79D00B2F7F2 /* AppContainer.xcdatamodeld in Sources */,
 				9F58B1B82D4D4B73009ABAB7 /* CadastrarEditarClienteView.swift in Sources */,
 				547451E52D4D44F400F94D3E /* Medida.swift in Sources */,

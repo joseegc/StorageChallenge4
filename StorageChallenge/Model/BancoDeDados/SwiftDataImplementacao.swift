@@ -18,7 +18,7 @@ class SwiftDataModel: ObservableObject {
         let cliente = ClienteSwiftData(nome: "Jorge", telefone: "Carlitos")
     }
     
-    func buscarClientes() -> [ClienteSwiftData] {
+    func buscarTodosClientes() -> [ClienteSwiftData] {
         return clientes
     }
     
