@@ -13,7 +13,6 @@
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="valor" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
         <relationship name="cliente" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ClienteEntity" inverseName="medidas" inverseEntity="ClienteEntity"/>
-        <relationship name="pedido" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PedidoEntity" inverseName="medidas" inverseEntity="PedidoEntity"/>
     </entity>
     <entity name="PagamentoEntity" representedClassName="PagamentoEntity" syncable="YES" codeGenerationType="class">
         <attribute name="statusDoPagamento" optional="YES" attributeType="String"/>
@@ -27,7 +26,6 @@
         <attribute name="statusDeEntrega" optional="YES" attributeType="String"/>
         <attribute name="titulo" optional="YES" attributeType="String"/>
         <relationship name="cliente" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ClienteEntity" inverseName="pedidos" inverseEntity="ClienteEntity"/>
-        <relationship name="medidas" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MedidaEntity" inverseName="pedido" inverseEntity="MedidaEntity"/>
         <relationship name="pagamento" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PagamentoEntity" inverseName="pedido" inverseEntity="PagamentoEntity"/>
         <relationship name="referencias" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ReferenciaEntity" inverseName="pedido" inverseEntity="ReferenciaEntity"/>
     </entity>

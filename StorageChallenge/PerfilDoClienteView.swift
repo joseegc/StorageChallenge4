@@ -17,8 +17,9 @@ struct PerfilDoClienteView: View {
     @State var mostrarAlertaDeExcluir = false
     
     var body: some View {
+        ScrollView{
             VStack(spacing: 50) {
-               
+                
                 //MARK: MEDIDAS TITULO E CARD
                 VStack(spacing: 14) {
                     HStack {
@@ -33,7 +34,6 @@ struct PerfilDoClienteView: View {
                         VStack
                         {
                             Image("silhueta")
-                            
                         }
                         .padding(.horizontal, 20)
                         
@@ -41,72 +41,80 @@ struct PerfilDoClienteView: View {
                             if cliente.medidas.isEmpty {
                                 VStack {
                                     Spacer()
-                                    Text("Sem medidas cadastradas \(cliente.id)")
+                                    Text("Sem medidas cadastradas!")
                                         .foregroundStyle(Color.pretoFix)
-                                    
                                     Spacer()
                                 }
                             }else {
-                                    ScrollView {
-                                        
-                                            ForEach(cliente.medidas) { medida in
-                                                VStack(spacing: 0) {
-                                                    HStack {
-                                                        Text("\(medida.descricao)")
-                                                            .frame(width: 100, alignment: .leading)  // Define uma largura fixa e alinha o texto à esquerda
-                                                            .lineLimit(1)       // Limita a uma linha
-                                                            .truncationMode(.tail) // Adiciona reticências no final do texto
-                                                            .multilineTextAlignment(.leading)  // Alinha o texto à esquerda
-                                                            .font(.callout)
-                                                            .fontWeight(.thin)
-                                                        
-                                                        Spacer()
-                                                        Text("\(String(format: "%.1f", medida.valor)) cm")
-                                                            .fontWeight(.thin)
-                                                        
-                                                    }
-                                                    Divider()
-                                                        .padding(.vertical, 12)
-                                                }
-                                                .foregroundStyle(Color(.pretoFix))
+                                ScrollView {
+                                    ForEach(cliente.medidas) { medida in
+                                        VStack(spacing: 0) {
+                                            HStack {
+                                                Text("\(medida.descricao)")
+                                                    .frame(width: 100, alignment: .leading)  // Define uma largura fixa e alinha o texto à esquerda
+                                                    .lineLimit(1)       // Limita a uma linha
+                                                    .truncationMode(.tail) // Adiciona reticências no final do texto
+                                                    .multilineTextAlignment(.leading)  // Alinha o texto à esquerda
+                                                    .font(.callout)
+                                                    .fontWeight(.thin)
                                                 
+                                                Spacer()
+                                                Text("\(String(format: "%.1f", medida.valor)) cm")
+                                                    .fontWeight(.thin)
+                                                
+                                            }
+                                            Divider()
+                                                .padding(.vertical, 12)
                                         }
+                                        .foregroundStyle(Color(.pretoFix))
                                         
                                     }
-                                    .padding(24)
-                                    .scrollIndicators(.visible) // Garante que a barra de rolagem seja visível
+                                    
                                 }
+                            }
                             
                         }.frame(maxWidth: .infinity, maxHeight: .infinity)
                             .background(Color(.amarelo))
                     }
                     .frame(height: 269)
-                    
                     .background(Color(.cinzaClaro))
-                    .clipShape(.rect(cornerRadius: 20))
-                    
+                    .clipShape(.rect(cornerRadius: 20)) 
                 }
-                Spacer()
+                VStack{
+                    HStack{
+                        Text("Pedidos")
+                            .font(.title2)
+                            .fontWeight(.bold)
+                        Spacer()
+                        NavigationLink(destination: CadastrarEditarPedidoView(cliente: cliente)) {
+                            Image(systemName: "plus")
+                        }
+                    }
+                    if(cliente.pedidos.isEmpty){
+                        Text("Nenhum pedido registrado!")
+                    } else {
+                        ListaDePedidosView()
+                    }
+                }
             }
-            .padding(.horizontal, 24)
-            .padding(.top, 50)
+        }.padding(.horizontal, 24)
             .navigationTitle(cliente.nome)
             .navigationBarTitleDisplayMode(.inline)
             .background(Color(.corDeFundo))
             .edgesIgnoringSafeArea(.bottom)
             .alert(isPresented: $mostrarAlertaDeExcluir) {
-                            Alert(
-                                title: Text("Excluir Cliente"),
-                                message: Text("Tem certeza de que deseja excluir este cliente? Esta ação não pode ser desfeita."),
-                                primaryButton: .destructive(Text("Excluir")) {
-                                    print("chamou deletar")
-                                    viewModel.deletarCliente(idDoCliente: cliente.id)
-                                    
-                                    presentationMode.wrappedValue.dismiss()
-                                },
-                                secondaryButton: .cancel()
-                            )
-                        }
+                Alert(
+                    title: Text("Excluir Cliente"),
+                    message: Text("Tem certeza de que deseja excluir este cliente? Esta ação não pode ser desfeita."),
+                    primaryButton: .destructive(Text("Excluir")) {
+                        print("chamou deletar")
+                        viewModel.deletarCliente(idDoCliente: cliente.id)
+                        
+                        presentationMode.wrappedValue.dismiss()
+                    },
+                    secondaryButton: .cancel()
+                )
+            }
             .toolbar {
                 ToolbarItem {
                     
@@ -117,13 +125,14 @@ struct PerfilDoClienteView: View {
                 ToolbarItem {
                     Button {
                         mostrarAlertaDeExcluir.toggle()
-                    } 
-                label: {
-                        Image(systemName: "trash.circle.fill")
-                        .padding(.leading, -5)
                     }
+                label: {
+                    Image(systemName: "trash.circle.fill")
+                        .padding(.leading, -5)
+                }
                 }
             }
+        
     }
     
 }

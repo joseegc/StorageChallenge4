@@ -16,13 +16,21 @@ class ClienteViewModel2: ObservableObject {
     
     init(bancoDeDados: BancoDeDados) {
         self.bancoDeDados = bancoDeDados
-        carregarClientes()
+//        carregarClientes()
+    }
+    
+    func savarCliente(cliente: Cliente) {
+        do {
+            try bancoDeDados.salvarCliente(cliente: cliente)
+        } catch {
+            print("Erro ao salvar clientes: \(error)")
+        }
     }
     
     
     func carregarClientes() {
         do {
-            clientes = try bancoDeDados.buscarTodosClientes()
+            self.clientes = try bancoDeDados.buscarTodosClientes()
         } catch {
             print("Erro ao carregar clientes: \(error)")
         }
@@ -37,13 +45,13 @@ class ClienteViewModel2: ObservableObject {
         }
     }
     
-    func buscarClientePorId(id: UUID) {
-        do {
-            cliente = try bancoDeDados.buscarClientePorId(idDoCliente: id)
-        } catch {
-            print("Erro ao deletar cliente: \(error)")
-        }
-    }
+//    func buscarClientePorId(id: UUID) {
+//        do {
+//            cliente = try bancoDeDados.buscarClientePorId(idDoCliente: id)
+//        } catch {
+//            print("Erro ao deletar cliente: \(error)")
+//        }
+//    }
     
     func editarCliente(){
         do {

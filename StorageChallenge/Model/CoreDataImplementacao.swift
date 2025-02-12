@@ -8,7 +8,7 @@
 import CoreData
 
 class CoreDataImplementacao: BancoDeDados {
-
+    
     let container: NSPersistentContainer
     
     init() {
@@ -20,25 +20,6 @@ class CoreDataImplementacao: BancoDeDados {
         }
     }
     
-    func buscarClientePorId(idDoCliente: UUID) throws -> Cliente {
-        let fetchRequest: NSFetchRequest<ClienteEntity> = ClienteEntity.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "id == %@", idDoCliente.uuidString)
-        var cliente: Cliente = Cliente()
-        do {
-            let retorno = try container.viewContext.fetch(fetchRequest)
-            
-            if let clienteBD = retorno.first {
-                cliente = Cliente(id: clienteBD.id!, nome: clienteBD.nome!, telefone: clienteBD.telefone!)
-                if clienteBD.pedidos != nil {
-                    let pedidos = try buscarTodosPedidos(idDoCliente: clienteBD.id!)
-                    cliente.pedidos = pedidos
-                }
-            }
-        } catch {
-            print("Erro ao buscar cliente por id no Core Data: \(error)")
-        }
-        return cliente
-    }
     
     func salvarCliente(cliente: Cliente) throws {
         let novoCliente = ClienteEntity(context: container.viewContext)
@@ -154,8 +135,20 @@ class CoreDataImplementacao: BancoDeDados {
                     }
                     
                     if clienteBD.pedidos != nil{
-                        let pedidosDoCliente = try buscarTodosPedidos(idDoCliente: clienteBD.id!)
-                        cliente.pedidos = pedidosDoCliente
+                        let fetchRequestPedido: NSFetchRequest<PedidoEntity> = PedidoEntity.fetchRequest()
+                        fetchRequestPedido.predicate = NSPredicate(format: "cliente == %@", clienteBD)
+                        
+                        let retornoPedidos = try container.viewContext.fetch(fetchRequestPedido)
+                        if (!retornoPedidos.isEmpty){
+                            for pedidoBD in retornoPedidos{
+                                let pedido = Pedido(id: pedidoBD.id!,
+                                                    titulo: pedidoBD.titulo!,
+                                                    statusDaEntrega: pedidoBD.statusDeEntrega!,
+                                                    observacoes: pedidoBD.statusDeEntrega
+                                )
+                                cliente.pedidos.append(pedido)
+                            }
+                        }
                     }
                     clientes.append(cliente)
                 }
@@ -207,89 +200,95 @@ class CoreDataImplementacao: BancoDeDados {
         }
     }
     
-    func buscarTodosPedidos(idDoCliente: UUID?) throws -> [Pedido] {
-        let requisicao = NSFetchRequest<PedidoEntity>(entityName: "PedidoEntity")
-        
-        if idDoCliente != nil {
-            let fetchRequest: NSFetchRequest<ClienteEntity> = ClienteEntity.fetchRequest()
-            fetchRequest.predicate = NSPredicate(format: "id == %@", idDoCliente!.uuidString)
-            let retorno = try container.viewContext.fetch(fetchRequest)
-            let cliente = retorno.first
-            
-            requisicao.predicate = NSPredicate(format: "cliente == %@", cliente!)
-        }
-        
-        var pedidos: [Pedido] = []
-        do {
-            let resposta = try container.viewContext.fetch(requisicao)
-            
-            if !resposta.isEmpty {
-                for pedidoBD in resposta{
-                    var pedido = Pedido(
-                        id: pedidoBD.id!,
-                        titulo: pedidoBD.titulo!,
-                        statusDaEntrega: pedidoBD.statusDeEntrega!,
-                        observacoes: pedidoBD.observacoes,
-                        dataDeEntrega: pedidoBD.dataDeEntrega!
-                    )
-                    if pedidoBD.referencias != nil {
-                        let fetchRequestReferencia: NSFetchRequest<ReferenciaEntity> = ReferenciaEntity.fetchRequest()
-                        fetchRequestReferencia.predicate = NSPredicate(format: "pedido == %@", pedidoBD)
-                        
-                        let retornoReferencia = try container.viewContext.fetch(fetchRequestReferencia)
-                        
-                        if retornoReferencia.isEmpty{
-                            for referencia in retornoReferencia{
-                                let referencia = Foto(imagem: referencia.imagem!)
-                                pedido.referencias?.append(referencia)
-                            }
-                        }
-                        
-                    }
-                }
-            }
-        } catch let error {
-            print("erro ao buscar pedidos \(error)")
-        }
-        return pedidos
-    }
+//    func buscarTodosPedidos(idDoCliente: UUID) throws -> [Pedido] {
+//        
+//        
+//        
+//        
+//        
+//        
+//        let requisicao = NSFetchRequest<PedidoEntity>(entityName: "PedidoEntity")
+//        
+//        if idDoCliente != nil {
+//            let fetchRequest: NSFetchRequest<ClienteEntity> = ClienteEntity.fetchRequest()
+//            fetchRequest.predicate = NSPredicate(format: "id == %@", idDoCliente!.uuidString)
+//            let retorno = try container.viewContext.fetch(fetchRequest)
+//            let cliente = retorno.first
+//            
+//            requisicao.predicate = NSPredicate(format: "cliente == %@", cliente!)
+//        }
+//        
+//        var pedidos: [Pedido] = []
+//        do {
+//            let resposta = try container.viewContext.fetch(requisicao)
+//            
+//            if !resposta.isEmpty {
+//                for pedidoBD in resposta{
+//                    var pedido = Pedido(
+//                        id: pedidoBD.id!,
+//                        titulo: pedidoBD.titulo!,
+//                        statusDaEntrega: pedidoBD.statusDeEntrega!,
+//                        observacoes: pedidoBD.observacoes,
+//                        dataDeEntrega: pedidoBD.dataDeEntrega!
+//                    )
+//                    if pedidoBD.referencias != nil {
+//                        let fetchRequestReferencia: NSFetchRequest<ReferenciaEntity> = ReferenciaEntity.fetchRequest()
+//                        fetchRequestReferencia.predicate = NSPredicate(format: "pedido == %@", pedidoBD)
+//                        
+//                        let retornoReferencia = try container.viewContext.fetch(fetchRequestReferencia)
+//                        
+//                        if retornoReferencia.isEmpty{
+//                            for referencia in retornoReferencia{
+//                                let referencia = Foto(imagem: referencia.imagem!)
+//                                pedido.referencias?.append(referencia)
+//                            }
+//                        }
+//                        
+//                    }
+//                }
+//            }
+//        } catch let error {
+//            print("erro ao buscar pedidos \(error)")
+//        }
+//        return pedidos
+//    }
     
-    func buscarPedidoPorId(idDoPedido: UUID) throws -> Pedido {
-        let fetchRequest: NSFetchRequest<PedidoEntity> = PedidoEntity.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "id == %@", idDoPedido.uuidString)
-        var pedido: Pedido = Pedido()
-        do {
-            let retorno = try container.viewContext.fetch(fetchRequest)
-            
-            if let pedidoBD = retorno.first {
-                pedido = Pedido(id: pedidoBD.id!,
-                                    titulo: pedidoBD.titulo!,
-                                    statusDaEntrega: pedidoBD.statusDeEntrega!,
-                                    observacoes: pedidoBD.observacoes,
-                                    dataDeEntrega: pedidoBD.dataDeEntrega!
-                                    )
-                
-                if pedidoBD.referencias != nil {
-                    let fetchRequestReferencia: NSFetchRequest<ReferenciaEntity> = ReferenciaEntity.fetchRequest()
-                    fetchRequestReferencia.predicate = NSPredicate(format: "pedido == %@", pedidoBD)
-                    
-                    let retornoReferencia = try container.viewContext.fetch(fetchRequestReferencia)
-                    
-                    if retornoReferencia.isEmpty{
-                        for referencia in retornoReferencia{
-                            let referencia = Foto(imagem: referencia.imagem!)
-                            pedido.referencias?.append(referencia)
-                        }
-                    }
-                    
-                }
-                return pedido
-            }
-        } catch {
-            print("Erro ao buscar cliente por id no Core Data: \(error)")
-        }
-        return pedido
-    }
+//    func buscarPedidoPorId(idDoPedido: UUID) throws -> Pedido {
+//        let fetchRequest: NSFetchRequest<PedidoEntity> = PedidoEntity.fetchRequest()
+//        fetchRequest.predicate = NSPredicate(format: "id == %@", idDoPedido.uuidString)
+//        var pedido: Pedido = Pedido()
+//        do {
+//            let retorno = try container.viewContext.fetch(fetchRequest)
+//            
+//            if let pedidoBD = retorno.first {
+//                pedido = Pedido(id: pedidoBD.id!,
+//                                titulo: pedidoBD.titulo!,
+//                                statusDaEntrega: pedidoBD.statusDeEntrega!,
+//                                observacoes: pedidoBD.observacoes,
+//                                dataDeEntrega: pedidoBD.dataDeEntrega!
+//                )
+//                
+//                if pedidoBD.referencias != nil {
+//                    let fetchRequestReferencia: NSFetchRequest<ReferenciaEntity> = ReferenciaEntity.fetchRequest()
+//                    fetchRequestReferencia.predicate = NSPredicate(format: "pedido == %@", pedidoBD)
+//                    
+//                    let retornoReferencia = try container.viewContext.fetch(fetchRequestReferencia)
+//                    
+//                    if retornoReferencia.isEmpty{
+//                        for referencia in retornoReferencia{
+//                            let referencia = Foto(imagem: referencia.imagem!)
+//                            pedido.referencias?.append(referencia)
+//                        }
+//                    }
+//                    
+//                }
+//                return pedido
+//            }
+//        } catch {
+//            print("Erro ao buscar cliente por id no Core Data: \(error)")
+//        }
+//        return pedido
+//    }
     
     func salvarPedido(pedido: Pedido, cliente: Cliente) throws{
         let novoPedido = PedidoEntity(context: container.viewContext)
@@ -320,7 +319,7 @@ class CoreDataImplementacao: BancoDeDados {
         do {
             let retorno = try container.viewContext.fetch(fetchRequest)
             
-            var pedidoBD = retorno.first
+            let pedidoBD = retorno.first
             if pedidoBD?.titulo != pedido.titulo {
                 pedidoBD?.titulo = pedido.titulo
             }
@@ -401,9 +400,9 @@ class CoreDataImplementacao: BancoDeDados {
     
     
     
-//    func deletarMedida(id: UUID) throws {
-//        
-//    }
+    //    func deletarMedida(id: UUID) throws {
+    //
+    //    }
     
     
     
@@ -427,179 +426,179 @@ class CoreDataImplementacao: BancoDeDados {
     
     
     
-//    func salvarMedidaAoPedido(medida: Medida, pedido: Pedido) throws {
-//        let novaMedida = MedidaEntity(context: container.viewContext)
-//        novaMedida.id = medida.id
-//        novaMedida.descricao = medida.descricao
-//        novaMedida.valor = medida.valor
-//        
-//        let fetchRequest: NSFetchRequest<PedidoEntity> = PedidoEntity.fetchRequest()
-//        fetchRequest.predicate = NSPredicate(format: "id == %@", pedido.id.uuidString)
-//        
-//        do{
-//            let retorno = try container.viewContext.fetch(fetchRequest)
-//            let pedidoBD = retorno.first
-//            novaMedida.pedido = pedidoBD
-//            
-//            try container.viewContext.save()
-//        } catch{
-//            print("Erro ao salvar medida do pedido no Core Data: \(error)")
-//        }
-//    }
+    //    func salvarMedidaAoPedido(medida: Medida, pedido: Pedido) throws {
+    //        let novaMedida = MedidaEntity(context: container.viewContext)
+    //        novaMedida.id = medida.id
+    //        novaMedida.descricao = medida.descricao
+    //        novaMedida.valor = medida.valor
+    //
+    //        let fetchRequest: NSFetchRequest<PedidoEntity> = PedidoEntity.fetchRequest()
+    //        fetchRequest.predicate = NSPredicate(format: "id == %@", pedido.id.uuidString)
+    //
+    //        do{
+    //            let retorno = try container.viewContext.fetch(fetchRequest)
+    //            let pedidoBD = retorno.first
+    //            novaMedida.pedido = pedidoBD
+    //
+    //            try container.viewContext.save()
+    //        } catch{
+    //            print("Erro ao salvar medida do pedido no Core Data: \(error)")
+    //        }
+    //    }
     
     
     
     
-//    func salvarInfoPagamento(dadosPagamento: (statusPagamento: String, valor: Double), pedido: Pedido) throws {
-//        let novaInfoDePagamento = PagamentoEntity(context: container.viewContext)
-//        novaInfoDePagamento.statusDoPagamento = dadosPagamento.statusPagamento
-//        novaInfoDePagamento.valor = dadosPagamento.valor
-//        
-//        let fetchRequest: NSFetchRequest<PedidoEntity> = PedidoEntity.fetchRequest()
-//        fetchRequest.predicate = NSPredicate(format: "id == %@", pedido.id.uuidString)
-//        
-//        do{
-//            let retorno = try container.viewContext.fetch(fetchRequest)
-//            let pedidoBD = retorno.first
-//            novaInfoDePagamento.pedido = pedidoBD
-//            
-//            try container.viewContext.save()
-//        } catch{
-//            print("Erro ao salvar pagamento no Core Data: \(error)")
-//        }
-//    }
+    //    func salvarInfoPagamento(dadosPagamento: (statusPagamento: String, valor: Double), pedido: Pedido) throws {
+    //        let novaInfoDePagamento = PagamentoEntity(context: container.viewContext)
+    //        novaInfoDePagamento.statusDoPagamento = dadosPagamento.statusPagamento
+    //        novaInfoDePagamento.valor = dadosPagamento.valor
+    //
+    //        let fetchRequest: NSFetchRequest<PedidoEntity> = PedidoEntity.fetchRequest()
+    //        fetchRequest.predicate = NSPredicate(format: "id == %@", pedido.id.uuidString)
+    //
+    //        do{
+    //            let retorno = try container.viewContext.fetch(fetchRequest)
+    //            let pedidoBD = retorno.first
+    //            novaInfoDePagamento.pedido = pedidoBD
+    //
+    //            try container.viewContext.save()
+    //        } catch{
+    //            print("Erro ao salvar pagamento no Core Data: \(error)")
+    //        }
+    //    }
     
     
     
     
     
     
-//    func editarMedidaDoPedido(medida: Medida, pedido: Pedido) throws {
-//        let fetchRequestMedida: NSFetchRequest<MedidaEntity> = MedidaEntity.fetchRequest()
-//        fetchRequestMedida.predicate = NSPredicate(format: "id == %@", medida.id.uuidString)
-//        do{
-//            let retornoMedida = try container.viewContext.fetch(fetchRequestMedida)
-//            var medidaBD = retornoMedida.first
-//            if medidaBD == nil {
-//                try salvarMedidaAoPedido(medida: medida, pedido: pedido)
-//            } else {
-//                if medidaBD?.descricao != medida.descricao {
-//                    medidaBD?.descricao = medida.descricao
-//                }
-//                if medidaBD?.valor != medida.valor {
-//                    medidaBD?.valor = medida.valor
-//                }
-//                try container.viewContext.save()
-//            }
-//        } catch {
-//            print("Erro ao editar medida no Core Data: \(error)")
-//        }
-//    }
+    //    func editarMedidaDoPedido(medida: Medida, pedido: Pedido) throws {
+    //        let fetchRequestMedida: NSFetchRequest<MedidaEntity> = MedidaEntity.fetchRequest()
+    //        fetchRequestMedida.predicate = NSPredicate(format: "id == %@", medida.id.uuidString)
+    //        do{
+    //            let retornoMedida = try container.viewContext.fetch(fetchRequestMedida)
+    //            var medidaBD = retornoMedida.first
+    //            if medidaBD == nil {
+    //                try salvarMedidaAoPedido(medida: medida, pedido: pedido)
+    //            } else {
+    //                if medidaBD?.descricao != medida.descricao {
+    //                    medidaBD?.descricao = medida.descricao
+    //                }
+    //                if medidaBD?.valor != medida.valor {
+    //                    medidaBD?.valor = medida.valor
+    //                }
+    //                try container.viewContext.save()
+    //            }
+    //        } catch {
+    //            print("Erro ao editar medida no Core Data: \(error)")
+    //        }
+    //    }
     
     
-//    func editarInfoPagamento(pagamento: Pagamento, pedidoBD: PedidoEntity) throws{
-//        let fetchRequest: NSFetchRequest<PagamentoEntity> = PagamentoEntity.fetchRequest()
-//        fetchRequest.predicate = NSPredicate(format: "pedido == %@", pedidoBD)
-//        do {
-//            let retorno = try container.viewContext.fetch(fetchRequest)
-//            
-//            if retorno.isEmpty {
-//                print("Nenhum pagamento encontrado para o pedido")
-//            } else {
-//                let pagamento = retorno.first
-//                
-//                if pagamento?.statusDoPagamento != pagamento?.statusDoPagamento{
-//                    pagamento?.statusDoPagamento = pagamento?.statusDoPagamento ?? "Pendente"
-//                }
-//                
-//                if pagamento?.valor != pagamento?.valor{
-//                    pagamento?.valor = pagamento?.valor ?? 0
-//                }
-//                
-//                try container.viewContext.save()
-//            }
-//        } catch {
-//            print("Erro ao buscar pagamentos: \(error)")
-//        }
-//        
-//        
-//    }
+    //    func editarInfoPagamento(pagamento: Pagamento, pedidoBD: PedidoEntity) throws{
+    //        let fetchRequest: NSFetchRequest<PagamentoEntity> = PagamentoEntity.fetchRequest()
+    //        fetchRequest.predicate = NSPredicate(format: "pedido == %@", pedidoBD)
+    //        do {
+    //            let retorno = try container.viewContext.fetch(fetchRequest)
+    //
+    //            if retorno.isEmpty {
+    //                print("Nenhum pagamento encontrado para o pedido")
+    //            } else {
+    //                let pagamento = retorno.first
+    //
+    //                if pagamento?.statusDoPagamento != pagamento?.statusDoPagamento{
+    //                    pagamento?.statusDoPagamento = pagamento?.statusDoPagamento ?? "Pendente"
+    //                }
+    //
+    //                if pagamento?.valor != pagamento?.valor{
+    //                    pagamento?.valor = pagamento?.valor ?? 0
+    //                }
+    //
+    //                try container.viewContext.save()
+    //            }
+    //        } catch {
+    //            print("Erro ao buscar pagamentos: \(error)")
+    //        }
+    //
+    //
+    //    }
     
-//    func buscarTodasMedidasDoPedido(pedido: PedidoEntity) throws -> [Medida] {
-//        let fetchRequest: NSFetchRequest<MedidaEntity> = MedidaEntity.fetchRequest()
-//        fetchRequest.predicate = NSPredicate(format: "pedido == %@", pedido)
-//        do{
-//            let retorno = try container.viewContext.fetch(fetchRequest)
-//            var medidas: [Medida] = []
-//            
-//            if (!retorno.isEmpty){
-//                for medidaBD in retorno{
-//                    let medida = Medida(id: medidaBD.id!, descricao: medidaBD.descricao!, valor: medidaBD.valor)
-//                    medidas.append(medida)
-//                }
-//            }
-//            return medidas
-//        } catch let error {
-//            print("erro ao buscar medidas do cliente \(error)")
-//        }
-//        return []
-//    }
+    //    func buscarTodasMedidasDoPedido(pedido: PedidoEntity) throws -> [Medida] {
+    //        let fetchRequest: NSFetchRequest<MedidaEntity> = MedidaEntity.fetchRequest()
+    //        fetchRequest.predicate = NSPredicate(format: "pedido == %@", pedido)
+    //        do{
+    //            let retorno = try container.viewContext.fetch(fetchRequest)
+    //            var medidas: [Medida] = []
+    //
+    //            if (!retorno.isEmpty){
+    //                for medidaBD in retorno{
+    //                    let medida = Medida(id: medidaBD.id!, descricao: medidaBD.descricao!, valor: medidaBD.valor)
+    //                    medidas.append(medida)
+    //                }
+    //            }
+    //            return medidas
+    //        } catch let error {
+    //            print("erro ao buscar medidas do cliente \(error)")
+    //        }
+    //        return []
+    //    }
     
-//    func buscarTodosPedidosDoCliente(idDoCliente: UUID) throws -> [Pedido] {
-////        let fetchRequest: NSFetchRequest<ClienteEntity> = ClienteEntity.fetchRequest()
-////        fetchRequest.predicate = NSPredicate(format: "id == %@", idDoCliente)
-////        let fetchRequest: NSFetchRequest<PedidoEntity> = PedidoEntity.fetchRequest()
-////        fetchRequest.predicate = NSPredicate(format: "cliente == %@", pedido)
-////        do{
-////            let retorno = try container.viewContext.fetch(fetchRequest)
-////            var medidas: [Medida] = []
-////
-////            if (!retorno.isEmpty){
-////                for medidaBD in retorno{
-////                    let medida = Medida(id: medidaBD.id!, descricao: medidaBD.descricao!, valor: medidaBD.valor)
-////                    medidas.append(medida)
-////                }
-////            }
-////            return medidas
-////        } catch let error {
-////            print("erro ao buscar medidas do cliente \(error)")
-////        }
-//        return[]
-//    }
+    //    func buscarTodosPedidosDoCliente(idDoCliente: UUID) throws -> [Pedido] {
+    ////        let fetchRequest: NSFetchRequest<ClienteEntity> = ClienteEntity.fetchRequest()
+    ////        fetchRequest.predicate = NSPredicate(format: "id == %@", idDoCliente)
+    ////        let fetchRequest: NSFetchRequest<PedidoEntity> = PedidoEntity.fetchRequest()
+    ////        fetchRequest.predicate = NSPredicate(format: "cliente == %@", pedido)
+    ////        do{
+    ////            let retorno = try container.viewContext.fetch(fetchRequest)
+    ////            var medidas: [Medida] = []
+    ////
+    ////            if (!retorno.isEmpty){
+    ////                for medidaBD in retorno{
+    ////                    let medida = Medida(id: medidaBD.id!, descricao: medidaBD.descricao!, valor: medidaBD.valor)
+    ////                    medidas.append(medida)
+    ////                }
+    ////            }
+    ////            return medidas
+    ////        } catch let error {
+    ////            print("erro ao buscar medidas do cliente \(error)")
+    ////        }
+    //        return[]
+    //    }
     
-//    func buscarPorIdClientes(id: UUID) throws -> Cliente? {
-//        let fetchRequest: NSFetchRequest<ClienteEntity> = ClienteEntity.fetchRequest()
-//        fetchRequest.predicate = NSPredicate(format: "id == %@", id.uuidString)
-//        
-//        do {
-//            let retorno = try container.viewContext.fetch(fetchRequest)
-//            
-//            if let retorno = retorno.first {
-//                let cliente = Cliente(
-//                    id: retorno.id!,
-//                    nome: retorno.nome!,
-//                    telefone: retorno.telefone,
-//                    foto: retorno.foto
-//                )
-//            } else {
-//                
-//            }
-//        } catch {
-//            print("Erro ao buscar cliente no Core Data: \(error)")
-//        }
-//        return nil
-//    }
-//    func buscarPorIdPedidos(id: UUID) throws -> Pedido? {
-//        return nil
-//    }
+    //    func buscarPorIdClientes(id: UUID) throws -> Cliente? {
+    //        let fetchRequest: NSFetchRequest<ClienteEntity> = ClienteEntity.fetchRequest()
+    //        fetchRequest.predicate = NSPredicate(format: "id == %@", id.uuidString)
+    //
+    //        do {
+    //            let retorno = try container.viewContext.fetch(fetchRequest)
+    //
+    //            if let retorno = retorno.first {
+    //                let cliente = Cliente(
+    //                    id: retorno.id!,
+    //                    nome: retorno.nome!,
+    //                    telefone: retorno.telefone,
+    //                    foto: retorno.foto
+    //                )
+    //            } else {
+    //
+    //            }
+    //        } catch {
+    //            print("Erro ao buscar cliente no Core Data: \(error)")
+    //        }
+    //        return nil
+    //    }
+    //    func buscarPorIdPedidos(id: UUID) throws -> Pedido? {
+    //        return nil
+    //    }
     
-
     
-//    func deletarPedido(id: UUID) throws {
-//        
-//    }
-//    func deletarReferencia(id: UUID) throws {
-//        
-//    }
+    
+    //    func deletarPedido(id: UUID) throws {
+    //
+    //    }
+    //    func deletarReferencia(id: UUID) throws {
+    //
+    //    }
     
 }

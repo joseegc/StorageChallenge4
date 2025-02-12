@@ -9,7 +9,7 @@ import Foundation
 
 
 protocol BancoDeDados {
-    func buscarClientePorId(idDoCliente: UUID) throws -> Cliente
+//    func buscarClientePorId(idDoCliente: UUID) throws -> Cliente
     func salvarCliente(cliente: Cliente) throws
     func salvarMedidaAoCliente(medida: Medida, cliente: Cliente) throws
     func editarCliente(cliente: Cliente) throws
@@ -17,8 +17,8 @@ protocol BancoDeDados {
     func buscarTodosClientes() throws -> [Cliente]
     func deletarCliente(id: UUID) throws
     func deletarMedida(id: UUID) throws
-    func buscarTodosPedidos(idDoCliente: UUID?) throws -> [Pedido]
-    func buscarPedidoPorId(idDoPedido: UUID) throws -> Pedido
+//    func buscarTodosPedidos(idDoCliente: UUID?) throws -> [Pedido]
+//    func buscarPedidoPorId(idDoPedido: UUID) throws -> Pedido
     func salvarPedido(pedido: Pedido, cliente: Cliente) throws
     func editarPedido(pedido: Pedido) throws
     func deletarPedido(id: UUID) throws

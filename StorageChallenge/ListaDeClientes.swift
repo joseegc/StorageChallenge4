@@ -58,7 +58,7 @@ struct ListaDeClientes: View {
             .navigationTitle("Clientes")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    NavigationLink(destination: CadastrarEditarClienteView()) {
+                    NavigationLink(destination: CadastrarEditarClienteView2()) {
                         Image(systemName: "plus")
                             .fontWeight(.black)
                     }

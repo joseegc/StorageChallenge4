@@ -165,8 +165,8 @@ struct CadastrarEditarClienteView: View {
             .navigationBarTitleDisplayMode(.inline)
             .task {
                 if idDoCliente != nil {
-                    clientesViewModel.buscarClientePorId(id: idDoCliente!)
-                    clienteInput = clientesViewModel.cliente
+//                    clientesViewModel.buscarClientePorId(id: idDoCliente!)
+//                    clienteInput = clientesViewModel.cliente
 //                    clientesViewModel.buscarClientePorId(idDoCliente: idDoCliente!)
 //                    if let foto = clientesViewModel.cliente.foto {
 //                        imagem = UIImage(data: foto)

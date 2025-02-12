@@ -10,8 +10,7 @@ import SwiftUI
 
 @main
 struct StorageChallengeApp: App {
-    @StateObject var clienteViewModel = ClienteViewModel2(bancoDeDados: CoreDataImplementacao())
-//    @StateObject var pedidoViewModel = PedidoViewModel()
+    @StateObject var clienteViewModel = ClienteViewModel2(bancoDeDados: SwiftDataImplementacao())
     
     
     var body: some Scene {
@@ -20,9 +19,6 @@ struct StorageChallengeApp: App {
                 ListaDeClientes()
           }
             .environmentObject(clienteViewModel)
-
-//                .environmentObject(pedidoViewModel)
-
         }
     }
 }

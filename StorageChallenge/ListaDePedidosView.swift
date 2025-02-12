@@ -10,50 +10,23 @@ import SwiftUI
 
 
 struct ListaDePedidosView: View {
-    @EnvironmentObject var pedidoViewModel: PedidoViewModel
+    @State var pedidos: [Pedido] = []
     
     var body: some View {
-        NavigationView {
-            ScrollView {
-                VStack {
-                   
-                    ForEach(pedidoViewModel.pedidos) { pedido in
-//                        
-//                        NavigationLink(destination: PerfilDoClienteView(idDoCliente: cliente.id)) {
-//                            Text(cliente.nome ?? "Sem nome")
-//                               
-//                        }
-                        
-                        Text(pedido.titulo)
-                        
-                    }.onAppear {
-
-                        pedidoViewModel.buscarTodosOsPedidos()
-                    }
-                    
-                    
-                }
-            }
-            .task {
-                pedidoViewModel.buscarTodosOsPedidos()
-            }
-            .padding(.horizontal)
-            .navigationTitle("Pedidos")
-            .toolbar {
-                ToolbarItem {
-                    NavigationLink(destination: CadastrarEditarClienteView()){
-                        Text("Criar")
-                    }
-                }
-            }
-            
-        }
         
+        if pedidos.isEmpty {
+            Text("Nenhum pedido registrado!")
+        } else{
+            ForEach(pedidos){pedido in
+                Text(pedido.titulo)
+            }
+        }
     }
 }
 
+
 #Preview {
     NavigationStack{
-       //ListarPedidosView()
+        ListaDePedidosView()
     }
 }
