@@ -6,9 +6,8 @@ struct StorageChallengeApp: App {
     
     var body: some Scene {
         WindowGroup {
-            NavigationStack{
-                ListaDeClientesView()
-            }
+                TabBarView()
+            
             .environmentObject(clienteViewModel)
         }
     }

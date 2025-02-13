@@ -32,6 +32,10 @@
 		9FCD73A62D52AF1B00A5FC53 /* CadastrarEditarPedidoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FCD73A52D52AF1B00A5FC53 /* CadastrarEditarPedidoView.swift */; };
 		BCB4E71C2D5E6C73007B7BC9 /* CardDeMedidasComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB4E71B2D5E6C73007B7BC9 /* CardDeMedidasComponent.swift */; };
 		BCB4E71E2D5E6F73007B7BC9 /* CardDeClienteComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB4E71D2D5E6F73007B7BC9 /* CardDeClienteComponent.swift */; };
+		BCB4E7242D5E7CD9007B7BC9 /* mudarDeBanco.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB4E7232D5E7CD9007B7BC9 /* mudarDeBanco.swift */; };
+		BCB4E7262D5E8916007B7BC9 /* PoliticaDePrivacidadeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB4E7252D5E8916007B7BC9 /* PoliticaDePrivacidadeView.swift */; };
+		BCB4E7282D5E8C2E007B7BC9 /* TermosDeUsoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB4E7272D5E8C2E007B7BC9 /* TermosDeUsoView.swift */; };
+		BCB4E72A2D5E9089007B7BC9 /* ConfiguracoesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB4E7292D5E9089007B7BC9 /* ConfiguracoesView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,6 +66,10 @@
 		9FCD73A52D52AF1B00A5FC53 /* CadastrarEditarPedidoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CadastrarEditarPedidoView.swift; sourceTree = "<group>"; };
 		BCB4E71B2D5E6C73007B7BC9 /* CardDeMedidasComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDeMedidasComponent.swift; sourceTree = "<group>"; };
 		BCB4E71D2D5E6F73007B7BC9 /* CardDeClienteComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDeClienteComponent.swift; sourceTree = "<group>"; };
+		BCB4E7232D5E7CD9007B7BC9 /* mudarDeBanco.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mudarDeBanco.swift; sourceTree = "<group>"; };
+		BCB4E7252D5E8916007B7BC9 /* PoliticaDePrivacidadeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoliticaDePrivacidadeView.swift; sourceTree = "<group>"; };
+		BCB4E7272D5E8C2E007B7BC9 /* TermosDeUsoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermosDeUsoView.swift; sourceTree = "<group>"; };
+		BCB4E7292D5E9089007B7BC9 /* ConfiguracoesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfiguracoesView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +89,7 @@
 				8B73953C2D4D46A000FAC6D2 /* TabBarView.swift */,
 				54DC04ED2D5528A0004C4A53 /* Pedido */,
 				54DC04EA2D552704004C4A53 /* Cliente */,
+				BCB4E7292D5E9089007B7BC9 /* ConfiguracoesView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -90,6 +99,9 @@
 			children = (
 				9F60AE8E2D52B46A00F09776 /* SelecionarClienteView.swift */,
 				9F58B1B72D4D4B73009ABAB7 /* CadastrarEditarClienteView.swift */,
+				BCB4E7232D5E7CD9007B7BC9 /* mudarDeBanco.swift */,
+				BCB4E7252D5E8916007B7BC9 /* PoliticaDePrivacidadeView.swift */,
+				BCB4E7272D5E8C2E007B7BC9 /* TermosDeUsoView.swift */,
 				8B6633082D53D58B00A6E5CC /* ListaDeClientesView.swift */,
 				BCB4E71D2D5E6F73007B7BC9 /* CardDeClienteComponent.swift */,
 				9F58B1B52D4D4977009ABAB7 /* PerfilDoClienteView.swift */,
@@ -252,8 +264,10 @@
 				9FCD73A62D52AF1B00A5FC53 /* CadastrarEditarPedidoView.swift in Sources */,
 				547451E32D4D447B00F94D3E /* Foto.swift in Sources */,
 				9F5E21322D4BF79D00B2F7F2 /* StorageChallengeApp.swift in Sources */,
+				BCB4E7242D5E7CD9007B7BC9 /* mudarDeBanco.swift in Sources */,
 				9F58B1B62D4D4977009ABAB7 /* PerfilDoClienteView.swift in Sources */,
 				547451E12D4D41A400F94D3E /* Pedido.swift in Sources */,
+				BCB4E7282D5E8C2E007B7BC9 /* TermosDeUsoView.swift in Sources */,
 				547451E72D4D453800F94D3E /* Pagamento.swift in Sources */,
 				9F60AE8F2D52B46A00F09776 /* SelecionarClienteView.swift in Sources */,
 				9F5E21372D4BF79D00B2F7F2 /* AppContainer.xcdatamodeld in Sources */,
@@ -265,8 +279,10 @@
 				8B73953D2D4D46A000FAC6D2 /* TabBarView.swift in Sources */,
 				8B73953F2D4D4A6300FAC6D2 /* ListarPedidosView.swift in Sources */,
 				8B73953D2D4D46A000FAC6D2 /* TabBarView.swift in Sources */,
+				BCB4E7262D5E8916007B7BC9 /* PoliticaDePrivacidadeView.swift in Sources */,
 				8B504FAB2D51355D00019D23 /* BancoDeDados.swift in Sources */,
 				8B73953F2D4D4A6300FAC6D2 /* ListarPedidosView.swift in Sources */,
+				BCB4E72A2D5E9089007B7BC9 /* ConfiguracoesView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

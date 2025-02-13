@@ -14,18 +14,37 @@ struct TabBarView: View {
     var body: some View {
         TabView {
             // Pedidos
-            NavigationStack{
-                ListarPedidosView()
-            }.tabItem {
-                Label("Pedidos", systemImage: "calendar")
+//            NavigationStack{
+//                ListarPedidosView()
+//            }.tabItem {
+//                Label("Pedidos", systemImage: "calendar")
+//            }
+            
+
+//
+            // Clientes
+            NavigationStack {
+                ListaDeClientesView()
+            }
+            .tabItem {
+                Image(systemName: "person.fill")
+                Text("Clientes")
             }
             
+            
             // Clientes
-            NavigationStack{
-                ListaDeClientesView()
-            }.tabItem {
-                Label("Clientes", systemImage: "person.3.fill")
+            NavigationStack {
+                
+                ConfiguracoesView()
             }
+            .tabItem {
+                Image(systemName: "gear")
+                Text("Configuracoes")
+            }
+            
+//               mudarDeBanco()
+            
+           
         }.accentColor(colorScheme == .dark ? Color.white : Color.black)
         
         

@@ -8,7 +8,7 @@
 import Foundation
 
 class ClienteViewModel: ObservableObject {
-    private let bancoDeDados: BancoDeDados
+    var bancoDeDados: BancoDeDados
     
     @Published var clientes: [Cliente] = []
     

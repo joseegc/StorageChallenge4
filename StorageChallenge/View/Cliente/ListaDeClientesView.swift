@@ -52,13 +52,16 @@ struct ListaDeClientesView: View {
                 }
                 Spacer()
             }
+
         }
+        .searchable(text: $nomeBuscado, prompt: "Buscar cliente...")
+
+
     }
         .frame(maxWidth: .infinity) // Ocupa todo o espaço
 
         .padding(20)
             .navigationTitle("Clientes")
-            .searchable(text: $nomeBuscado, prompt: "Buscar cliente...")
             
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
