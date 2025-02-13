@@ -34,6 +34,6 @@ struct TabBarView: View {
 
 #Preview {
     TabBarView()
-        .environmentObject(ClienteViewModel())
+        .environmentObject(ClienteViewModel3())
 //        .environmentObject(PedidoViewModel())
 }

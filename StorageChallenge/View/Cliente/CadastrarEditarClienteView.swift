@@ -9,7 +9,7 @@ import SwiftUI
 import PhotosUI
 
 struct CadastrarEditarClienteView: View {
-    @EnvironmentObject var clientesViewModel: ClienteViewModel2
+    @EnvironmentObject var clientesViewModel: ClienteViewModel
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.colorScheme) var colorScheme
     
@@ -298,5 +298,5 @@ extension UIImage {
 
 #Preview {
     CadastrarEditarClienteView()
-        .environmentObject(ClienteViewModel())
+        .environmentObject(ClienteViewModel3())
 }

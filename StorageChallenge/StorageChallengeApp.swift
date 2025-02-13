@@ -9,7 +9,7 @@ import SwiftUI
 
 @main
 struct StorageChallengeApp: App {
-    @StateObject var clienteViewModel = ClienteViewModel2(bancoDeDados: SwiftDataImplementacao())
+    @StateObject var clienteViewModel = ClienteViewModel(bancoDeDados: SwiftDataImplementacao())
     //    @StateObject var pedidoViewModel = PedidoViewModel()
     
     var body: some Scene {

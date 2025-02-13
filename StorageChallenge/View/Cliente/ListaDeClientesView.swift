@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ListaDeClientesView: View {
-    @EnvironmentObject var viewModel: ClienteViewModel2
+    @EnvironmentObject var viewModel: ClienteViewModel
     @State var nomeBuscado = ""
     @State var mensagemDeErro = "Não há nenhum cliente cadastrado"
     
@@ -94,7 +94,7 @@ struct ListaDeClientesView: View {
 #Preview {
     NavigationStack{
         ListaDeClientesView()
-            .environmentObject(ClienteViewModel())
+            .environmentObject(ClienteViewModel3())
     }
     
 }

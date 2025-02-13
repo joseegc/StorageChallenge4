@@ -1,96 +1,56 @@
 //
-//  ClienteViewModel.swift
+//  ClienteViewModel2.swift
 //  StorageChallenge
 //
-//  Created by JOSE ELIAS GOMES CAMARGO on 30/01/25.
+//  Created by ALINE FERNANDA PONZANI on 06/02/25.
 //
 
 import Foundation
-import CoreData
-import SwiftUI
-
 
 class ClienteViewModel: ObservableObject {
+    private let bancoDeDados: BancoDeDados
+    
     @Published var clientes: [Cliente] = []
     
-    @Published var cliente = Cliente(id: UUID(),nome: "Antonio", telefone: "(11) 98078-9146", pedidos: [Pedido(titulo: "Vestido", statusDaEntrega: "Completo", observacoes: "Braco gigantesco", dataDeEntrega: Date(), cliente: Cliente(nome: "Antonio"))], medidas:[])
+    @Published var cliente: Cliente = Cliente()
     
-    init(){
-        
-        do {
-            try self.clientes = CoreDataModel.shared.buscarTodosClientes()
-        } catch {
-            print("erro ao salvar")
-        }
-        buscarTodosClientes()
+    init(bancoDeDados: BancoDeDados) {
+        self.bancoDeDados = bancoDeDados
+//        carregarClientes()
     }
     
-    
-    func adicionarClienteAoBanco() {
-        print(self.cliente)
+    func salvarCliente() {
         do {
-            try CoreDataModel.shared.salvarCliente(cliente: self.cliente)
+            try bancoDeDados.salvarCliente(cliente: self.cliente)
         } catch {
-            print("erro ao salvar")
+            print("Erro ao salvar clientes: \(error)")
         }
-        buscarTodosClientes()
     }
     
-    func editarCliente() {
+    func buscarClientePorId(id: UUID) -> Cliente?
+    {
         do {
-            try CoreDataModel.shared.editarCliente(cliente: self.cliente)
+            return try bancoDeDados.buscarClientePorId(id: id)
         } catch {
-            print("erro ao salvar")
+            print("Erro ao busca cliente por ID: \(error)")
         }
-        buscarTodosClientes()
+        return nil
     }
+    
     
     func buscarTodosClientes() {
-        
         do {
-            self.clientes = try CoreDataModel.shared.buscarTodosClientes()
-            
+            self.clientes = try bancoDeDados.buscarTodosClientes()
         } catch {
-            print("erro ao buscar")
+            print("Erro ao carregar clientes: \(error)")
         }
-    }
-    func buscarClientePorId(idDoCliente: UUID) -> Cliente {
-        var cliente = Cliente()
-        if let clienteBuscado = CoreDataModel.shared.buscarClientePorId(idDoCliente: idDoCliente) {
-            cliente.id = clienteBuscado.id!
-            
-            
-            cliente.nome = clienteBuscado.nome ?? ""
-            
-            cliente.telefone = clienteBuscado.telefone ?? ""
-            
-            if let imagemSalva = clienteBuscado.foto {
-                cliente.foto = imagemSalva
-            }
-            
-            
-            if let medidasSalvas = clienteBuscado.medidas?.allObjects as? [MedidaEntity] {
-                for medida in medidasSalvas {
-                    let medida = Medida(id: medida.id!, descricao: medida.descricao ?? "", valor: medida.valor)
-                    cliente.medidas.append(medida)
-                }
-                
-            }
-            
-            //            if let pedidosSalvos = clienteBuscado.pedidos?.allObjects as? [PedidoEntity] {
-            //                for pedido in pedidosSalvos {
-            //                    let pedido = Medida(id: medida.id!, descricao: medida.descricao ?? "", valor: medida.valor)
-            //                    self.cliente.medidas?.append(medida)
-            //                }
-            //
-            //            }
-        }
-        return cliente
     }
     
-    func buscarClientePorNome(nome: String) {
+
+    
+    func buscarClientesPorNome(nome: String) {
         do {
-            self.clientes = try CoreDataModel.shared.buscarClientesPorNome(nome: nome)
+            self.clientes = try bancoDeDados.buscarClientesPorNome(nome: nome)
             
         } catch {
             print("erro ao buscar")
@@ -98,21 +58,36 @@ class ClienteViewModel: ObservableObject {
     }
     
     func deletarCliente(idDoCliente: UUID) {
-        print("deletando cliente de id \(idDoCliente)")
-        CoreDataModel.shared.deletarCliente(idDoCliente: idDoCliente)
-        buscarTodosClientes()
+        do {
+            print("chamou deletar na viewModel")
+            try bancoDeDados.deletarCliente(id: idDoCliente)
+        } catch {
+            print("Erro ao deletar cliente: \(error)")
+        }
     }
     
-    func deletarMedida(id: UUID) {
-        do {
-            print("fala")
-           try CoreDataModel.shared.deletarMedida(id: id)
-            
-        } catch {
-            print("erro ao deletar medida")
-        }    }
+//    func buscarClientePorId(id: UUID) {
+//        do {
+//            cliente = try bancoDeDados.buscarClientePorId(idDoCliente: id)
+//        } catch {
+//            print("Erro ao deletar cliente: \(error)")
+//        }
+//    }
     
-    func deletarTodos() {
-        self.clientes.removeAll()
+    func editarCliente(){
+        do {
+            print("chamou deletar na viewModel")
+            try bancoDeDados.editarCliente(cliente: cliente)
+        } catch {
+            print("Erro ao deletar cliente: \(error)")
+        }
+    }
+    func deletarMedida(id: UUID){
+        do {
+            print("chamou deletar na viewModel")
+            try bancoDeDados.deletarMedida(id: id)
+        } catch {
+            print("Erro ao deletar cliente: \(error)")
+        }
     }
 }
