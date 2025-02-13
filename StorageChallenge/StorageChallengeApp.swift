@@ -1,16 +1,8 @@
-//
-//  StorageChallengeApp.swift
-//  StorageChallenge
-//
-//  Created by JOSE ELIAS GOMES CAMARGO on 30/01/25.
-//
-
 import SwiftUI
 
 @main
 struct StorageChallengeApp: App {
     @StateObject var clienteViewModel = ClienteViewModel(bancoDeDados: SwiftDataImplementacao())
-    //    @StateObject var pedidoViewModel = PedidoViewModel()
     
     var body: some Scene {
         WindowGroup {
@@ -18,7 +10,6 @@ struct StorageChallengeApp: App {
                 ListaDeClientesView()
             }
             .environmentObject(clienteViewModel)
-            //                .environmentObject(pedidoViewModel)
         }
     }
 }

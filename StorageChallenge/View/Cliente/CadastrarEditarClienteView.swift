@@ -122,7 +122,7 @@ struct CadastrarEditarClienteView: View {
                             telefoneValido = true
                         }
                     }
-                        
+                    
                     .keyboardType(.numberPad)
                     Rectangle().fill(Color("cinzaEscuro")).frame(height: 1)
                     if (!telefoneValido) {
@@ -139,11 +139,11 @@ struct CadastrarEditarClienteView: View {
                     }
                     
                     
-//                    HStack {
-//                        Text("Descrição")
-//                        Spacer()
-//                        Text("Medida").padding(.trailing, 55)
-//                    }
+                    //                    HStack {
+                    //                        Text("Descrição")
+                    //                        Spacer()
+                    //                        Text("Medida").padding(.trailing, 55)
+                    //                    }
                     
                     // Exibe as medidas
                     ForEach($clienteInput.medidas) { $medida in
@@ -298,5 +298,5 @@ extension UIImage {
 
 #Preview {
     CadastrarEditarClienteView()
-        .environmentObject(ClienteViewModel3())
+        .environmentObject(ClienteViewModel(bancoDeDados: SwiftDataImplementacao()))
 }

@@ -16,7 +16,7 @@ class ClienteViewModel: ObservableObject {
     
     init(bancoDeDados: BancoDeDados) {
         self.bancoDeDados = bancoDeDados
-//        carregarClientes()
+        //        carregarClientes()
     }
     
     func salvarCliente() {
@@ -46,7 +46,7 @@ class ClienteViewModel: ObservableObject {
         }
     }
     
-
+    
     
     func buscarClientesPorNome(nome: String) {
         do {
@@ -66,13 +66,6 @@ class ClienteViewModel: ObservableObject {
         }
     }
     
-//    func buscarClientePorId(id: UUID) {
-//        do {
-//            cliente = try bancoDeDados.buscarClientePorId(idDoCliente: id)
-//        } catch {
-//            print("Erro ao deletar cliente: \(error)")
-//        }
-//    }
     
     func editarCliente(){
         do {

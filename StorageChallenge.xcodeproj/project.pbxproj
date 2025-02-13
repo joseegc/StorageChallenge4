@@ -30,6 +30,8 @@
 		9F60AE8F2D52B46A00F09776 /* SelecionarClienteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F60AE8E2D52B46A00F09776 /* SelecionarClienteView.swift */; };
 		9F8C248B2D4C10410046FB2E /* Cliente.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8C248A2D4C10410046FB2E /* Cliente.swift */; };
 		9FCD73A62D52AF1B00A5FC53 /* CadastrarEditarPedidoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FCD73A52D52AF1B00A5FC53 /* CadastrarEditarPedidoView.swift */; };
+		BCB4E71C2D5E6C73007B7BC9 /* CardDeMedidasComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB4E71B2D5E6C73007B7BC9 /* CardDeMedidasComponent.swift */; };
+		BCB4E71E2D5E6F73007B7BC9 /* CardDeClienteComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB4E71D2D5E6F73007B7BC9 /* CardDeClienteComponent.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +60,8 @@
 		9F60AE8E2D52B46A00F09776 /* SelecionarClienteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelecionarClienteView.swift; sourceTree = "<group>"; };
 		9F8C248A2D4C10410046FB2E /* Cliente.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cliente.swift; sourceTree = "<group>"; };
 		9FCD73A52D52AF1B00A5FC53 /* CadastrarEditarPedidoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CadastrarEditarPedidoView.swift; sourceTree = "<group>"; };
+		BCB4E71B2D5E6C73007B7BC9 /* CardDeMedidasComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDeMedidasComponent.swift; sourceTree = "<group>"; };
+		BCB4E71D2D5E6F73007B7BC9 /* CardDeClienteComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDeClienteComponent.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,7 +91,9 @@
 				9F60AE8E2D52B46A00F09776 /* SelecionarClienteView.swift */,
 				9F58B1B72D4D4B73009ABAB7 /* CadastrarEditarClienteView.swift */,
 				8B6633082D53D58B00A6E5CC /* ListaDeClientesView.swift */,
+				BCB4E71D2D5E6F73007B7BC9 /* CardDeClienteComponent.swift */,
 				9F58B1B52D4D4977009ABAB7 /* PerfilDoClienteView.swift */,
+				BCB4E71B2D5E6C73007B7BC9 /* CardDeMedidasComponent.swift */,
 				54E7F52B2D5D245700AE6C44 /* ClienteViewModel.swift */,
 			);
 			path = Cliente;
@@ -242,6 +248,7 @@
 				8B7395412D4D529F00FAC6D2 /* PedidoViewModel.swift in Sources */,
 				54E7F52C2D5D245700AE6C44 /* ClienteViewModel.swift in Sources */,
 				9F8C248B2D4C10410046FB2E /* Cliente.swift in Sources */,
+				BCB4E71E2D5E6F73007B7BC9 /* CardDeClienteComponent.swift in Sources */,
 				9FCD73A62D52AF1B00A5FC53 /* CadastrarEditarPedidoView.swift in Sources */,
 				547451E32D4D447B00F94D3E /* Foto.swift in Sources */,
 				9F5E21322D4BF79D00B2F7F2 /* StorageChallengeApp.swift in Sources */,
@@ -251,6 +258,7 @@
 				9F60AE8F2D52B46A00F09776 /* SelecionarClienteView.swift in Sources */,
 				9F5E21372D4BF79D00B2F7F2 /* AppContainer.xcdatamodeld in Sources */,
 				9F58B1B82D4D4B73009ABAB7 /* CadastrarEditarClienteView.swift in Sources */,
+				BCB4E71C2D5E6C73007B7BC9 /* CardDeMedidasComponent.swift in Sources */,
 				547451E52D4D44F400F94D3E /* Medida.swift in Sources */,
 				8B504FAD2D5135AE00019D23 /* CoreDataImplementacao.swift in Sources */,
 				8B7395432D4D584400FAC6D2 /* CriarPedidoView.swift in Sources */,
