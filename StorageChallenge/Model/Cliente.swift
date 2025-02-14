@@ -8,7 +8,7 @@ struct Cliente: Identifiable {
     var pedidos: [Pedido]
     var medidas: [Medida]
     
-    init(id: UUID? = nil, nome: String = "", telefone: String = "", foto: Data? = nil , pedidos: [Pedido] = [], medidas: [Medida] = []) {
+    init(id: UUID = UUID(), nome: String = "", telefone: String = "", foto: Data? = nil , pedidos: [Pedido] = [], medidas: [Medida] = []) {
         self.id = id
         self.nome = nome
         self.telefone = telefone
