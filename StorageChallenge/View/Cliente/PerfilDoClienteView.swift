@@ -13,7 +13,7 @@ struct PerfilDoClienteView: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var clientesViewModel: ClienteViewModel
     
-    @State var cliente: Cliente
+    @State var cliente: Cliente = Cliente()
     
     @State var mostrarAlertaDeExcluir = false
     
@@ -183,8 +183,8 @@ struct PerfilDoClienteView: View {
     }
 }
 
-//#Preview {
-//    NavigationStack {
-//        PerfilDoClienteView( idDoCliente: nil).environmentObject(ClienteViewModel())
-//    }
-//}
+#Preview {
+    NavigationStack {
+        PerfilDoClienteView().environmentObject(ClienteViewModel(bancoDeDados: SwiftDataImplementacao()))
+    }
+}

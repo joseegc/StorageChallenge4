@@ -94,7 +94,7 @@ struct ListaDeClientesView: View {
 #Preview {
     NavigationStack{
         ListaDeClientesView()
-            .environmentObject(ClienteViewModel3())
+            .environmentObject(ClienteViewModel(bancoDeDados: SwiftDataImplementacao()))
     }
     
 }

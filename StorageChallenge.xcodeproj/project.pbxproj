@@ -11,6 +11,11 @@
 		547451E32D4D447B00F94D3E /* Foto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547451E22D4D447B00F94D3E /* Foto.swift */; };
 		547451E52D4D44F400F94D3E /* Medida.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547451E42D4D44F400F94D3E /* Medida.swift */; };
 		547451E72D4D453800F94D3E /* Pagamento.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547451E62D4D453800F94D3E /* Pagamento.swift */; };
+		54A666512D5E741C00520E28 /* MensagemErroComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A666502D5E741C00520E28 /* MensagemErroComponent.swift */; };
+		54C29C692D5FB49900EC0328 /* PhotoPickerComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C29C682D5FB49900EC0328 /* PhotoPickerComponent.swift */; };
+		54C29C6B2D5FB7F000EC0328 /* CampoTextoComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C29C6A2D5FB7F000EC0328 /* CampoTextoComponent.swift */; };
+		54C29C6D2D5FC09500EC0328 /* MedidaInputComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C29C6C2D5FC09500EC0328 /* MedidaInputComponent.swift */; };
+		54C29C6F2D5FC60200EC0328 /* MedidaComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C29C6E2D5FC60200EC0328 /* MedidaComponent.swift */; };
 		54E7F52C2D5D245700AE6C44 /* ClienteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E7F52B2D5D245700AE6C44 /* ClienteViewModel.swift */; };
 		8B504FAB2D51355D00019D23 /* BancoDeDados.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B504FAA2D51355D00019D23 /* BancoDeDados.swift */; };
 		8B504FAD2D5135AE00019D23 /* CoreDataImplementacao.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B504FAC2D5135AE00019D23 /* CoreDataImplementacao.swift */; };
@@ -37,6 +42,11 @@
 		547451E22D4D447B00F94D3E /* Foto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Foto.swift; sourceTree = "<group>"; };
 		547451E42D4D44F400F94D3E /* Medida.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Medida.swift; sourceTree = "<group>"; };
 		547451E62D4D453800F94D3E /* Pagamento.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pagamento.swift; sourceTree = "<group>"; };
+		54A666502D5E741C00520E28 /* MensagemErroComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MensagemErroComponent.swift; sourceTree = "<group>"; };
+		54C29C682D5FB49900EC0328 /* PhotoPickerComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPickerComponent.swift; sourceTree = "<group>"; };
+		54C29C6A2D5FB7F000EC0328 /* CampoTextoComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampoTextoComponent.swift; sourceTree = "<group>"; };
+		54C29C6C2D5FC09500EC0328 /* MedidaInputComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedidaInputComponent.swift; sourceTree = "<group>"; };
+		54C29C6E2D5FC60200EC0328 /* MedidaComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedidaComponent.swift; sourceTree = "<group>"; };
 		54E7F52B2D5D245700AE6C44 /* ClienteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClienteViewModel.swift; sourceTree = "<group>"; };
 		8B504FAA2D51355D00019D23 /* BancoDeDados.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BancoDeDados.swift; sourceTree = "<group>"; };
 		8B504FAC2D5135AE00019D23 /* CoreDataImplementacao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataImplementacao.swift; sourceTree = "<group>"; };
@@ -77,6 +87,11 @@
 				8B73953C2D4D46A000FAC6D2 /* TabBarView.swift */,
 				54DC04ED2D5528A0004C4A53 /* Pedido */,
 				54DC04EA2D552704004C4A53 /* Cliente */,
+				54A666502D5E741C00520E28 /* MensagemErroComponent.swift */,
+				54C29C682D5FB49900EC0328 /* PhotoPickerComponent.swift */,
+				54C29C6A2D5FB7F000EC0328 /* CampoTextoComponent.swift */,
+				54C29C6C2D5FC09500EC0328 /* MedidaInputComponent.swift */,
+				54C29C6E2D5FC60200EC0328 /* MedidaComponent.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -242,18 +257,23 @@
 				8B7395412D4D529F00FAC6D2 /* PedidoViewModel.swift in Sources */,
 				54E7F52C2D5D245700AE6C44 /* ClienteViewModel.swift in Sources */,
 				9F8C248B2D4C10410046FB2E /* Cliente.swift in Sources */,
+				54A666512D5E741C00520E28 /* MensagemErroComponent.swift in Sources */,
 				9FCD73A62D52AF1B00A5FC53 /* CadastrarEditarPedidoView.swift in Sources */,
 				547451E32D4D447B00F94D3E /* Foto.swift in Sources */,
 				9F5E21322D4BF79D00B2F7F2 /* StorageChallengeApp.swift in Sources */,
 				9F58B1B62D4D4977009ABAB7 /* PerfilDoClienteView.swift in Sources */,
+				54C29C6F2D5FC60200EC0328 /* MedidaComponent.swift in Sources */,
+				54C29C6B2D5FB7F000EC0328 /* CampoTextoComponent.swift in Sources */,
 				547451E12D4D41A400F94D3E /* Pedido.swift in Sources */,
 				547451E72D4D453800F94D3E /* Pagamento.swift in Sources */,
 				9F60AE8F2D52B46A00F09776 /* SelecionarClienteView.swift in Sources */,
+				54C29C6D2D5FC09500EC0328 /* MedidaInputComponent.swift in Sources */,
 				9F5E21372D4BF79D00B2F7F2 /* AppContainer.xcdatamodeld in Sources */,
 				9F58B1B82D4D4B73009ABAB7 /* CadastrarEditarClienteView.swift in Sources */,
 				547451E52D4D44F400F94D3E /* Medida.swift in Sources */,
 				8B504FAD2D5135AE00019D23 /* CoreDataImplementacao.swift in Sources */,
 				8B7395432D4D584400FAC6D2 /* CriarPedidoView.swift in Sources */,
+				54C29C692D5FB49900EC0328 /* PhotoPickerComponent.swift in Sources */,
 				8B73953D2D4D46A000FAC6D2 /* TabBarView.swift in Sources */,
 				8B73953F2D4D4A6300FAC6D2 /* ListarPedidosView.swift in Sources */,
 				8B73953D2D4D46A000FAC6D2 /* TabBarView.swift in Sources */,
