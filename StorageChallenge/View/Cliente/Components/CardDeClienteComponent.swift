@@ -1,10 +1,3 @@
-//
-//  CardDeClienteComponent.swift
-//  StorageChallenge
-//
-//  Created by EDSON DE OLIVEIRA CORREIA on 13/02/25.
-//
-
 import SwiftUI
 
 struct CardDeClienteComponent: View {
@@ -29,30 +22,31 @@ struct CardDeClienteComponent: View {
                 VStack(alignment: .leading){
                     Text(cliente.nome)
                         .frame(width: 200, alignment: .leading)
-
+                    
                         .fontWeight(.medium)
                         .font(.title2)
                         .lineLimit(1)
                         .truncationMode(.tail)
-
                     
-                        Text(cliente.telefone)
+                    
+                    Text(cliente.telefone)
                         .frame(width: 180, alignment: .leading)
                         .font(.title3)
-
+                    
                 }
                 Spacer()
                 Image(systemName: "chevron.forward")
                     .fontWeight(.semibold)
             }
             .foregroundStyle(Color.preto32)
-
-            .padding(20)
-                .background(.amarelo)
-                .cornerRadius(8).foregroundColor(Color.accentColor)
-           
             
-        }    }
+            .padding(20)
+            .background(.amarelo)
+            .cornerRadius(8).foregroundColor(Color.accentColor)
+            
+            
+        }
+    }
 }
 
 #Preview {

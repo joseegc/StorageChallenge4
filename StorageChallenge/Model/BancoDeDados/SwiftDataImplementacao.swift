@@ -1,16 +1,10 @@
-//
-//  SwiftDataImplementacao.swift
-//  StorageChallenge
-//
-//  Created by ALINE FERNANDA PONZANI on 03/02/25.
-//
-
 import Foundation
 import SwiftData
 
 class SwiftDataImplementacao: BancoDeDados {
     
     let modelContainer: ModelContainer
+    
     
     init() {
         do {
@@ -79,11 +73,9 @@ class SwiftDataImplementacao: BancoDeDados {
         let nomeNormalizado = nome.trimmingCharacters(in: .whitespaces).lowercased()
         let context = modelContainer.mainContext
         
-        // Busca todos os clientes (não filtra no banco)
         let fetchDescriptor = FetchDescriptor<ClienteModel>()
         let clientesModel = try context.fetch(fetchDescriptor)
         
-        // Filtra na memória de forma case insensitive
         let clientesFiltrados = clientesModel.filter { cliente in
             cliente.nome.lowercased().contains(nomeNormalizado)
         }
@@ -113,12 +105,10 @@ class SwiftDataImplementacao: BancoDeDados {
         
         let fetchDescriptor = FetchDescriptor<ClienteModel>(predicate: predicate)
         
-        // Busca o primeiro cliente que corresponde ao ID
         guard let clienteBD = try context.fetch(fetchDescriptor).first else {
             return nil
         }
         
-        // Converte para o modelo Cliente
         var cliente = Cliente(id: clienteBD.id, nome: clienteBD.nome, telefone: clienteBD.telefone!, foto: clienteBD.foto)
         
         
@@ -139,7 +129,6 @@ class SwiftDataImplementacao: BancoDeDados {
     func salvarCliente(cliente: Cliente) throws {
         let context = modelContainer.mainContext
         
-        // Converter Cliente para ClienteModel antes de salvar
         let medidasModel = cliente.medidas.map { MedidaModel(id: $0.id, descricao: $0.descricao, valor: $0.valor) }
         let clienteModel = ClienteModel(id: cliente.id, nome: cliente.nome, telefone: cliente.telefone, foto: cliente.foto, medidas: medidasModel)
         
@@ -231,48 +220,43 @@ class SwiftDataImplementacao: BancoDeDados {
             }
         }
     }
+    
+    
+    
+    
+    @MainActor
+    func deletarMedida(id: UUID) throws {
+        let context = modelContainer.mainContext
         
-     
-        
-        
-        @MainActor
-        func deletarMedida(id: UUID) throws {
-            let context = modelContainer.mainContext
-            
-            let predicate = #Predicate<MedidaModel> { medidaBD in
-                medidaBD.id == id
-            }
-            
-            let fetchDescriptor = FetchDescriptor<MedidaModel>(predicate: predicate)
-            
-            
-            if let medidaBD = try context.fetch(fetchDescriptor).first{
-                context.delete(medidaBD)
-            }
-            
+        let predicate = #Predicate<MedidaModel> { medidaBD in
+            medidaBD.id == id
         }
         
-        func salvarPedido(pedido: Pedido, cliente: Cliente) throws {
-            print("okkkkkk")
+        let fetchDescriptor = FetchDescriptor<MedidaModel>(predicate: predicate)
+        
+        
+        if let medidaBD = try context.fetch(fetchDescriptor).first{
+            context.delete(medidaBD)
         }
-        
-        func editarPedido(pedido: Pedido) throws {
-            print("okkkkkk")
-        }
-        
-        func deletarPedido(id: UUID) throws {
-            print("okkkkkk")
-        }
-        
-        func salvarReferencia(imagem: Data, pedido: Pedido) throws {
-            print("okkkkkk")
-        }
-        
-        func deletarReferencia(id: UUID) throws {
-            print("okkkkkk")
-        }
-        
-        
-        
-        
     }
+    
+    func salvarPedido(pedido: Pedido, cliente: Cliente) throws {
+        print("")
+    }
+    
+    func editarPedido(pedido: Pedido) throws {
+        print("")
+    }
+    
+    func deletarPedido(id: UUID) throws {
+        print("")
+    }
+    
+    func salvarReferencia(imagem: Data, pedido: Pedido) throws {
+        print("")
+    }
+    
+    func deletarReferencia(id: UUID) throws {
+        print("")
+    }
+}

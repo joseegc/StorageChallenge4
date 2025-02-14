@@ -1,10 +1,3 @@
-//
-//  ClienteViewModel2.swift
-//  StorageChallenge
-//
-//  Created by ALINE FERNANDA PONZANI on 06/02/25.
-//
-
 import Foundation
 
 class ClienteViewModel: ObservableObject {
@@ -16,7 +9,6 @@ class ClienteViewModel: ObservableObject {
     
     init(bancoDeDados: BancoDeDados) {
         self.bancoDeDados = bancoDeDados
-        //        carregarClientes()
     }
     
     func salvarCliente() {
@@ -37,7 +29,6 @@ class ClienteViewModel: ObservableObject {
         return nil
     }
     
-    
     func buscarTodosClientes() {
         do {
             self.clientes = try bancoDeDados.buscarTodosClientes()
@@ -45,8 +36,6 @@ class ClienteViewModel: ObservableObject {
             print("Erro ao carregar clientes: \(error)")
         }
     }
-    
-    
     
     func buscarClientesPorNome(nome: String) {
         do {
@@ -66,7 +55,6 @@ class ClienteViewModel: ObservableObject {
         }
     }
     
-    
     func editarCliente(){
         do {
             print("chamou deletar na viewModel")
@@ -75,6 +63,7 @@ class ClienteViewModel: ObservableObject {
             print("Erro ao deletar cliente: \(error)")
         }
     }
+    
     func deletarMedida(id: UUID){
         do {
             print("chamou deletar na viewModel")

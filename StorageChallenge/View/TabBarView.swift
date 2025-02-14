@@ -1,27 +1,10 @@
-//
-//  TabbarView.swift
-//  StorageChallenge
-//
-//  Created by ALINE FERNANDA PONZANI on 31/01/25.
-//
-
 import SwiftUI
 
 struct TabBarView: View {
     @Environment(\.colorScheme) var colorScheme
     
-    
     var body: some View {
         TabView {
-            // Pedidos
-//            NavigationStack{
-//                ListarPedidosView()
-//            }.tabItem {
-//                Label("Pedidos", systemImage: "calendar")
-//            }
-            
-
-//
             // Clientes
             NavigationStack {
                 ListaDeClientesView()
@@ -31,28 +14,19 @@ struct TabBarView: View {
                 Text("Clientes")
             }
             
-            
-            // Clientes
+            // Configurações
             NavigationStack {
-                
                 ConfiguracoesView()
             }
             .tabItem {
                 Image(systemName: "gear")
                 Text("Configuracoes")
             }
-            
-//               mudarDeBanco()
-            
-           
         }.accentColor(colorScheme == .dark ? Color.white : Color.black)
-        
-        
     }
 }
 
 #Preview {
     TabBarView()
         .environmentObject(ClienteViewModel(bancoDeDados: SwiftDataImplementacao()))
-    //        .environmentObject(PedidoViewModel())
 }

@@ -1,10 +1,3 @@
-//
-//  CoreDataImplementacao.swift
-//  StorageChallenge
-//
-//  Created by ALINE FERNANDA PONZANI on 03/02/25.
-//
-
 import CoreData
 
 class CoreDataImplementacao: BancoDeDados {
@@ -40,15 +33,15 @@ class CoreDataImplementacao: BancoDeDados {
         novaMedida.descricao = medida.descricao
         novaMedida.valor = medida.valor
         
- 
-     
-            novaMedida.cliente = cliente
+        
+        
+        novaMedida.cliente = cliente
         do {
             try container.viewContext.save()
         } catch  {
             print("Erro em salvar medida")
         }
-       
+        
     }
     
     func editarCliente(cliente: Cliente) throws{
@@ -219,7 +212,7 @@ class CoreDataImplementacao: BancoDeDados {
     
     func buscarClientesPorNome(nome: String) -> [Cliente] {
         var nome = nome.trimmingCharacters(in: .whitespaces)
-
+        
         let predicate = NSPredicate(format: "nome CONTAINS[cd] %@", nome)
         
         let fetchRequest: NSFetchRequest<ClienteEntity> = ClienteEntity.fetchRequest()
@@ -242,10 +235,10 @@ class CoreDataImplementacao: BancoDeDados {
                         cliente.medidas = medidasDoCliente
                     }
                     
-//                    if clienteBD.pedidos != nil{
-//                        let pedidosDoCliente = try buscarTodosPedidosDoCliente(idDoCliente: clienteBD.id!)
-//                        cliente.pedidos = pedidosDoCliente
-//                    }
+                    //                    if clienteBD.pedidos != nil{
+                    //                        let pedidosDoCliente = try buscarTodosPedidosDoCliente(idDoCliente: clienteBD.id!)
+                    //                        cliente.pedidos = pedidosDoCliente
+                    //                    }
                     clientes.append(cliente)
                 }
             }
@@ -277,8 +270,8 @@ class CoreDataImplementacao: BancoDeDados {
         }
         return []
     }
-
-
+    
+    
     
     func deletarCliente(id: UUID) throws {
         

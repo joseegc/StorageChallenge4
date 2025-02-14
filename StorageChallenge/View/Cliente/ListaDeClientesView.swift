@@ -1,10 +1,3 @@
-//
-//  ListaDeClientes.swift
-//  StorageChallenge
-//
-//  Created by ALINE FERNANDA PONZANI on 05/02/25.
-//
-
 import SwiftUI
 
 struct ListaDeClientesView: View {
@@ -16,103 +9,95 @@ struct ListaDeClientesView: View {
     
     var body: some View {
         ScrollView {
-        VStack(spacing: 20){
-            if clientesViewModel.clientes.isEmpty {
-                VStack {
-                    Text(mensagemDeErro)
-                        .padding(.top, 180)
-                }
-                
-
-            } else{
-                ForEach(clientesViewModel.clientes){ cliente in
-                    CardDeClienteComponent(cliente: cliente)
-                        .contextMenu {
-                            NavigationLink(destination: CadastrarEditarClienteView(idDoCliente: cliente.id)) {
+            VStack(spacing: 20){
+                if clientesViewModel.clientes.isEmpty {
+                    VStack {
+                        Text(mensagemDeErro)
+                            .padding(.top, 180)
+                    }
+                } else{
+                    ForEach(clientesViewModel.clientes){ cliente in
+                        CardDeClienteComponent(cliente: cliente)
+                            .contextMenu {
+                                NavigationLink(destination: CadastrarEditarClienteView(idDoCliente: cliente.id)) {
+                                    HStack {
+                                        Text("Editar")
+                                        Image(systemName: "pencil")
+                                    }
+                                }
+                                
+                                Button(role: .destructive) {
+                                    mostrarAlertaDeExcluir.toggle()
+                                    idDeClienteParaDeletar = cliente.id
+                                }
+                            label: {
                                 HStack {
-                                    Text("Editar")
-                                    Image(systemName: "pencil")
+                                    Text("Apagar")
+                                        .foregroundStyle(Color.red)
+                                    Spacer()
+                                    Image(systemName: "trash")
+                                        .foregroundStyle(Color.red)
                                 }
                             }
-                            
-                            Button(role: .destructive) {
-                                mostrarAlertaDeExcluir.toggle()
-                                idDeClienteParaDeletar = cliente.id
                             }
-                        label: {
-                            HStack {
-                                Text("Apagar")
-                                    .foregroundStyle(Color.red)
-                                Spacer()
-                                Image(systemName: "trash")
-                                    .foregroundStyle(Color.red)
-                            }
-                        }
-                        }
+                    }
+                    Spacer()
                 }
-                Spacer()
             }
-
+            .searchable(text: $nomeBuscado, prompt: "Buscar cliente...")
         }
-        .searchable(text: $nomeBuscado, prompt: "Buscar cliente...")
-
-
-    }
-        .frame(maxWidth: .infinity) // Ocupa todo o espaço
-
+        .frame(maxWidth: .infinity)
+        
         .padding(20)
-            .navigationTitle("Clientes")
-            
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    NavigationLink(destination: CadastrarEditarClienteView()) {
-                        Image(systemName: "plus")
-                            .fontWeight(.bold)
-                            .foregroundStyle(Color.preto)
-                    }
+        .navigationTitle("Clientes")
+        
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                NavigationLink(destination: CadastrarEditarClienteView()) {
+                    Image(systemName: "plus")
+                        .fontWeight(.bold)
+                        .foregroundStyle(Color.preto)
                 }
             }
-            
-            .actionSheet(isPresented: $mostrarAlertaDeExcluir) {
-                ActionSheet(
-                    title: Text("Excluir Cliente"), // Title of the action sheet
-                    message: Text("Tem certeza de que deseja excluir este cliente? Esta ação não pode ser desfeita."), // Question/Message
-                    buttons: [
-                        .destructive(Text("Excluir")) {
-                            // Perform deletion action here
-                            if let idDeClienteParaDeletar {
-                                clientesViewModel.deletarCliente(idDoCliente: idDeClienteParaDeletar)
-                                clientesViewModel.buscarTodosClientes()
-                                
-                            }
-                        },
-                        .cancel() // Cancel button
-                    ]
-                )
-            }
-       
-            .onAppear{
+        }
+        
+        .actionSheet(isPresented: $mostrarAlertaDeExcluir) {
+            ActionSheet(
+                title: Text("Excluir Cliente"), // Title of the action sheet
+                message: Text("Tem certeza de que deseja excluir este cliente? Esta ação não pode ser desfeita."),
+                buttons: [
+                    .destructive(Text("Excluir")) {
+                        if let idDeClienteParaDeletar {
+                            clientesViewModel.deletarCliente(idDoCliente: idDeClienteParaDeletar)
+                            clientesViewModel.buscarTodosClientes()
+                        }
+                    },
+                    .cancel()
+                ]
+            )
+        }
+        
+        .onAppear{
+            clientesViewModel.buscarTodosClientes()
+        }
+        .onChange(of: nomeBuscado) { novoNome in
+            if novoNome.isEmpty {
                 clientesViewModel.buscarTodosClientes()
-            }
-            .onChange(of: nomeBuscado) { novoNome in
-                if novoNome.isEmpty {
-                    clientesViewModel.buscarTodosClientes()
-                    
-                    if clientesViewModel.clientes.isEmpty {
-                        mensagemDeErro = "Não há nenhum cliente cadastrado"
-                    }
-                } else {
-                    clientesViewModel.buscarClientesPorNome(nome: novoNome)
-                    
-                    if clientesViewModel.clientes.isEmpty {
-                        mensagemDeErro = "Nenhum cliente encontrado"
-                    }
+                
+                if clientesViewModel.clientes.isEmpty {
+                    mensagemDeErro = "Não há nenhum cliente cadastrado"
+                }
+            } else {
+                clientesViewModel.buscarClientesPorNome(nome: novoNome)
+                
+                if clientesViewModel.clientes.isEmpty {
+                    mensagemDeErro = "Nenhum cliente encontrado"
                 }
             }
-            .background(Color(.corDeFundo))
-            .edgesIgnoringSafeArea(.bottom)
+        }
+        .background(Color(.corDeFundo))
+        .edgesIgnoringSafeArea(.bottom)
     }
-    
 }
 
 

@@ -1,19 +1,11 @@
-//
-//  perfilDoClienteView.swift
-//  StorageChallenge
-//
-//  Created by JOSE ELIAS GOMES CAMARGO on 31/01/25.
-//
-
 import SwiftUI
 
 struct PerfilDoClienteView: View {
-    //    let cliente: ClienteEntity
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var clientesViewModel: ClienteViewModel
     
-    @State var cliente: Cliente = Cliente(medidas: [Medida(descricao: "Pescoço", valor: 39)])
+    @State var cliente: Cliente = Cliente()
     
     @State var mostrarAlertaDeExcluir = false
     
@@ -31,8 +23,6 @@ struct PerfilDoClienteView: View {
                 
                 //MARK: COMPONENTE DE CARD DE MEDIDAS
                 CardDeMedidasComponent(cliente: cliente)
-                
-                
             }
             
             
@@ -79,15 +69,15 @@ struct PerfilDoClienteView: View {
         .edgesIgnoringSafeArea(.bottom)
         .actionSheet(isPresented: $mostrarAlertaDeExcluir) {
             ActionSheet(
-                title: Text("Excluir Cliente"), // Title of the action sheet
-                message: Text("Tem certeza de que deseja excluir \(cliente.nome)? Esta ação não pode ser desfeita."), // Question/Message
+                title: Text("Excluir Cliente"),
+                message: Text("Tem certeza de que deseja excluir \(cliente.nome)? Esta ação não pode ser desfeita."),
                 buttons: [
                     .destructive(Text("Excluir")) {
-                        // Perform deletion action here
+                        
                         clientesViewModel.deletarCliente(idDoCliente: cliente.id)
-                        presentationMode.wrappedValue.dismiss()                               // Update your data source, etc.
+                        presentationMode.wrappedValue.dismiss()
                     },
-                    .cancel() // Cancel button
+                    .cancel()
                 ]
             )
         }
