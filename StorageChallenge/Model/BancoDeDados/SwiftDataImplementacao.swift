@@ -130,11 +130,11 @@ class SwiftDataImplementacao: BancoDeDados {
     }
     
     @MainActor
-    func buscarClientePorId(cliente: Cliente) throws -> Cliente? {
+    func buscarClientePorId(id: UUID) throws -> Cliente? {
         let context = modelContainer.mainContext
         
         let predicate = #Predicate<ClienteModel> { cliente in
-            cliente.id == cliente.id
+            cliente.id == id
         }
         
         let fetchDescriptor = FetchDescriptor<ClienteModel>(predicate: predicate)

@@ -164,9 +164,9 @@ class CoreDataImplementacao: BancoDeDados {
     
     
     
-    func buscarClientePorId(cliente: Cliente) -> Cliente? {
+    func buscarClientePorId(id: UUID) -> Cliente? {
         let fetchRequest: NSFetchRequest<ClienteEntity> = ClienteEntity.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "id == %@", cliente.id.uuidString)
+        fetchRequest.predicate = NSPredicate(format: "id == %@", id.uuidString)
         
         do {
             let clientesExistentes = try container.viewContext.fetch(fetchRequest)

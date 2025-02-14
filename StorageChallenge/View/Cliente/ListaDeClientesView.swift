@@ -1,93 +1,104 @@
-//
-//  ListaDeClientes.swift
-//  StorageChallenge
-//
-//  Created by ALINE FERNANDA PONZANI on 05/02/25.
-//
 
 import SwiftUI
 
 struct ListaDeClientesView: View {
-    @EnvironmentObject var viewModel: ClienteViewModel
+    @EnvironmentObject var clientesViewModel: ClienteViewModel
     @State var nomeBuscado = ""
     @State var mensagemDeErro = "Não há nenhum cliente cadastrado"
+    @State var mostrarAlertaDeExcluir = false
+    @State var idDeClienteParaDeletar: UUID?
     
     var body: some View {
-        VStack(spacing: 20){
-            if viewModel.clientes.isEmpty {
-                Text(mensagemDeErro)
-            } else{
-                ForEach(viewModel.clientes){ cliente in
-                    NavigationLink(destination: PerfilDoClienteView(cliente: cliente)){
-                        HStack(spacing:10){
-                            if let imageData = cliente.foto, let uiImage = UIImage(data: imageData) {
-                                Image(uiImage: uiImage)
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                    .frame(width: 60, height: 60)
-                                    .clipShape(Circle())
-                            }
-                            else {
-                                Image(systemName: "person.circle.fill")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                    .frame(width: 60, height: 60)
-                                    .clipShape(Circle())
-                            }
-                            VStack(alignment: .leading){
-                                Text(cliente.nome)
-                                    .font(.title2)
-                                    Text(cliente.telefone).font(.title3)
-        
-                            }
-                            Spacer()
-                            Image(systemName: "chevron.forward")
-                        }.padding(20)
-                            .background(.amarelo)
-                            .cornerRadius(8).foregroundColor(Color.accentColor)
+        ScrollView {
+            VStack(spacing: 20){
+                if clientesViewModel.clientes.isEmpty {
+                    VStack {
+                        Text(mensagemDeErro)
+                            .padding(.top, 180)
+                    }
+                } else{
+                    ForEach(clientesViewModel.clientes){ cliente in
+                        CardDeClienteComponent(cliente: cliente)
                             .contextMenu {
-                                Button("Deletar Cliente"){
-                                    // Lógica de deletar cliente
+                                NavigationLink(destination: CadastrarEditarClienteView(idDoCliente: cliente.id)) {
+                                    HStack {
+                                        Text("Editar")
+                                        Image(systemName: "pencil")
+                                    }
+                                }
+                                
+                                Button(role: .destructive) {
+                                    mostrarAlertaDeExcluir.toggle()
+                                    idDeClienteParaDeletar = cliente.id
+                                }
+                            label: {
+                                HStack {
+                                    Text("Apagar")
+                                        .foregroundStyle(Color.red)
+                                    Spacer()
+                                    Image(systemName: "trash")
+                                        .foregroundStyle(Color.red)
                                 }
                             }
-                        
+                            }
                     }
+                    Spacer()
                 }
-                Spacer()
             }
-        }.padding(20)
-            .navigationTitle("Clientes")
             .searchable(text: $nomeBuscado, prompt: "Buscar cliente...")
-            .background(Color(.corDeFundo))
-            .edgesIgnoringSafeArea(.bottom)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    NavigationLink(destination: CadastrarEditarClienteView()) {
-                        Image(systemName: "plus")
-                            .fontWeight(.black)
-                    }
+        }
+        .frame(maxWidth: .infinity)
+        
+        .padding(20)
+        .navigationTitle("Clientes")
+        
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                NavigationLink(destination: CadastrarEditarClienteView()) {
+                    Image(systemName: "plus")
+                        .fontWeight(.bold)
+                        .foregroundStyle(Color.preto)
                 }
             }
-            .onAppear{
-                viewModel.buscarTodosClientes()
-            }
-            .onChange(of: nomeBuscado) { novoNome in
-                if novoNome.isEmpty {
-                    viewModel.buscarTodosClientes()
-                    
-                    if viewModel.clientes.isEmpty {
-                        mensagemDeErro = "Não há nenhum cliente cadastrado"
-                    }
-                } else {
-                    viewModel.buscarClientesPorNome(nome: novoNome)
-                    
-                    if viewModel.clientes.isEmpty {
-                        mensagemDeErro = "Nenhum cliente encontrado"
-                    }
+        }
+        
+        .actionSheet(isPresented: $mostrarAlertaDeExcluir) {
+            ActionSheet(
+                title: Text("Excluir Cliente"), // Title of the action sheet
+                message: Text("Tem certeza de que deseja excluir este cliente? Esta ação não pode ser desfeita."),
+                buttons: [
+                    .destructive(Text("Excluir")) {
+                        if let idDeClienteParaDeletar {
+                            clientesViewModel.deletarCliente(idDoCliente: idDeClienteParaDeletar)
+                            clientesViewModel.buscarTodosClientes()
+                        }
+                    },
+                    .cancel()
+                ]
+            )
+        }
+        
+        .onAppear{
+            clientesViewModel.buscarTodosClientes()
+        }
+        .onChange(of: nomeBuscado) { novoNome in
+            if novoNome.isEmpty {
+                clientesViewModel.buscarTodosClientes()
+                
+                if clientesViewModel.clientes.isEmpty {
+                    mensagemDeErro = "Não há nenhum cliente cadastrado"
+                }
+            } else {
+                clientesViewModel.buscarClientesPorNome(nome: novoNome)
+                
+                if clientesViewModel.clientes.isEmpty {
+                    mensagemDeErro = "Nenhum cliente encontrado"
                 }
             }
+        }
+        .background(Color(.corDeFundo))
+        .edgesIgnoringSafeArea(.bottom)
     }
-    
 }
 
 

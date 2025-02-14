@@ -30,6 +30,7 @@
 		9F60AE8F2D52B46A00F09776 /* SelecionarClienteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F60AE8E2D52B46A00F09776 /* SelecionarClienteView.swift */; };
 		9F8C248B2D4C10410046FB2E /* Cliente.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8C248A2D4C10410046FB2E /* Cliente.swift */; };
 		9FCD73A62D52AF1B00A5FC53 /* CadastrarEditarPedidoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FCD73A52D52AF1B00A5FC53 /* CadastrarEditarPedidoView.swift */; };
+		BCB949C92D5FC78E00CE6501 /* CardDeClienteComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB949C82D5FC78E00CE6501 /* CardDeClienteComponent.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +59,7 @@
 		9F60AE8E2D52B46A00F09776 /* SelecionarClienteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelecionarClienteView.swift; sourceTree = "<group>"; };
 		9F8C248A2D4C10410046FB2E /* Cliente.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cliente.swift; sourceTree = "<group>"; };
 		9FCD73A52D52AF1B00A5FC53 /* CadastrarEditarPedidoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CadastrarEditarPedidoView.swift; sourceTree = "<group>"; };
+		BCB949C82D5FC78E00CE6501 /* CardDeClienteComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDeClienteComponent.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +89,7 @@
 				9F60AE8E2D52B46A00F09776 /* SelecionarClienteView.swift */,
 				9F58B1B72D4D4B73009ABAB7 /* CadastrarEditarClienteView.swift */,
 				8B6633082D53D58B00A6E5CC /* ListaDeClientesView.swift */,
+				BCB949C82D5FC78E00CE6501 /* CardDeClienteComponent.swift */,
 				9F58B1B52D4D4977009ABAB7 /* PerfilDoClienteView.swift */,
 				54E7F52B2D5D245700AE6C44 /* ClienteViewModel.swift */,
 			);
@@ -253,6 +256,7 @@
 				9F58B1B82D4D4B73009ABAB7 /* CadastrarEditarClienteView.swift in Sources */,
 				547451E52D4D44F400F94D3E /* Medida.swift in Sources */,
 				8B504FAD2D5135AE00019D23 /* CoreDataImplementacao.swift in Sources */,
+				BCB949C92D5FC78E00CE6501 /* CardDeClienteComponent.swift in Sources */,
 				8B7395432D4D584400FAC6D2 /* CriarPedidoView.swift in Sources */,
 				8B73953D2D4D46A000FAC6D2 /* TabBarView.swift in Sources */,
 				8B73953F2D4D4A6300FAC6D2 /* ListarPedidosView.swift in Sources */,
