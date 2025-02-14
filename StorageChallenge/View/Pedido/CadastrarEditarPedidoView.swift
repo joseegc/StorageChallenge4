@@ -51,13 +51,7 @@ struct CadastrarEditarPedidoView: View {
                         Spacer()
                     }
                     
-                    HStack {
-                        NavigationLink(destination: SelecionarClienteView()) {
-                            Text("Selecionar Cliente")
-                            
-                        }
-                        Spacer()
-                    }
+            
                     
                     HStack{
                         Text("Data de Entrega")

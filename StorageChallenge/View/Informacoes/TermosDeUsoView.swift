@@ -2,6 +2,9 @@
 import SwiftUI
 
 struct TermosDeUsoView: View {
+    @State var taps = 0
+    @Binding var exibirModoDeDesenvolvedor: Bool
+    
     var body: some View {
         ScrollView {
             VStack(alignment: .leading) {
@@ -68,8 +71,18 @@ struct TermosDeUsoView: View {
                 .padding(.bottom, 20)
                 
                 Text("5. Limitação de Responsabilidade")
+                    .onTapGesture {
+                        taps += 1
+                            
+                        if (taps == 5) {
+                            UserDefaults.standard.set(true, forKey: "modoDeDesenvolvedor")
+                            
+                            exibirModoDeDesenvolvedor = UserDefaults.standard.bool(forKey: "modoDeDesenvolvedor")
+                        }
+                    }
                     .font(.title3)
                     .bold()
+                    
                 
                 Text("""
                 A equipe de desenvolvimento do Swedle não será responsável por:
@@ -110,9 +123,9 @@ struct TermosDeUsoView: View {
 }
 
 
-#Preview {
-    TermosDeUsoView()
-}
+//#Preview {
+//    TermosDeUsoView(exibirModoDeDesenvolvedor: <#T##Binding<Bool>#>)
+//}
 
 
 

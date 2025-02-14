@@ -16,13 +16,14 @@ struct TabBarView: View {
             
             // Configurações
             NavigationStack {
-                ConfiguracoesView()
+                InformacoesView()
             }
             .tabItem {
-                Image(systemName: "gear")
-                Text("Configuracoes")
+                Image(systemName: "info.circle.fill")
+                Text("Informações")
             }
         }.accentColor(colorScheme == .dark ? Color.white : Color.black)
+            
     }
 }
 

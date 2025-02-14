@@ -1,3 +1,10 @@
+//
+//  CadastrarClienteView.swift
+//  StorageChallenge
+//
+//  Created by JOSE ELIAS GOMES CAMARGO on 31/01/25.
+//
+
 import SwiftUI
 import PhotosUI
 
@@ -6,7 +13,7 @@ struct CadastrarEditarClienteView: View {
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.colorScheme) var colorScheme
     
-    @State private var imagem: UIImage?
+    @State var imagem: UIImage?
     @State var photosPickerItem: PhotosPickerItem?
     
     @State var clienteInput = Cliente()
@@ -14,6 +21,8 @@ struct CadastrarEditarClienteView: View {
     
     @State var medidas :[Medida] = []
     @State var telefoneValido: Bool = true
+    @State var nomeValido: Bool = true
+    @State var medidasVazias: [Int] = []
     
     
     var fotoExibida: Image {
@@ -27,39 +36,30 @@ struct CadastrarEditarClienteView: View {
     let numberFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
-        formatter.maximumIntegerDigits = 4
+        formatter.maximumFractionDigits = 2 // Permite 2 casas decimais
+        formatter.minimumFractionDigits = 0
+        formatter.maximumIntegerDigits = 5
         return formatter
     }()
     
-    func formatPhoneNumber(_ number: String) -> String {
-        let digits = number.filter { "0123456789".contains($0) }
+    func validarEntradaCliente() -> Bool {
+        self.telefoneValido = NumeroTelefoneValido(clienteInput.telefone)
+        self.nomeValido = !clienteInput.nome.isEmpty
+        for (index, medida) in clienteInput.medidas.enumerated() {
+            if medida.descricao.isEmpty {
+                medidasVazias.append(index)
+            }
+        }
+
+        guard telefoneValido, nomeValido, medidasVazias.isEmpty else { return false }
         
-        if digits.isEmpty {
-            return ""
-        }
-        
-        if digits.count >= 11 {
-            let area = digits.prefix(2)
-            let firstPart = digits.dropFirst(2).prefix(5)
-            let secondPart = digits.dropFirst(7).prefix(4)
-            return "(\(area)) \(firstPart)-\(secondPart)"
-        }
-        else if digits.count == 10 {
-            let area = digits.prefix(2)
-            let firstPart = digits.dropFirst(2).prefix(4)
-            let secondPart = digits.dropFirst(6).prefix(4)
-            return "(\(area)) \(firstPart)-\(secondPart)"
-        }
-        else {
-            return digits
-        }
+        return true
     }
     
-    func isValidPhoneNumber(_ phone: String) -> Bool {
-        let pattern = #"^\(\d{2}\)\s?\d{4,5}-\d{4}$"#
-        let predicate = NSPredicate(format: "SELF MATCHES %@", pattern)
-        telefoneValido = predicate.evaluate(with: phone)
-        return predicate.evaluate(with: phone)
+    func NumeroTelefoneValido(_ numero: String) -> Bool {
+        let regex = #"^\(\d{2}\)\s?\d{4,5}-\d{4}$"#
+        let predicado = NSPredicate(format: "SELF MATCHES %@", regex)
+        return predicado.evaluate(with: numero)
     }
     
     var body: some View {
@@ -67,61 +67,26 @@ struct CadastrarEditarClienteView: View {
             VStack(alignment: .leading, spacing: 30) {
                 HStack {
                     Spacer()
-                    PhotosPicker(selection: $photosPickerItem, matching: .images) {
-                        fotoExibida
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: 83, height: 83)
-                            .clipShape(Circle())
-                            .overlay {
-                                ZStack {
-                                    Circle()
-                                        .fill(Color(colorScheme == .dark ? Color("cinzaMedio"): Color("cinzaClaro")))
-                                        .frame(width: 31, height: 31)
-                                    Image(systemName: "camera").foregroundStyle(Color("pretoFixo"))
-                                }.offset(x: 25, y: 25)
-                            }
-                            .foregroundStyle(Color(colorScheme == .dark ? Color("cinzaClaro"): Color("cinzaEscuro")))
-                    }.frame(width: 50, height: 50).padding(.top, 80)
-                        .onChange(of: photosPickerItem) { _, _ in
-                            Task {
-                                if let photosPickerItem, let data = try? await photosPickerItem.loadTransferable(type: Data.self) {
-                                    if let image = UIImage(data: data) {
-                                        DispatchQueue.main.async {
-                                            self.imagem = image
-                                        }
-                                    }
-                                }
-                                photosPickerItem = nil
-                            }
-                        }
+                    PhotoPickerComponent(imagem: $imagem, photosPickerItem: $photosPickerItem)
                     Spacer()
                 }
                 
-                VStack(alignment: .leading, spacing: 5) {
-                    TextField("Nome", text: $clienteInput.nome)
-                    Rectangle().fill(Color("cinzaEscuro")).frame(height: 1)
-                }.padding(.horizontal)
+                CampoTextoComponent(
+                    titulo: "Nome*",
+                    texto: $clienteInput.nome,
+                    valido: $nomeValido,
+                    mensagemErro: nomeValido ? nil : "Nome é obrigatório!",
+                    tipoCampo: .nome
+                )
                 
-                VStack(alignment: .leading, spacing: 5) {
-                    
-                    TextField("Telefone", text: $clienteInput.telefone
-                    ).onChange(of: clienteInput.telefone) { newValue in
-                        let formatted = formatPhoneNumber(newValue)
-                        if formatted != newValue {
-                            clienteInput.telefone = formatted
-                        }
-                        if formatted.count >= 10 {
-                            telefoneValido = true
-                        }
-                    }
-                    
-                    .keyboardType(.numberPad)
-                    Rectangle().fill(Color("cinzaEscuro")).frame(height: 1)
-                    if (!telefoneValido) {
-                        Text("Telefone Inválido").bold().foregroundStyle(Color(.red))
-                    }
-                }.padding(.horizontal)
+                CampoTextoComponent(
+                    titulo: "Telefone*",
+                    texto: $clienteInput.telefone,
+                    valido: $telefoneValido,
+                    teclado: .numberPad,
+                    mensagemErro: telefoneValido ? nil : "Telefone inválido!",
+                    tipoCampo: .telefone
+                )
                 
                 
                 VStack(alignment: .center) {
@@ -132,59 +97,23 @@ struct CadastrarEditarClienteView: View {
                     }
                     
                     
-                    //                    HStack {
-                    //                        Text("Descrição")
-                    //                        Spacer()
-                    //                        Text("Medida").padding(.trailing, 55)
-                    //                    }
-                    
                     // Exibe as medidas
-                    ForEach($clienteInput.medidas) { $medida in
-                        HStack {
-                            VStack(spacing: 5) {
-                                HStack {
-                                    // TextField para Descricao
-                                    TextField("Exemplo: Busto", text: $medida.descricao) // Vincula diretamente ao estado da medida
-                                    
-                                    Spacer()
-                                    
-                                    HStack(spacing: 0) {
-                                        // TextField para Valor (número)
-                                        Rectangle()
-                                            .fill(Color("cinzaEscuro"))
-                                            .frame(width: 1)
-                                            .padding(.trailing, 10)
-                                        
-                                        TextField("Valor", value: $medida.valor, formatter: numberFormatter)
-                                            .frame(width: 45)
-                                            .keyboardType(.decimalPad)
-                                        
-                                        
-                                        
-                                        Text("cm").padding(EdgeInsets(top: 0, leading: 3, bottom: 0, trailing: 3))
-                                        
-                                    }
-                                    
-                                    
+                    ForEach(Array(clienteInput.medidas.enumerated()), id: \.element.id) { index, medida in
+                        MedidaComponent(
+                            medida: $clienteInput.medidas[index],
+                            index: index,
+                            medidasVazias: $medidasVazias,
+                            clienteInput: $clienteInput.medidas,
+                            removerMedida: {
+                                if medidasVazias.contains(index) {
+                                    medidasVazias.removeAll { $0 == index }
                                 }
-                                Rectangle()
-                                    .fill(Color("cinzaEscuro"))
-                                    .frame(height: 1)
-                            }
-                            Button(action: {
-                                var idMedida = medida.id
-                                if let index = clienteInput.medidas.firstIndex(where: { $0.id == idMedida }) {
-                                    clienteInput.medidas.remove(at: index)
-                                    clientesViewModel.deletarMedida(id: idMedida)
-                                }
+                                let idMedida = clienteInput.medidas[index].id
+                                clienteInput.medidas.remove(at: index)
+                                clientesViewModel.deletarMedida(id: idMedida)
                             },
-                                   label: {
-                                Image(systemName: "minus.circle")
-                                    .foregroundStyle(Color(.red))
-                            })
-                        }
-                        
-                        .padding(.bottom, 10)
+                            clientesViewModel: clientesViewModel
+                        )
                     }
                     
                     
@@ -212,6 +141,7 @@ struct CadastrarEditarClienteView: View {
             .background(Color(colorScheme == .dark ? Color("pretoFixo"): Color("cinzaClaro")))
             .cornerRadius(20)
             .padding(.horizontal, 21)
+            .padding(.bottom, 24)
             .navigationTitle(idDoCliente != nil ? "Editar Cliente" : "Cadastrar Cliente")
             .navigationBarTitleDisplayMode(.inline)
             .task {
@@ -234,35 +164,42 @@ struct CadastrarEditarClienteView: View {
                 //                }
             }
             
+            
+            
             .toolbar {
                 ToolbarItem {
                     Button(action: {
-                        if isValidPhoneNumber(clienteInput.telefone) {
-                            if let imageData = self.imagem?.pngData() {
-                                clienteInput.foto = imageData
-                            }
-                            
-                            //                        clienteInput.medidas = medidas
-                            clientesViewModel.cliente.medidas = clienteInput.medidas
-                            
-                            
-                            clientesViewModel.cliente = clienteInput
-                            print(clientesViewModel.cliente.medidas)
-                            if idDoCliente != nil {
-                                clientesViewModel.editarCliente()
-                            } else {
-                                clientesViewModel.salvarCliente()
-                                print("Adicionando ao banco")
-                                
-                            }
-                            
-                            
-                            
-                            clientesViewModel.buscarTodosClientes()
-                            presentationMode.wrappedValue.dismiss()
+                        
+                        if !validarEntradaCliente() {
+                            return
                         }
+                        
+                        
+                        if let imageData = self.imagem?.pngData() {
+                            clienteInput.foto = imageData
+                        }
+                        
+                        //                        clienteInput.medidas = medidas
+                        clientesViewModel.cliente.medidas = clienteInput.medidas
+                        
+                        
+                        clientesViewModel.cliente = clienteInput
+                        print(clientesViewModel.cliente.medidas)
+                        if idDoCliente != nil {
+                            clientesViewModel.editarCliente()
+                        } else {
+                            clientesViewModel.salvarCliente()
+                            print("Adicionando ao banco")
+                            
+                        }
+                        
+                        
+                        
+                        clientesViewModel.buscarTodosClientes()
+                        presentationMode.wrappedValue.dismiss()
                     }) {
                         Text("Salvar")
+                        
                     }
                 }
             }
@@ -271,7 +208,6 @@ struct CadastrarEditarClienteView: View {
             .edgesIgnoringSafeArea(.bottom)
     }
 }
-
 
 extension UIImage {
     func resized(to maxWidth: CGFloat) -> UIImage? {
@@ -290,6 +226,8 @@ extension UIImage {
 
 
 #Preview {
-    CadastrarEditarClienteView()
-        .environmentObject(ClienteViewModel(bancoDeDados: SwiftDataImplementacao()))
+    NavigationStack {
+        CadastrarEditarClienteView()
+            .environmentObject(ClienteViewModel(bancoDeDados: SwiftDataImplementacao()))
+    }
 }

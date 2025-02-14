@@ -34,7 +34,12 @@
 		BCB4E7242D5E7CD9007B7BC9 /* mudarDeBanco.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB4E7232D5E7CD9007B7BC9 /* mudarDeBanco.swift */; };
 		BCB4E7262D5E8916007B7BC9 /* PoliticaDePrivacidadeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB4E7252D5E8916007B7BC9 /* PoliticaDePrivacidadeView.swift */; };
 		BCB4E7282D5E8C2E007B7BC9 /* TermosDeUsoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB4E7272D5E8C2E007B7BC9 /* TermosDeUsoView.swift */; };
-		BCB4E72A2D5E9089007B7BC9 /* ConfiguracoesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB4E7292D5E9089007B7BC9 /* ConfiguracoesView.swift */; };
+		BCB4E72A2D5E9089007B7BC9 /* InformacoesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB4E7292D5E9089007B7BC9 /* InformacoesView.swift */; };
+		BCB949CB2D5FD14A00CE6501 /* CampoTextoComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB949CA2D5FD14A00CE6501 /* CampoTextoComponent.swift */; };
+		BCB949CD2D5FD15100CE6501 /* MedidaComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB949CC2D5FD15100CE6501 /* MedidaComponent.swift */; };
+		BCB949CF2D5FD17800CE6501 /* MedidaInputComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB949CE2D5FD17800CE6501 /* MedidaInputComponent.swift */; };
+		BCB949D12D5FD18000CE6501 /* MensagemErroComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB949D02D5FD18000CE6501 /* MensagemErroComponent.swift */; };
+		BCB949D32D5FD19100CE6501 /* PhotoPickerComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB949D22D5FD19100CE6501 /* PhotoPickerComponent.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -67,7 +72,12 @@
 		BCB4E7232D5E7CD9007B7BC9 /* mudarDeBanco.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mudarDeBanco.swift; sourceTree = "<group>"; };
 		BCB4E7252D5E8916007B7BC9 /* PoliticaDePrivacidadeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoliticaDePrivacidadeView.swift; sourceTree = "<group>"; };
 		BCB4E7272D5E8C2E007B7BC9 /* TermosDeUsoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermosDeUsoView.swift; sourceTree = "<group>"; };
-		BCB4E7292D5E9089007B7BC9 /* ConfiguracoesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfiguracoesView.swift; sourceTree = "<group>"; };
+		BCB4E7292D5E9089007B7BC9 /* InformacoesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformacoesView.swift; sourceTree = "<group>"; };
+		BCB949CA2D5FD14A00CE6501 /* CampoTextoComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampoTextoComponent.swift; sourceTree = "<group>"; };
+		BCB949CC2D5FD15100CE6501 /* MedidaComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedidaComponent.swift; sourceTree = "<group>"; };
+		BCB949CE2D5FD17800CE6501 /* MedidaInputComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedidaInputComponent.swift; sourceTree = "<group>"; };
+		BCB949D02D5FD18000CE6501 /* MensagemErroComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MensagemErroComponent.swift; sourceTree = "<group>"; };
+		BCB949D22D5FD19100CE6501 /* PhotoPickerComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPickerComponent.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,7 +96,7 @@
 			children = (
 				54DC04ED2D5528A0004C4A53 /* Pedido */,
 				54DC04EA2D552704004C4A53 /* Cliente */,
-				BCA971182D5FBE3600945EFF /* Configuracoes */,
+				BCA971182D5FBE3600945EFF /* Informacoes */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -183,18 +193,23 @@
 			children = (
 				BCB4E71D2D5E6F73007B7BC9 /* CardDeClienteComponent.swift */,
 				BCB4E71B2D5E6C73007B7BC9 /* CardDeMedidasComponent.swift */,
+				BCB949CA2D5FD14A00CE6501 /* CampoTextoComponent.swift */,
+				BCB949CC2D5FD15100CE6501 /* MedidaComponent.swift */,
+				BCB949CE2D5FD17800CE6501 /* MedidaInputComponent.swift */,
+				BCB949D02D5FD18000CE6501 /* MensagemErroComponent.swift */,
+				BCB949D22D5FD19100CE6501 /* PhotoPickerComponent.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
 		};
-		BCA971182D5FBE3600945EFF /* Configuracoes */ = {
+		BCA971182D5FBE3600945EFF /* Informacoes */ = {
 			isa = PBXGroup;
 			children = (
-				BCB4E7292D5E9089007B7BC9 /* ConfiguracoesView.swift */,
+				BCB4E7292D5E9089007B7BC9 /* InformacoesView.swift */,
 				BCB4E7252D5E8916007B7BC9 /* PoliticaDePrivacidadeView.swift */,
 				BCB4E7272D5E8C2E007B7BC9 /* TermosDeUsoView.swift */,
 			);
-			path = Configuracoes;
+			path = Informacoes;
 			sourceTree = "<group>";
 		};
 		BCA971192D5FBE5400945EFF /* ViewModel */ = {
@@ -278,6 +293,7 @@
 				8B6633092D53D58B00A6E5CC /* ListaDeClientesView.swift in Sources */,
 				9F5E214A2D4BFB1500B2F7F2 /* CoreDataModel.swift in Sources */,
 				8B504FAF2D5135C300019D23 /* SwiftDataImplementacao.swift in Sources */,
+				BCB949CD2D5FD15100CE6501 /* MedidaComponent.swift in Sources */,
 				8B7395412D4D529F00FAC6D2 /* PedidoViewModel.swift in Sources */,
 				54E7F52C2D5D245700AE6C44 /* ClienteViewModel.swift in Sources */,
 				9F8C248B2D4C10410046FB2E /* Cliente.swift in Sources */,
@@ -287,6 +303,10 @@
 				9F5E21322D4BF79D00B2F7F2 /* StorageChallengeApp.swift in Sources */,
 				BCB4E7242D5E7CD9007B7BC9 /* mudarDeBanco.swift in Sources */,
 				9F58B1B62D4D4977009ABAB7 /* PerfilDoClienteView.swift in Sources */,
+				BCB949CF2D5FD17800CE6501 /* MedidaInputComponent.swift in Sources */,
+				BCB949D12D5FD18000CE6501 /* MensagemErroComponent.swift in Sources */,
+				BCB949D32D5FD19100CE6501 /* PhotoPickerComponent.swift in Sources */,
+				BCB949CB2D5FD14A00CE6501 /* CampoTextoComponent.swift in Sources */,
 				547451E12D4D41A400F94D3E /* Pedido.swift in Sources */,
 				BCB4E7282D5E8C2E007B7BC9 /* TermosDeUsoView.swift in Sources */,
 				547451E72D4D453800F94D3E /* Pagamento.swift in Sources */,
@@ -302,7 +322,7 @@
 				BCB4E7262D5E8916007B7BC9 /* PoliticaDePrivacidadeView.swift in Sources */,
 				8B504FAB2D51355D00019D23 /* BancoDeDados.swift in Sources */,
 				8B73953F2D4D4A6300FAC6D2 /* ListarPedidosView.swift in Sources */,
-				BCB4E72A2D5E9089007B7BC9 /* ConfiguracoesView.swift in Sources */,
+				BCB4E72A2D5E9089007B7BC9 /* InformacoesView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

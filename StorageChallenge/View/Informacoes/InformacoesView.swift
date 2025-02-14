@@ -7,7 +7,11 @@
 
 import SwiftUI
 
-struct ConfiguracoesView: View {
+struct InformacoesView: View {
+    @EnvironmentObject var clientesViewModel: ClienteViewModel
+
+    @State var exibirModoDeDesenvolvedor = false
+    @State var bancoDeDados = 1
     var body: some View {
         VStack {
             NavigationLink(destination: PoliticaDePrivacidadeView()) {
@@ -19,11 +23,11 @@ struct ConfiguracoesView: View {
                     }
                     Divider()
                 }
-                .padding(.horizontal, 24)
                 
             }
+            .padding(.top, 24)
             
-            NavigationLink(destination: TermosDeUsoView()) {
+            NavigationLink(destination: TermosDeUsoView(exibirModoDeDesenvolvedor: $exibirModoDeDesenvolvedor)) {
                 VStack(spacing: 16) {
                     HStack {
                         Text("Termos de Uso")
@@ -32,13 +36,50 @@ struct ConfiguracoesView: View {
                     }
                     Divider()
                 }
-                .padding(.horizontal, 24)
                 
                 
             }
+            
+            VStack(spacing: 8){
+                if  (exibirModoDeDesenvolvedor) {
+
+                HStack {
+                    Text("Banco de Dados")
+                        .font(.title3)
+                        .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                    Spacer()
+                }
+                
+                    
+                    Picker("Select Option", selection: $bancoDeDados) {
+                        Text("Core Data")
+                            .tag(0)
+                        Text("Swift Data")
+                            .tag(1)
+                    }
+                    .pickerStyle(SegmentedPickerStyle())
+                    .padding(.horizontal)
+                    .onChange(of: bancoDeDados) { bancoDeDados in
+                        
+                        if bancoDeDados == 0 {
+                            clientesViewModel.bancoDeDados = CoreDataImplementacao()
+                            
+                        } else if bancoDeDados == 1 {
+                            clientesViewModel.bancoDeDados = SwiftDataImplementacao()
+                            
+                        }
+                    }
+                }
+            }
+            .padding(.top, 24)
             Spacer()
 
         }
+        .onAppear{
+            exibirModoDeDesenvolvedor = UserDefaults.standard.bool(forKey: "modoDeDesenvolvedor")
+        }
+        .padding(.horizontal, 24)
+
         .frame(maxWidth: .infinity, maxHeight: .infinity) // Ocupa todo o espaço
 
 
@@ -48,7 +89,7 @@ struct ConfiguracoesView: View {
 
 //        .background(Color.blue)
 //        .padding(.horizontal, 24)
-    .navigationTitle("Configurações")
+    .navigationTitle("Informações")
 
     //            .navigationBarTitleDisplayMode(.inline)
         .background(Color(.corDeFundo))
@@ -62,7 +103,7 @@ struct ConfiguracoesView: View {
 
 #Preview {
     NavigationStack {
-        ConfiguracoesView()
+        InformacoesView()
     }
 }
 
