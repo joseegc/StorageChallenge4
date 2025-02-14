@@ -10,19 +10,13 @@ import Combine
 
 class PedidoViewModel: ObservableObject{
     private let bancoDeDados: BancoDeDados
-    
-    
+  
     @Published var pedidos: [Pedido] = [] // Lista de pedidos
 //    @Published var pedidoSelecionado: Pedido? // Pedido para visualização ou edição
     @Published var descricao: String = "" // Descrição para cadastro ou edição
     
-    @Published var pedido:Pedido? = nil
-    
-    @Published var titulo = ""
-    @Published var dataDeEntrega = Date()
-    @Published var observacoes: String = ""
-    @Published var status: String = "Pendente"
-    @Published var valorPedido: String = ""
+    @Published var pedido: Pedido = Pedido()
+
     
     init(bancoDeDados: BancoDeDados) {
         self.bancoDeDados = bancoDeDados
@@ -45,22 +39,29 @@ class PedidoViewModel: ObservableObject{
 //        }
 //    }
     
-//    func editarPedido(pedido: Pedido) {
-//        self.pedidoSelecionado = pedido
-//    }
+    func editarPedido(){
+        do {
+            print("chamou deletar na viewModel")
+            try bancoDeDados.editarPedido(pedido: pedido)
+        } catch {
+            print("Erro ao deletar cliente: \(error)")
+        }
+    }
     
-    func salvarPedido(cliente: Cliente) {
-        
-        let pedido = Pedido(
-            titulo: self.titulo,
-            observacoes: self.observacoes, 
-            dataDeEntrega: self.dataDeEntrega,
-            cliente: cliente,
-            statusPagamento: self.status
-        )
+    func buscarPedido(pedido: Pedido) -> Pedido? {
+        do {
+            return try bancoDeDados.buscarPedidoPorId(pedido: pedido)
+        } catch {
+            print("Erro ao busca cliente por ID: \(error)")
+        }
+        return nil
+    }
+    
+    func salvarPedido() {
         
         do {
-            try bancoDeDados.salvarPedido(pedido: pedido)
+            try bancoDeDados.salvarPedido(pedido: self.pedido)
+            
         } catch {
             print("Erro ao salvar clientes: \(error)")
         }
@@ -73,31 +74,3 @@ class PedidoViewModel: ObservableObject{
     
     
 }
-
-
-//class PedidoViewModel: ObservableObject {
-//    @Published var pedidos: [Pedido] = [] // Lista de pedidos
-//    @Published var pedidosDoCliente: [Pedido] = [] // Lista de pedidos de um cliente especifico
-//    @Published var pedidoSelecionado: Pedido? // Pedido para visualização ou edição
-//    @Published var descricao: String = "" // Descrição para cadastro ou edição
-//
-
-//    // Função para salvar pedido (novo ou editado)
-//    func savePedido(cliente: Cliente) -> Pedido {
-//        let pedido = Pedido(id: pedidoSelecionado?.id ?? Int.random(in: 1...1000),
-//                            descricao: descricao, cliente: cliente)
-//        
-//        if let index = pedidos.firstIndex(where: { $0.id == pedido.id }) {
-//            pedidos[index] = pedido // Atualiza o pedido existente
-//        } else {
-//            pedidos.append(pedido) // Adiciona um novo pedido
-//        }
-//        
-//        return pedido
-//    }
-//    
-//    // Função para apagar pedido
-//    func deletePedido(id: Int) {
-//        pedidos.removeAll { $0.id == id }
-//    }
-//}

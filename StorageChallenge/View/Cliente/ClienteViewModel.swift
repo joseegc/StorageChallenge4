@@ -30,7 +30,7 @@ class ClienteViewModel: ObservableObject {
     func buscarClientePorId(id: UUID) -> Cliente?
     {
         do {
-            return try bancoDeDados.buscarClientePorId(cliente: cliente)
+            return try bancoDeDados.buscarClientePorId(id: id)
         } catch {
             print("Erro ao busca cliente por ID: \(error)")
         }
@@ -57,10 +57,10 @@ class ClienteViewModel: ObservableObject {
         }
     }
     
-    func deletarCliente() {
+    func deletarCliente(idDoCliente: UUID) {
         do {
             print("chamou deletar na viewModel")
-            try bancoDeDados.deletarCliente(id: self.cliente.id)
+            try bancoDeDados.deletarCliente(id: idDoCliente)
         } catch {
             print("Erro ao deletar cliente: \(error)")
         }
@@ -77,11 +77,13 @@ class ClienteViewModel: ObservableObject {
     func editarCliente(){
         do {
             print("chamou deletar na viewModel")
-            try bancoDeDados.editarCliente(cliente: self.cliente)
+            try bancoDeDados.editarCliente(cliente: cliente)
         } catch {
             print("Erro ao deletar cliente: \(error)")
         }
     }
+    
+    
     func deletarMedida(id: UUID){
         do {
             print("chamou deletar na viewModel")

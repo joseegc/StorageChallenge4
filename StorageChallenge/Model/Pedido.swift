@@ -15,8 +15,7 @@ struct Pedido: Identifiable {
     var cliente: Cliente
     var statusPagamento: String
     
-    
-    init(id: UUID = UUID(), titulo: String, observacoes: String? = "", dataDeEntrega: Date, cliente: Cliente = Cliente(), statusPagamento: String) {
+    init(id: UUID = UUID(), titulo: String = "", observacoes: String? = "", dataDeEntrega: Date = Date(), cliente: Cliente = Cliente(), statusPagamento: String = "Pendente") {
         self.id = id
         self.titulo = titulo
         self.observacoes = observacoes

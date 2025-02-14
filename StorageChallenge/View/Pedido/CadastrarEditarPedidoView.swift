@@ -8,8 +8,16 @@
 import SwiftUI
 
 struct CadastrarEditarPedidoView: View {
+    @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var viewModel: PedidoViewModel
     @State var cliente: Cliente
+    
+    @State var titulo = ""
+    @State var dataDeEntrega = Date()
+    @State var observacoes: String = ""
+    @State var statusPagamento: String = "Pendente"
+    @State var valorPedido: String = ""
+    var idDoPedido: UUID?
     
     var body: some View {
         VStack {
@@ -21,13 +29,13 @@ struct CadastrarEditarPedidoView: View {
                     Text("Título")
                     Spacer()
                 }
-                TextField("Título", text: $viewModel.titulo)
+                TextField("Título", text: $titulo)
             }
             Divider()
             
             DatePicker(
                 "Data de Entrega",
-                selection: $viewModel.dataDeEntrega,
+                selection: $dataDeEntrega,
                 displayedComponents: [.date]
             )
             Divider()
@@ -36,13 +44,13 @@ struct CadastrarEditarPedidoView: View {
                     Text("Valor do pedido")
                     Spacer()
                 }
-                TextField("R$", text: $viewModel.valorPedido)
-                    .onChange(of: viewModel.valorPedido) {
-                        if viewModel.valorPedido == "R$"{
-                            viewModel.valorPedido = ""
-                        } else if viewModel.valorPedido != "" {
-                            let novoValor = "R$" + "\(viewModel.valorPedido.replacingOccurrences(of: "R$", with: ""))"
-                            viewModel.valorPedido = novoValor
+                TextField("R$", text: $valorPedido)
+                    .onChange(of: valorPedido) {
+                        if valorPedido == "R$"{
+                            valorPedido = ""
+                        } else if valorPedido != "" {
+                            let novoValor = "R$" + "\(valorPedido.replacingOccurrences(of: "R$", with: ""))"
+                            valorPedido = novoValor
                         }
                     }
                     .keyboardType(.decimalPad)
@@ -52,7 +60,7 @@ struct CadastrarEditarPedidoView: View {
                 Text("Status do Pagamento")
                 
                 Spacer()
-                Picker("Selecione o status", selection: $viewModel.status) {
+                Picker("Selecione o status", selection: $statusPagamento) {
                     Text("Pendente").tag("Pendente")
                     Text("Pago").tag("Pago")
                 }
@@ -65,7 +73,7 @@ struct CadastrarEditarPedidoView: View {
                     Text("Observações")
                     Spacer()
                 }
-                TextEditor(text: $viewModel.observacoes).frame(minHeight: 100).cornerRadius(8)
+                TextEditor(text: $observacoes).frame(minHeight: 100).cornerRadius(8)
             }
         }.padding(.horizontal)
             .padding(.vertical , 25)
@@ -78,8 +86,23 @@ struct CadastrarEditarPedidoView: View {
             .toolbar {
                 ToolbarItem {
                     Button(action: {
-                        viewModel.salvarPedido(cliente: cliente)
-                        print()
+                        
+                        viewModel.pedido = Pedido(
+                            titulo: self.titulo,
+                            observacoes: self.observacoes,
+                            dataDeEntrega: self.dataDeEntrega,
+                            cliente: self.cliente,
+                            statusPagamento: self.statusPagamento
+                        )
+                        if idDoPedido != nil {
+                            viewModel.editarPedido()
+                        } else {
+                            viewModel.salvarPedido()
+                            print("Adicionando ao banco")
+                            
+                        }
+                        
+                        presentationMode.wrappedValue.dismiss()
                     }, label: {
                         Text("Salvar")
                     })

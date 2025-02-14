@@ -13,10 +13,6 @@ struct TabBarView: View {
     
     var body: some View {
         TabView {
-            // Pedidos
-            
-            
-            // Clientes
             NavigationStack{
                 ListaDeClientesView()
             }.tabItem {

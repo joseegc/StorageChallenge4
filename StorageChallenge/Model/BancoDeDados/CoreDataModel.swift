@@ -97,7 +97,7 @@ class CoreDataModel: ObservableObject {
     
     func adicionarCliente(cliente: Cliente) {
         let fetchRequest: NSFetchRequest<ClienteEntity> = ClienteEntity.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "id == %@", cliente.id.uuidString)
+        fetchRequest.predicate = NSPredicate(format: "id == %@", cliente.id!.uuidString)
         
         do {
             let clientesExistentes = try container.viewContext.fetch(fetchRequest)
@@ -141,7 +141,7 @@ class CoreDataModel: ObservableObject {
         novaMedida.valor = medida.valor
         
         let fetchRequest: NSFetchRequest<ClienteEntity> = ClienteEntity.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "id == %@", cliente.id.uuidString)
+        fetchRequest.predicate = NSPredicate(format: "id == %@", cliente.id!.uuidString)
         
         do {
             let retorno = try container.viewContext.fetch(fetchRequest)
@@ -159,7 +159,7 @@ class CoreDataModel: ObservableObject {
     
     func editarCliente(cliente: Cliente) throws{
         let fetchRequest: NSFetchRequest<ClienteEntity> = ClienteEntity.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "id == %@", cliente.id.uuidString)
+        fetchRequest.predicate = NSPredicate(format: "id == %@", cliente.id!.uuidString)
         do {
             let retorno = try container.viewContext.fetch(fetchRequest)
             

@@ -18,24 +18,26 @@ struct ListaDePedidosView: View {
             Text("Nenhum pedido registrado!")
         } else{
             ForEach(pedidos){pedido in
-                VStack(spacing:0){
-                    VStack{
-                        HStack{
-                            Text(pedido.titulo)
-                                .font(.title2)
-                            Spacer()
-                        }.padding(15)
-                    }
-                    .background(.amarelo)
-                    HStack{
-                        HStack{
-                            Text("Entrega: \(pedido.dataDeEntrega.formatted(date: .numeric, time: .omitted))")
-                            Spacer()
+                NavigationLink(destination: ExibirPedidoView(pedido: pedido)){
+                    VStack(spacing:0){
+                        VStack{
+                            HStack{
+                                Text(pedido.titulo)
+                                    .font(.title2)
+                                Spacer()
+                            }.padding(15)
                         }
-                    }.padding(.horizontal, 15).background(.cinzaEscuro)
+                        .background(.amarelo)
+                        HStack{
+                            HStack{
+                                Text("Entrega: \(pedido.dataDeEntrega.formatted(date: .numeric, time: .omitted))")
+                                Spacer()
+                            }
+                        }.padding(.horizontal, 15).padding(.vertical, 5).background(.cinzaEscuro)
+                    }
+                }.frame(maxWidth: .infinity)
+                .cornerRadius(/*@START_MENU_TOKEN@*/20.0/*@END_MENU_TOKEN@*/)
                 }
-            }.frame(maxWidth: .infinity)
-            .cornerRadius(/*@START_MENU_TOKEN@*/20.0/*@END_MENU_TOKEN@*/)
         }
     }
 }

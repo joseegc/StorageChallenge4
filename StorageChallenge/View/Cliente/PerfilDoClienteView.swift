@@ -8,158 +8,144 @@
 import SwiftUI
 
 struct PerfilDoClienteView: View {
-    //    let cliente: ClienteEntity
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.colorScheme) var colorScheme
-    @EnvironmentObject var viewModel: ClienteViewModel
+    @EnvironmentObject var clientesViewModel: ClienteViewModel
     
-//    @State var cliente: Cliente
+    @State var cliente: Cliente
     
     @State var mostrarAlertaDeExcluir = false
     
     var body: some View {
-        VStack(spacing: 50) {
-            
-            //MARK: MEDIDAS TITULO E CARD
-            VStack(spacing: 14) {
-                HStack {
-                    Text("Medidas")
-                        .font(.title2)
-                        .bold()
-                    Spacer()
-                }
+        ScrollView{
+            VStack(spacing: 50) {
                 
-                //MARK: COMPONENTE DE CARD DE MEDIDAS
-                HStack(spacing: 0) {
-                    
-                    VStack
-                    {
-                        Image("silhueta")
-                        
+                //MARK: MEDIDAS TITULO E CARD
+                VStack(spacing: 14) {
+                    HStack {
+                        Text("Medidas")
+                            .font(.title2)
+                            .bold()
+                        Spacer()
                     }
-                    .padding(.horizontal, 20)
                     
-                    
-                    
-                    
-                    VStack {
-                        if viewModel.cliente.medidas.isEmpty {
-                            VStack {
-                                Spacer()
-                                Text("Sem medidas cadastradas")
-                                    .foregroundStyle(Color.pretoFix)
-                                
-                                Spacer()
-                            }
-                        }else {
-                            ScrollView {
-                                ForEach(viewModel.cliente.medidas) { medida in
-                                    VStack(spacing: 0) {
-                                        HStack {
-                                            Text("\(medida.descricao)")
-                                                .frame(width: 100, alignment: .leading)
-                                                .lineLimit(1)
-                                                .truncationMode(.tail)
-                                                .multilineTextAlignment(.leading)
-                                                .font(.callout)
-                                                .fontWeight(.thin)
-                                            
-                                            
-                                            Spacer()
-                                            Text("\(String(format: "%.1f", medida.valor)) cm")
-                                                .fontWeight(.thin)
-                                            
-                                        }
-                                        Divider()
-                                            .padding(.vertical, 12)
-                                    }
-                                    .foregroundStyle(Color(.pretoFix))
-                                }
-                                .frame(maxWidth: .infinity)
-                                
-                                //                                    .scrollIndicators(.visible) // Garante que a barra de rolagem seja visível
-                            }
-                            .padding(24)
-                            .scrollIndicators(.visible)
+                    //MARK: COMPONENTE DE CARD DE MEDIDAS
+                    HStack(spacing: 0) {
+                        
+                        VStack
+                        {
+                            Image("silhueta")
+                            
                         }
+                        .padding(.horizontal, 20)
                         
-                    }.frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .background(Color(.amarelo))
-                }
-                .frame(height: 269)
-                
-                .background(Color(.cinzaClaro))
-                .clipShape(.rect(cornerRadius: 20))
-                
-            }
-            
-            
-            //MARK: PEDIDOS E LISTA
-            VStack(spacing: 14) {
-                HStack {
-                    Text("Pedidos")
-                        .font(.title2)
-                        .bold()
-                    Spacer()
-                    NavigationLink(destination: CadastrarEditarPedidoView(cliente: viewModel.cliente)) {
-                        Image(systemName: "plus")
+                        VStack {
+                            if cliente.medidas.isEmpty {
+                                VStack {
+                                    Spacer()
+                                    Text("Sem medidas cadastradas")
+                                        .foregroundStyle(Color.pretoFix)
+                                    
+                                    Spacer()
+                                }
+                            }else {
+                                ScrollView {
+                                    ForEach(cliente.medidas) { medida in
+                                        VStack(spacing: 0) {
+                                            HStack {
+                                                Text("\(medida.descricao)")
+                                                    .frame(width: 100, alignment: .leading)
+                                                    .lineLimit(1)
+                                                    .truncationMode(.tail)
+                                                    .multilineTextAlignment(.leading)
+                                                    .font(.callout)
+                                                    .fontWeight(.thin)
+                                                
+                                                
+                                                Spacer()
+                                                Text("\(String(format: "%.1f", medida.valor)) cm")
+                                                    .fontWeight(.thin)
+                                                
+                                            }
+                                            Divider()
+                                                .padding(.vertical, 12)
+                                        }
+                                        .foregroundStyle(Color(.pretoFix))
+                                    }
+                                    .frame(maxWidth: .infinity)
+                                    
+                                    //                                    .scrollIndicators(.visible) // Garante que a barra de rolagem seja visível
+                                }
+                                .padding(24)
+                                .scrollIndicators(.visible)
+                            }
+                            
+                        }.frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .background(Color(.amarelo))
                     }
-                }
-                
-                ListaDePedidosView(pedidos: viewModel.cliente.pedidos)
-            }
-            
-            
-            .padding(.horizontal, 24)
-            .padding(.top, 50)
-            .navigationTitle(viewModel.cliente.nome)
-            .navigationBarTitleDisplayMode(.inline)
-            .background(Color(.corDeFundo))
-            .edgesIgnoringSafeArea(.bottom)
-            .alert(isPresented: $mostrarAlertaDeExcluir) {
-                Alert(
-                    title: Text("Excluir Cliente"),
-                    message: Text("Tem certeza de que deseja excluir este cliente? Esta ação não pode ser desfeita."),
-                    primaryButton: .destructive(Text("Excluir")) {
-                        viewModel.deletarCliente()
-                        presentationMode.wrappedValue.dismiss()
-                        
-                    },
-                    secondaryButton: .cancel()
-                )
-            }
-            .toolbar {
-                ToolbarItem {
+                    .frame(height: 269)
                     
-                    NavigationLink(destination: CadastrarEditarClienteView()) {
-                        Image(systemName: "pencil")
-                    }
+                    .background(Color(.cinzaClaro))
+                    .clipShape(.rect(cornerRadius: 20))
                     
                 }
                 
-                
-                ToolbarItem {
-                    Button() {
-                        mostrarAlertaDeExcluir.toggle()
+                //MARK: PEDIDOS E LISTA
+                VStack(spacing: 14) {
+                    HStack {
+                        Text("Pedidos")
+                            .font(.title2)
+                            .bold()
+                        Spacer()
+                        NavigationLink(destination: CadastrarEditarPedidoView(cliente: cliente)) {
+                            Image(systemName: "plus")
+                        }
                     }
-                label: {
-                    Image(systemName: "trash.fill")
-                        .padding(.leading, -5)
                     
+                    ListaDePedidosView(pedidos: cliente.pedidos)
                 }
+                .navigationTitle(cliente.nome)
+                .navigationBarTitleDisplayMode(.inline)
+                .background(Color(.corDeFundo))
+                .edgesIgnoringSafeArea(.bottom)
+                .alert(isPresented: $mostrarAlertaDeExcluir) {
+                    Alert(
+                        title: Text("Excluir Cliente"),
+                        message: Text("Tem certeza de que deseja excluir este cliente? Esta ação não pode ser desfeita."),
+                        primaryButton: .destructive(Text("Excluir")) {
+                            clientesViewModel.deletarCliente(idDoCliente: cliente.id!)
+                            presentationMode.wrappedValue.dismiss()
+                            
+                        },
+                        secondaryButton: .cancel()
+                    )
+                }
+                .toolbar {
+                    ToolbarItem {
+                        NavigationLink(destination: CadastrarEditarClienteView(idDoCliente: cliente.id)){
+                            Image(systemName: "pencil")
+                        }
+                    }
+                    ToolbarItem {
+                        Button(action: {
+                            mostrarAlertaDeExcluir.toggle()
+                        }, label: {
+                            Image(systemName: "trash.fill")
+                        })
+                    }
+                }
+                .onAppear {
+                    cliente = clientesViewModel.buscarClientePorId(id: cliente.id!)!
                 }
             }
-//            .onAppear {
-//                cliente = viewModel.buscarClientePorId(id: cliente.id)!
-//                
-//            }
-            
-        }
+        }.padding(25).scrollIndicators(.hidden)
+        
     }
 }
 
+
 #Preview {
     NavigationStack {
-        PerfilDoClienteView().environmentObject(ClienteViewModel(bancoDeDados: SwiftDataImplementacao()))
+        PerfilDoClienteView( cliente: Cliente(id: UUID(), nome: "Jorge", telefone: "11966666666")).environmentObject(ClienteViewModel(bancoDeDados: SwiftDataImplementacao()))
     }
 }

@@ -10,6 +10,8 @@ import SwiftData
 
 class SwiftDataImplementacao: BancoDeDados {
     
+    
+    
     let modelContainer: ModelContainer
     
     init() {
@@ -98,6 +100,27 @@ class SwiftDataImplementacao: BancoDeDados {
         return clientes
     }
     
+    @MainActor
+    func buscarPedidoPorId(pedido: Pedido) throws -> Pedido? {
+        let context = modelContainer.mainContext
+        
+        let predicate = #Predicate<PedidoModel> { pedidoBD in
+            pedidoBD.id == pedido.id
+        }
+        
+        let fetchDescriptor = FetchDescriptor<PedidoModel>(predicate: predicate)
+        
+        // Busca o primeiro cliente que corresponde ao ID
+        guard let pedidoBD = try context.fetch(fetchDescriptor).first else {
+            return nil
+        }
+        
+        // Converte para o modelo Cliente
+        var pedido = Pedido(id: pedidoBD.id, titulo: pedidoBD.titulo, observacoes: pedidoBD.observacoes, dataDeEntrega: pedidoBD.dataDeEntrega, cliente: pedido.cliente, statusPagamento: pedidoBD.statusPagamento)
+        
+        return pedido
+    }
+    
     
     
     @MainActor
@@ -130,11 +153,11 @@ class SwiftDataImplementacao: BancoDeDados {
     }
     
     @MainActor
-    func buscarClientePorId(cliente: Cliente) throws -> Cliente? {
+    func buscarClientePorId(id: UUID) throws -> Cliente? {
         let context = modelContainer.mainContext
         
         let predicate = #Predicate<ClienteModel> { cliente in
-            cliente.id == cliente.id
+            cliente.id == id
         }
         
         let fetchDescriptor = FetchDescriptor<ClienteModel>(predicate: predicate)
@@ -160,7 +183,7 @@ class SwiftDataImplementacao: BancoDeDados {
             print(pedido.titulo)
             cliente.pedidos.append(pedido)
         }
-    
+        
         
         return cliente
     }
@@ -175,7 +198,7 @@ class SwiftDataImplementacao: BancoDeDados {
         // Converter Cliente para ClienteModel antes de salvar
         let medidasModel = cliente.medidas.map { MedidaModel(id: $0.id, descricao: $0.descricao, valor: $0.valor) }
         let pedidosModel = cliente.pedidos.map { PedidoModel(id: $0.id, titulo: $0.titulo, observacoes: $0.observacoes, dataDeEntrega: $0.dataDeEntrega, statusPagamento: $0.statusPagamento) }
-        let clienteModel = ClienteModel(id: cliente.id, nome: cliente.nome, telefone: cliente.telefone, foto: cliente.foto, medidas: medidasModel, pedidos: pedidosModel)
+        let clienteModel = ClienteModel(id: UUID(), nome: cliente.nome, telefone: cliente.telefone, foto: cliente.foto, medidas: medidasModel, pedidos: pedidosModel)
         
         context.insert(clienteModel)
         try context.save()
@@ -197,14 +220,15 @@ class SwiftDataImplementacao: BancoDeDados {
             context.delete(clienteBD)
         }
         
-        
     }
     
     @MainActor
     func editarCliente(cliente: Cliente) throws {
         let context = modelContainer.mainContext
         
-        let idCliente = cliente.id
+        let idCliente = cliente.id!
+        
+        print(idCliente)
         
         let predicate = #Predicate<ClienteModel> { clienteBD in
             clienteBD.id == idCliente
@@ -245,83 +269,70 @@ class SwiftDataImplementacao: BancoDeDados {
                 } else {
                     let medida = MedidaModel(id: medida.id, descricao: medida.descricao, valor: medida.valor)
                     context.insert(medida)
-                    
                     clienteBD.medidas.append(medida)
                 }
                 
             }
-            
-//            // Converte para o modelo Cliente
-//            var cliente = Cliente(id: clienteBD.id, nome: clienteBD.nome, telefone: clienteBD.telefone!, foto: clienteBD.foto)
-//            
-//            for medidaBD in clienteBD.medidas {
-//                let medida = Medida(id: medidaBD.id, descricao: medidaBD.descricao, valor: medidaBD.valor)
-//                print("MEDIDA BD")
-//                print(medidaBD.descricao)
-//                cliente.medidas.append(medida)
-//            }
         }
     }
+    
+    
+    @MainActor
+    func deletarMedida(id: UUID) throws {
+        let context = modelContainer.mainContext
         
-     
-        
-        
-        @MainActor
-        func deletarMedida(id: UUID) throws {
-            let context = modelContainer.mainContext
-            
-            let predicate = #Predicate<MedidaModel> { medidaBD in
-                medidaBD.id == id
-            }
-            
-            let fetchDescriptor = FetchDescriptor<MedidaModel>(predicate: predicate)
-            
-            
-            if let medidaBD = try context.fetch(fetchDescriptor).first{
-                context.delete(medidaBD)
-            }
-            
+        let predicate = #Predicate<MedidaModel> { medidaBD in
+            medidaBD.id == id
         }
         
-        @MainActor
-        func salvarPedido(pedido: Pedido) throws {
-            let context = modelContainer.mainContext
-            
-            
-            let idCliente = pedido.cliente.id
-            
-            let predicate = #Predicate<ClienteModel> { clienteBD in
-                clienteBD.id == idCliente
-            }
-            
-            let fetchDescriptor = FetchDescriptor<ClienteModel>(predicate: predicate)
-            
-            if let clienteBD = try context.fetch(fetchDescriptor).first  {
-                let pedidoModel = PedidoModel(id: pedido.id, titulo: pedido.titulo, observacoes: pedido.observacoes, dataDeEntrega: pedido.dataDeEntrega, statusPagamento: pedido.statusPagamento)
-                print("salvando no swift")
-                print(pedidoModel.id)
-                context.insert(pedidoModel)
-                clienteBD.pedidos.append(pedidoModel)
-            }
+        let fetchDescriptor = FetchDescriptor<MedidaModel>(predicate: predicate)
+        
+        
+        if let medidaBD = try context.fetch(fetchDescriptor).first{
+            context.delete(medidaBD)
         }
-        
-        func editarPedido(pedido: Pedido) throws {
-            print("okkkkkk")
-        }
-        
-        func deletarPedido(id: UUID) throws {
-            print("okkkkkk")
-        }
-        
-        func salvarReferencia(imagem: Data, pedido: Pedido) throws {
-            print("okkkkkk")
-        }
-        
-        func deletarReferencia(id: UUID) throws {
-            print("okkkkkk")
-        }
-        
-        
-        
         
     }
+    
+    @MainActor
+    func salvarPedido(pedido: Pedido) throws {
+        let context = modelContainer.mainContext
+        
+        
+        let idCliente = pedido.cliente.id!
+        
+        let predicate = #Predicate<ClienteModel> { clienteBD in
+            clienteBD.id == idCliente
+        }
+        
+        let fetchDescriptor = FetchDescriptor<ClienteModel>(predicate: predicate)
+        
+        if let clienteBD = try context.fetch(fetchDescriptor).first  {
+            let pedidoModel = PedidoModel(id: pedido.id, titulo: pedido.titulo, observacoes: pedido.observacoes, dataDeEntrega: pedido.dataDeEntrega, statusPagamento: pedido.statusPagamento)
+            print("salvando no swift")
+            print(pedidoModel.id)
+            context.insert(pedidoModel)
+            clienteBD.pedidos.append(pedidoModel)
+        }
+    }
+    
+    func editarPedido(pedido: Pedido) throws {
+        print("okkkkkk")
+    }
+    
+    func deletarPedido(id: UUID) throws {
+        print("okkkkkk")
+    }
+    
+    func salvarReferencia(imagem: Data, pedido: Pedido) throws {
+        print("okkkkkk")
+    }
+    
+    func deletarReferencia(id: UUID) throws {
+        print("okkkkkk")
+    }
+    
+    
+    
+    
+}

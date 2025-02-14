@@ -13,7 +13,7 @@ protocol BancoDeDados {
     func salvarCliente(cliente: Cliente) throws
     func editarCliente(cliente: Cliente) throws
     func buscarTodosClientes() throws -> [Cliente]
-    func buscarClientePorId(cliente: Cliente) throws -> Cliente?
+    func buscarClientePorId(id: UUID) throws -> Cliente?
     func buscarClientesPorNome(nome: String) throws -> [Cliente]
     func deletarCliente(id: UUID) throws
     func deletarMedida(id: UUID) throws
@@ -22,6 +22,7 @@ protocol BancoDeDados {
     func salvarPedido(pedido: Pedido) throws
     func editarPedido(pedido: Pedido) throws
     func deletarPedido(id: UUID) throws
+    func buscarPedidoPorId(pedido: Pedido) throws -> Pedido?
     
     func salvarReferencia(imagem: Data, pedido: Pedido) throws
     func deletarReferencia(id: UUID) throws

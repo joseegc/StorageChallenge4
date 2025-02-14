@@ -8,6 +8,10 @@
 import CoreData
 
 class CoreDataImplementacao: BancoDeDados {
+    func buscarPedidoPorId(pedido: Pedido) throws -> Pedido? {
+        return nil
+    }
+    
     let container: NSPersistentContainer
     
     init() {
@@ -53,7 +57,7 @@ class CoreDataImplementacao: BancoDeDados {
     
     func editarCliente(cliente: Cliente) throws{
         let fetchRequest: NSFetchRequest<ClienteEntity> = ClienteEntity.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "id == %@", cliente.id.uuidString)
+        fetchRequest.predicate = NSPredicate(format: "id == %@", cliente.id!.uuidString)
         do {
             let retorno = try container.viewContext.fetch(fetchRequest)
             
@@ -156,17 +160,15 @@ class CoreDataImplementacao: BancoDeDados {
         } catch let error {
             print("erro ao buscar clientes \(error)")
         }
-        for cliente in clientes {
-            print(cliente.id)
-        }
+        
         return clientes
     }
     
     
     
-    func buscarClientePorId(cliente: Cliente) -> Cliente? {
+    func buscarClientePorId(id: UUID) -> Cliente? {
         let fetchRequest: NSFetchRequest<ClienteEntity> = ClienteEntity.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "id == %@", cliente.id.uuidString)
+        fetchRequest.predicate = NSPredicate(format: "id == %@", id.uuidString)
         
         do {
             let clientesExistentes = try container.viewContext.fetch(fetchRequest)
@@ -219,7 +221,7 @@ class CoreDataImplementacao: BancoDeDados {
     }
     
     func buscarClientesPorNome(nome: String) -> [Cliente] {
-        var nome = nome.trimmingCharacters(in: .whitespaces)
+        let nome = nome.trimmingCharacters(in: .whitespaces)
 
         let predicate = NSPredicate(format: "nome CONTAINS[cd] %@", nome)
         
@@ -417,7 +419,7 @@ class CoreDataImplementacao: BancoDeDados {
         novoPedido.observacoes = pedido.observacoes
         
         let fetchRequest: NSFetchRequest<ClienteEntity> = ClienteEntity.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "id == %@", pedido.cliente.id.uuidString)
+        fetchRequest.predicate = NSPredicate(format: "id == %@", pedido.cliente.id!.uuidString)
         
         do{
             let retorno = try container.viewContext.fetch(fetchRequest)

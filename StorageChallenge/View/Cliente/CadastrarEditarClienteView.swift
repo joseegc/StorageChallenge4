@@ -9,7 +9,7 @@ import SwiftUI
 import PhotosUI
 
 struct CadastrarEditarClienteView: View {
-    @EnvironmentObject var viewModel: ClienteViewModel
+    @EnvironmentObject var clientesViewModel: ClienteViewModel
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.colorScheme) var colorScheme
     
@@ -17,7 +17,7 @@ struct CadastrarEditarClienteView: View {
     @State var photosPickerItem: PhotosPickerItem?
     
     @State var clienteInput = Cliente()
-//    var idDoCliente: UUID?
+    var idDoCliente: UUID?
     
     @State var medidas :[Medida] = []
     @State var telefoneValido: Bool = true
@@ -182,7 +182,7 @@ struct CadastrarEditarClienteView: View {
                                 var idMedida = medida.id
                                 if let index = clienteInput.medidas.firstIndex(where: { $0.id == idMedida }) {
                                     clienteInput.medidas.remove(at: index)
-                                    viewModel.deletarMedida(id: idMedida)
+                                    clientesViewModel.deletarMedida(id: idMedida)
                                 }
                             },
                                    label: {
@@ -219,17 +219,26 @@ struct CadastrarEditarClienteView: View {
             .background(Color(colorScheme == .dark ? Color("pretoFixo"): Color("cinzaClaro")))
             .cornerRadius(20)
             .padding(.horizontal, 21)
-            .navigationTitle(viewModel.cliente.id != nil ? "Editar Cliente" : "Cadastrar Cliente")
+            .navigationTitle(idDoCliente != nil ? "Editar Cliente" : "Cadastrar Cliente")
             .navigationBarTitleDisplayMode(.inline)
             .task {
-                if viewModel.cliente.id != nil {
-                    clienteInput = viewModel.cliente
+                if idDoCliente != nil {
+                    clienteInput = clientesViewModel.buscarClientePorId(id: idDoCliente!)!
+                    //                    clientesViewModel.buscarClientePorId(idDoCliente: idDoCliente!)
+                    //                    if let foto = clientesViewModel.cliente.foto {
+                    //                        imagem = UIImage(data: foto)
+                    //                    }
+                    //
+                    
                     
                     if let imageData =  clienteInput.foto {
                         imagem =  UIImage(data: imageData)
                         
                     }
-                }           }
+                }
+                //                else {
+                //                    clientesViewModel.cliente = Cliente()
+                //                }
             }
             
             .toolbar {
@@ -241,20 +250,22 @@ struct CadastrarEditarClienteView: View {
                             }
                             
                             //                        clienteInput.medidas = medidas
-//                            viewModel.cliente.medidas = clienteInput.medidas
-//                            
+                            clientesViewModel.cliente.medidas = clienteInput.medidas
                             
-                            viewModel.cliente = clienteInput
-//                            print(viewModel.cliente.medidas)
-                            if viewModel.cliente.id != nil {
-                                viewModel.editarCliente()
+                            
+                            clientesViewModel.cliente = clienteInput
+                            print(clientesViewModel.cliente.medidas)
+                            if idDoCliente != nil {
+                                clientesViewModel.editarCliente()
                             } else {
-                                viewModel.salvarCliente()
+                                clientesViewModel.salvarCliente()
                                 print("Adicionando ao banco")
                                 
                             }
                             
-//                            clientesViewModel.buscarTodosClientes()
+                            
+                            
+                            clientesViewModel.buscarTodosClientes()
                             presentationMode.wrappedValue.dismiss()
                         }
                     }) {
