@@ -142,7 +142,10 @@ struct PoliticaDePrivacidadeView: View {
             }
             .frame(maxWidth: .infinity)
             .padding(.horizontal, 24)
-        }.navigationTitle("Política de Privacidade")
+            .padding(.bottom, 84)
+
+        }
+        .navigationTitle("Política de Privacidade")
 //            .navigationBarTitleDisplayMode(.inline)
             .background(Color(.corDeFundo))
             .edgesIgnoringSafeArea(.bottom)

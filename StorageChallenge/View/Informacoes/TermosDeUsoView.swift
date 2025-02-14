@@ -108,14 +108,13 @@ struct TermosDeUsoView: View {
                 """)
                 .font(.callout)
                 .padding(.horizontal, 20)
-                .padding(.bottom, 20)
-                
-                
-                
             }
             .frame(maxWidth: .infinity)
             .padding(.horizontal, 24)
-        }.navigationTitle("Termos de Uso")
+            .padding(.bottom, 84)
+
+        }
+        .navigationTitle("Termos de Uso")
 //            .navigationBarTitleDisplayMode(.inline)
             .background(Color(.corDeFundo))
             .edgesIgnoringSafeArea(.bottom)
