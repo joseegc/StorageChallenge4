@@ -84,10 +84,9 @@
 		54DC04E92D5526F6004C4A53 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				BCA971182D5FBE3600945EFF /* Configuracoes */,
-				8B73953C2D4D46A000FAC6D2 /* TabBarView.swift */,
 				54DC04ED2D5528A0004C4A53 /* Pedido */,
 				54DC04EA2D552704004C4A53 /* Cliente */,
+				BCA971182D5FBE3600945EFF /* Configuracoes */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -149,6 +148,7 @@
 			children = (
 				54DC04E92D5526F6004C4A53 /* View */,
 				9F5E21472D4BF89E00B2F7F2 /* Model */,
+				8B73953C2D4D46A000FAC6D2 /* TabBarView.swift */,
 				9F5E21312D4BF79D00B2F7F2 /* StorageChallengeApp.swift */,
 				9F5E213A2D4BF79E00B2F7F2 /* Assets.xcassets */,
 				9F5E213C2D4BF79E00B2F7F2 /* StorageChallenge.entitlements */,

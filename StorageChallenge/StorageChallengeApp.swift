@@ -7,7 +7,6 @@ struct StorageChallengeApp: App {
     var body: some Scene {
         WindowGroup {
                 TabBarView()
-            
             .environmentObject(clienteViewModel)
         }
     }
