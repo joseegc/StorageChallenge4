@@ -141,8 +141,9 @@ class CoreDataImplementacao: BancoDeDados {
                             for pedidoBD in retornoPedidos{
                                 let pedido = Pedido(id: pedidoBD.id!,
                                                     titulo: pedidoBD.titulo!,
-                                                    statusDaEntrega: pedidoBD.statusDeEntrega!,
-                                                    observacoes: pedidoBD.statusDeEntrega
+                                                    observacoes: pedidoBD.observacoes, 
+                                                    dataDeEntrega: pedidoBD.dataDeEntrega!,
+                                                    statusPagamento: pedidoBD.statusPagamento!
                                 )
                                 cliente.pedidos.append(pedido)
                             }
@@ -163,9 +164,9 @@ class CoreDataImplementacao: BancoDeDados {
     
     
     
-    func buscarClientePorId(id idDoCliente: UUID) -> Cliente? {
+    func buscarClientePorId(cliente: Cliente) -> Cliente? {
         let fetchRequest: NSFetchRequest<ClienteEntity> = ClienteEntity.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "id == %@", idDoCliente.uuidString)
+        fetchRequest.predicate = NSPredicate(format: "id == %@", cliente.id.uuidString)
         
         do {
             let clientesExistentes = try container.viewContext.fetch(fetchRequest)
@@ -407,16 +408,16 @@ class CoreDataImplementacao: BancoDeDados {
     //        return pedido
     //    }
     
-    func salvarPedido(pedido: Pedido, cliente: Cliente) throws{
+    func salvarPedido(pedido: Pedido) throws{
         let novoPedido = PedidoEntity(context: container.viewContext)
         novoPedido.id = pedido.id
         novoPedido.titulo = pedido.titulo
         novoPedido.dataDeEntrega = pedido.dataDeEntrega
-        novoPedido.statusDeEntrega = pedido.statusDaEntrega
+        novoPedido.statusPagamento = pedido.statusPagamento
         novoPedido.observacoes = pedido.observacoes
         
         let fetchRequest: NSFetchRequest<ClienteEntity> = ClienteEntity.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "id == %@", cliente.id.uuidString)
+        fetchRequest.predicate = NSPredicate(format: "id == %@", pedido.cliente.id.uuidString)
         
         do{
             let retorno = try container.viewContext.fetch(fetchRequest)
@@ -445,7 +446,7 @@ class CoreDataImplementacao: BancoDeDados {
                 pedidoBD?.dataDeEntrega = pedido.dataDeEntrega
             }
             
-            if pedidoBD?.statusDeEntrega != pedido.statusDaEntrega {
+            if pedidoBD?.statusPagamento != pedido.statusPagamento {
                 pedidoBD?.dataDeEntrega = pedido.dataDeEntrega
             }
             

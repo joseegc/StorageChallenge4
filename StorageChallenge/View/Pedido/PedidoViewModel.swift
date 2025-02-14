@@ -8,46 +8,66 @@
 import Foundation
 import Combine
 
-var pedidosTeste = [Pedido(titulo: "titulo 1", statusDaEntrega: "Pendente", dataDeEntrega: Date(), cliente: Cliente(nome: "Cliente1")), Pedido(titulo: "titulo 1", statusDaEntrega: "Pendente", dataDeEntrega: Date(), cliente: Cliente(nome: "Cliente1")), Pedido(titulo: "titulo 1", statusDaEntrega: "Pendente", dataDeEntrega: Date(), cliente: Cliente(nome: "Cliente1"))]
-
-
-
 class PedidoViewModel: ObservableObject{
+    private let bancoDeDados: BancoDeDados
+    
+    
     @Published var pedidos: [Pedido] = [] // Lista de pedidos
-    @Published var pedidoSelecionado: Pedido? // Pedido para visualização ou edição
+//    @Published var pedidoSelecionado: Pedido? // Pedido para visualização ou edição
     @Published var descricao: String = "" // Descrição para cadastro ou edição
     
-    @Published var pedido = Pedido()
-
-
-    init() {
-        buscarTodosOsPedidos()
+    @Published var pedido:Pedido? = nil
+    
+    @Published var titulo = ""
+    @Published var dataDeEntrega = Date()
+    @Published var observacoes: String = ""
+    @Published var status: String = "Pendente"
+    @Published var valorPedido: String = ""
+    
+    init(bancoDeDados: BancoDeDados) {
+        self.bancoDeDados = bancoDeDados
     }
     
-    func buscarPedidoPorId(id: UUID) {
-//        self.pedido = CoreDataModel.shared.buscarPedidoPorId(id: id)
-    }
+//    func buscarPedidoPorId(id: UUID) {
+////        self.pedido = CoreDataModel.shared.buscarPedidoPorId(id: id)
+//    }
     
-    func buscarTodosOsPedidos() {
-        self.pedidos = pedidosTeste
-    }
+//    func buscarTodosOsPedidos() {
+//        self.pedidos = pedidosTeste
+//    }
+//    
+//    func buscarPedidosDoCliente(cliente: Cliente) {
+//        self.pedidos = []
+//        for pedido in pedidos {
+//            if pedido.cliente.id == cliente.id {
+//                self.pedidos.append(pedido)
+//            }
+//        }
+//    }
     
-    func buscarPedidosDoCliente(cliente: Cliente) {
-        self.pedidos = []
-        for pedido in pedidos {
-            if pedido.cliente.id == cliente.id {
-                self.pedidos.append(pedido)
-            }
+//    func editarPedido(pedido: Pedido) {
+//        self.pedidoSelecionado = pedido
+//    }
+    
+    func salvarPedido(cliente: Cliente) {
+        
+        let pedido = Pedido(
+            titulo: self.titulo,
+            observacoes: self.observacoes, 
+            dataDeEntrega: self.dataDeEntrega,
+            cliente: cliente,
+            statusPagamento: self.status
+        )
+        
+        do {
+            try bancoDeDados.salvarPedido(pedido: pedido)
+        } catch {
+            print("Erro ao salvar clientes: \(error)")
         }
     }
     
-    func editarPedido(pedido: Pedido) {
-        self.pedidoSelecionado = pedido
-    }
-    
     func deletarPedido(id: UUID) {
-        CoreDataModel.shared.deletarPedido(id: id)
-        buscarTodosOsPedidos()
+        
     }
     
     

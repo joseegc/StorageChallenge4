@@ -14,11 +14,7 @@ struct TabBarView: View {
     var body: some View {
         TabView {
             // Pedidos
-            NavigationStack{
-                ListarPedidosView()
-            }.tabItem {
-                Label("Pedidos", systemImage: "calendar")
-                }
+            
             
             // Clientes
             NavigationStack{
@@ -34,6 +30,5 @@ struct TabBarView: View {
 
 #Preview {
     TabBarView()
-        .environmentObject(ClienteViewModel3())
-//        .environmentObject(PedidoViewModel())
+        .environmentObject(ClienteViewModel(bancoDeDados: SwiftDataImplementacao()))
 }

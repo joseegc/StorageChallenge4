@@ -7,46 +7,42 @@
 
 import SwiftUI
 
-struct ListarPedidosView: View {
-    @EnvironmentObject var pedidoViewModel: PedidoViewModel
+
+
+struct ListaDePedidosView: View {
+    @State var pedidos: [Pedido] = []
     
     var body: some View {
-        NavigationView {
-            ScrollView {
-                VStack {
-                   
-                    ForEach(pedidoViewModel.pedidos) { pedido in
-                        
-                        Text(pedido.titulo)
-                        
-                    }.onAppear {
-
-                        pedidoViewModel.buscarTodosOsPedidos()
-                    }
-                    
-                    
-                }
-            }
-            .task {
-                pedidoViewModel.buscarTodosOsPedidos()
-            }
-            .padding(.horizontal)
-            .navigationTitle("Pedidos")
-            .toolbar {
-                ToolbarItem {
-                    NavigationLink(destination: CadastrarEditarClienteView()){
-                        Text("Criar")
-                    }
-                }
-            }
-            
-        }
         
+        if pedidos.isEmpty {
+            Text("Nenhum pedido registrado!")
+        } else{
+            ForEach(pedidos){pedido in
+                VStack(spacing:0){
+                    VStack{
+                        HStack{
+                            Text(pedido.titulo)
+                                .font(.title2)
+                            Spacer()
+                        }.padding(15)
+                    }
+                    .background(.amarelo)
+                    HStack{
+                        HStack{
+                            Text("Entrega: \(pedido.dataDeEntrega.formatted(date: .numeric, time: .omitted))")
+                            Spacer()
+                        }
+                    }.padding(.horizontal, 15).background(.cinzaEscuro)
+                }
+            }.frame(maxWidth: .infinity)
+            .cornerRadius(/*@START_MENU_TOKEN@*/20.0/*@END_MENU_TOKEN@*/)
+        }
     }
 }
 
+
 #Preview {
     NavigationStack{
-       //ListarPedidosView()
+        ListaDePedidosView()
     }
 }

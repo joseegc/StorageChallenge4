@@ -13,12 +13,13 @@ protocol BancoDeDados {
     func salvarCliente(cliente: Cliente) throws
     func editarCliente(cliente: Cliente) throws
     func buscarTodosClientes() throws -> [Cliente]
+    func buscarClientePorId(cliente: Cliente) throws -> Cliente?
     func buscarClientesPorNome(nome: String) throws -> [Cliente]
     func deletarCliente(id: UUID) throws
     func deletarMedida(id: UUID) throws
 //    func buscarTodosPedidos(idDoCliente: UUID?) throws -> [Pedido]
 //    func buscarPedidoPorId(idDoPedido: UUID) throws -> Pedido
-    func salvarPedido(pedido: Pedido, cliente: Cliente) throws
+    func salvarPedido(pedido: Pedido) throws
     func editarPedido(pedido: Pedido) throws
     func deletarPedido(id: UUID) throws
     
@@ -43,7 +44,7 @@ protocol BancoDeDados {
 ////    func buscarTodasMedidasDoPedido(idDoPedido: UUID) throws -> [Medida]
 //    func buscarTodasReferencias(idDoPedido: UUID) throws -> [Foto?]
 //
-    func buscarClientePorId(id: UUID) throws -> Cliente?
+    
 //    func buscarPorIdPedidos(id: UUID) throws -> Pedido?
 //
 //
