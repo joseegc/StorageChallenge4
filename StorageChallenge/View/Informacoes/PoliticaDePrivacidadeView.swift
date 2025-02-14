@@ -146,14 +146,13 @@ struct PoliticaDePrivacidadeView: View {
 
         }
         .navigationTitle("Política de Privacidade")
-//            .navigationBarTitleDisplayMode(.inline)
             .background(Color(.corDeFundo))
             .edgesIgnoringSafeArea(.bottom)
     }
 }
 
-#Preview {
-    NavigationStack {
-        PoliticaDePrivacidadeView()
-    }
-}
+//#Preview {
+//    NavigationStack {
+//        PoliticaDePrivacidadeView()
+//    }
+//}

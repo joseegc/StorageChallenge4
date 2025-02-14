@@ -1,10 +1,3 @@
-//
-//  CampoTextoComponent.swift
-//  StorageChallenge
-//
-//  Created by MATHEUS DA SILVA MARINI on 14/02/25.
-//
-
 import SwiftUI
 
 enum TipoCampo {
@@ -20,7 +13,7 @@ struct CampoTextoComponent: View {
     var teclado: UIKeyboardType = .default
     var mensagemErro: String?
     var tipoCampo: TipoCampo = .padrao
-
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 5) {
             TextField(titulo, text: $texto)
@@ -43,7 +36,7 @@ struct CampoTextoComponent: View {
         }
         .padding(.horizontal)
     }
-
+    
     func aplicarFormatacao(_ valor: String) -> String {
         switch tipoCampo {
         case .telefone:
@@ -52,13 +45,13 @@ struct CampoTextoComponent: View {
             return valor
         }
     }
-
+    
     // 📞 Formata o número de telefone automaticamente
     func formatarNumeroTelefone(_ numero: String) -> String {
         let digitos = numero.filter { "0123456789".contains($0) }
-
+        
         if digitos.isEmpty { return "" }
-
+        
         if digitos.count >= 11 {
             let area = digitos.prefix(2)
             let primeiraParte = digitos.dropFirst(2).prefix(5)

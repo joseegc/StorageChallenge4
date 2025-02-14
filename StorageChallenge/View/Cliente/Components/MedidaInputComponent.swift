@@ -1,10 +1,3 @@
-//
-//  MedidaComponent.swift
-//  StorageChallenge
-//
-//  Created by MATHEUS DA SILVA MARINI on 14/02/25.
-//
-
 import SwiftUI
 
 struct MedidaInputComponent: View {
@@ -12,13 +5,12 @@ struct MedidaInputComponent: View {
     var onDelete: () -> Void
     @Binding var medidasVazias: [Int]
     @Binding var medidas: [Medida]
-
+    
     var body: some View {
         HStack {
             VStack(spacing: 5) {
                 HStack {
                     if let index = medidas.firstIndex(where: { $0.id == medida.id }) {
-                        // TextField para Descrição
                         TextField("Exemplo: Busto", text: $medida.descricao)
                             .onChange(of: medida.descricao) { descricao in
                                 if !descricao.isEmpty {
@@ -56,7 +48,6 @@ struct MedidaInputComponent: View {
                     .frame(height: 1)
             }
             
-            // Botão de Remover Medida
             Button(action: onDelete) {
                 Image(systemName: "minus.circle")
                     .foregroundStyle(Color(.red))

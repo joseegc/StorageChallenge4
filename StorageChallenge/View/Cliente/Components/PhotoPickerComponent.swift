@@ -1,10 +1,3 @@
-//
-//  SwiftUIView.swift
-//  StorageChallenge
-//
-//  Created by MATHEUS DA SILVA MARINI on 14/02/25.
-//
-
 import SwiftUI
 import PhotosUI
 

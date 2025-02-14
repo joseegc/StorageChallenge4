@@ -115,7 +115,6 @@ struct TermosDeUsoView: View {
 
         }
         .navigationTitle("Termos de Uso")
-//            .navigationBarTitleDisplayMode(.inline)
             .background(Color(.corDeFundo))
             .edgesIgnoringSafeArea(.bottom)
     }

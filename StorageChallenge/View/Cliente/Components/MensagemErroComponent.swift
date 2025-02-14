@@ -1,10 +1,3 @@
-//
-//  MensagemErroComponent.swift
-//  StorageChallenge
-//
-//  Created by MATHEUS DA SILVA MARINI on 13/02/25.
-//
-
 import Foundation
 import SwiftUI
 
