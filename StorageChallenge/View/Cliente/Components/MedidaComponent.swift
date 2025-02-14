@@ -87,8 +87,10 @@ struct MedidaComponent: View {
     }
 
     func formatarValor(_ valor: String) -> String {
-        let caracteresPermitidos = "0123456789."
+        let caracteresPermitidos = "0123456789.,"
         var filtrado = valor.filter { caracteresPermitidos.contains($0) }
+        
+        filtrado = filtrado.replacingOccurrences(of: ",", with: ".")
 
         if filtrado.filter({ $0 == "." }).count > 1 {
             filtrado.removeLast()
